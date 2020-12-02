@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/myCat.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zllwsy.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="索引失效（应该避免） 导致索引失效的一些准则，也算是一些规范，在实际开发中，在满足业务的条件下，可以尽量的避免，以达到优化的效果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql进阶--索引失效准则">
+<meta property="og:url" content="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%87%86%E5%88%99/index.html">
+<meta property="og:site_name" content="Sweet Candy">
+<meta property="og:description" content="索引失效（应该避免） 导致索引失效的一些准则，也算是一些规范，在实际开发中，在满足业务的条件下，可以尽量的避免，以达到优化的效果。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113153457208.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113154231090.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113154649743.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113155032536.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113155719578.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113155932855.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113160634862.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113161724300.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113161923839.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113162049543.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113163028278.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113163356914.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113164523102.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113164500550.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113165317184.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113165712133.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113170411196.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113170500892.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113170536703.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113171405716.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113171736749.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172301789.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172547154.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172459510.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172710719.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172857346.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172908822.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172917802.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113173213108.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113173658523.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113173841162.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113174214845.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113174719189.png">
+<meta property="article:published_time" content="2020-11-21T10:49:56.000Z">
+<meta property="article:modified_time" content="2020-12-02T11:53:08.397Z">
+<meta property="article:author" content="Diamond">
+<meta property="article:tag" content="-Mysql -索引 -索引失效准则 -Explain">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113153457208.png">
+
+<link rel="canonical" href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%87%86%E5%88%99/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Mysql进阶--索引失效准则 | Sweet Candy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Sweet Candy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweet Candy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I will in life and deth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%87%86%E5%88%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mysql进阶--索引失效准则
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-21 18:49:56" itemprop="dateCreated datePublished" datetime="2020-11-21T18:49:56+08:00">2020-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">-MySQL进阶</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%87%86%E5%88%99/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%87%86%E5%88%99/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>索引失效（应该避免）</strong></p>
+<p>导致索引失效的一些准则，也算是一些规范，在实际开发中，在满足业务的条件下，可以尽量的避免，以达到优化的效果。</p>
+<a id="more"></a>
+
+<p>1.首先新建一张员工表，并插入数据，建立复合索引，执行语句，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE staffs(</span><br><span class="line">    id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">    &#96;name&#96; VARCHAR(24)NOT NULL DEFAULT&#39;&#39; COMMENT&#39;姓名&#39;,</span><br><span class="line">    &#96;age&#96; INT NOT NULL DEFAULT 0 COMMENT&#39;年龄&#39;,</span><br><span class="line">    &#96;pos&#96; VARCHAR(20) NOT NULL DEFAULT&#39;&#39; COMMENT&#39;职位&#39;,</span><br><span class="line">    &#96;add_time&#96; TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT&#39;入职时间&#39;</span><br><span class="line">)CHARSET utf8 COMMENT&#39;员工记录表&#39;;</span><br><span class="line"></span><br><span class="line">INSERT INTO staffs(&#96;name&#96;,&#96;age&#96;,&#96;pos&#96;,&#96;add_time&#96;) VALUES(&#39;z3&#39;,22,&#39;manager&#39;,NOW());</span><br><span class="line">INSERT INTO staffs(&#96;name&#96;,&#96;age&#96;,&#96;pos&#96;,&#96;add_time&#96;) VALUES(&#39;July&#39;,23,&#39;dev&#39;,NOW());</span><br><span class="line">INSERT INTO staffs(&#96;name&#96;,&#96;age&#96;,&#96;pos&#96;,&#96;add_time&#96;) VALUES(&#39;2000&#39;,23,&#39;dev&#39;,NOW());</span><br><span class="line"></span><br><span class="line">ALTER TABLE staffs ADD INDEX index_staffs_nameAgePos(&#96;name&#96;,&#96;age&#96;,&#96;pos&#96;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113153457208.png" alt="image-20201113153457208"></p>
+<p><strong>索引失效准则：</strong></p>
+<ol>
+<li>全值匹配我最爱</li>
+<li>最佳左前缀法则：如果索引了多例，要遵守最左前缀法则。指的是查询从索引的最左前列开始并且不跳过索引中的列。</li>
+<li>不在索引列上做任何操作（计算、函数、（自动or手动）类型转换），会导致索引失效而转向全表扫描</li>
+<li>存储引擎不能使用索引中范围条件右边的列</li>
+<li>尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少<code>select *</code></li>
+<li>mysql在使用不等于（!=或者&lt;&gt;）的时候无法使用索引会导致全表扫描</li>
+<li><code>is null</code>，<code>is not null</code> 也无法使用索引（早期版本不能走索引，后续版本应该优化过，可以走索引）</li>
+<li>like以通配符开头（’%abc…’）mysql索引失效会变成全表扫描操作</li>
+<li>字符串不加单引号索引失效</li>
+<li>少用or，用它连接时会索引失效</li>
+</ol>
+<blockquote>
+<p>最佳左匹配法则：带头大哥不能死，中间兄弟不能断</p>
+</blockquote>
+<p>概念：如果索引了多列，要遵守最左前缀法则，指的是查询从索引的最左前列开始并且<strong>不跳过索引中的列</strong>，</p>
+<p>只有第一个查询条件 name 的时候：</p>
+<ul>
+<li>type=ref，进行了优化</li>
+<li>key = index_staffs_nameAgePos 表明索引生效</li>
+<li>ref = const ，这个常量就是查询时的 ‘July’ 字符串常量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113154231090.png" alt="image-20201113154231090"></p>
+<p>在name的基础上加上age查询条件的时候：</p>
+<ul>
+<li>type=ref，进行了优化</li>
+<li>key = index_staffs_nameAgePos 表明索引生效</li>
+<li>ref = const,const ，两个常量分别就代表了“July”和“23”，这两个查询条件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;AND age &#x3D; 23;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113154649743.png" alt="image-20201113154649743"></p>
+<p>在name、age的基础上再加上pos查询条件：</p>
+<ul>
+<li>type=ref，进行了优化</li>
+<li>key = index_staffs_nameAgePos 表明索引生效</li>
+<li>ref = const,const,const ，三个常量分别就代表了“July”和“23”和“dev”，这三个查询条件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;AND age &#x3D; 23 AND pos &#x3D; &#39;dev&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113155032536.png" alt="image-20201113155032536"></p>
+<p>并且可以注意到，key_len的数值也在变化：74-&gt;78-&gt;140，就算忘记了它的涵义，但是key_len那么明显，什么的长度，别忘了这是在干嘛，执行一条sql，并且使用索引，就算还是不知道是索引长度，就算把它作为sql的执行长度，也应该是越短越好，</p>
+<p>尝试去掉name查询条件：</p>
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE age &#x3D; 23 AND pos &#x3D; &#39;dev&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113155719578.png" alt="image-20201113155719578"></p>
+<p>尝试去掉age查询条件：</p>
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE pos &#x3D; &#39;dev&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113155932855.png" alt="image-20201113155932855"></p>
+<p><strong>毫无疑问，当name条件去掉以后，索引就不再生效了，说明老大哥确实不能死，死了后面都不再生效，</strong></p>
+<p>那试试去掉age查询字段，留下name和pos呢：</p>
+<ul>
+<li>type=ref，毫无疑问，索引生效了，</li>
+<li>key = index_staffs_nameAgePos，表明索引生效</li>
+<li>ref = const，说明只有一个字段生效了，而查看它的key_len是为74的，而key_len代表的是索引的长度，并且这个数字很熟悉，因为在前面单独查询name的时候就为74，那就说明这个const代表的只会是“July”这个查询条件，</li>
+</ul>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113160634862.png" alt="image-20201113160634862"></p>
+<p>这又证明了当中间条件age去掉之后，后面的索引也不再生效了，说明了<strong>带头大哥不能死，中间兄弟也不能断</strong>，</p>
+<blockquote>
+<p>不在索引列上做任何操作(计算、函数、(自动or手动)类型转换)，会导致索引失效而转向全表扫描</p>
+</blockquote>
+<p>还是先只设置name一个查询条件：</p>
+<ul>
+<li>type=ref，毫无疑问，索引生效了，</li>
+<li>key = index_staffs_nameAgePos，表明索引生效</li>
+<li>ref = const，代表了”July”查询条件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113161724300.png" alt="image-20201113161724300"></p>
+<p>对name使用left进行截断操作：</p>
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE LEFT(name,4) &#x3D; &#39;July&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113161923839.png" alt="image-20201113161923839"></p>
+<p>而我们查看两条sql的查询结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM staffs WHERE LEFT(name,4) &#x3D; &#39;July&#39;;</span><br><span class="line">SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113162049543.png" alt="image-20201113162049543"></p>
+<p>毫无疑问，结果是一致的，但是name进行了left截断操作的语句的索引失效了，所以，<strong>不要对索引的字段进行计算，将会导致索引失效</strong>，</p>
+<blockquote>
+<p>存储引擎不能使用索引中范围条件右边的列</p>
+</blockquote>
+<p>先看一下全值匹配，也就是三个查询条件都是=：</p>
+<ul>
+<li>type=ref，进行了优化</li>
+<li>key = index_staffs_nameAgePos 表明索引生效</li>
+<li>ref = const,const,const ，三个常量分别就代表了“July”和“23”和“dev”，这三个查询条件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;AND age &#x3D; 23 AND pos &#x3D; &#39;dev&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113163028278.png" alt="image-20201113163028278"></p>
+<p>那试一试将age改为范围查询条件呢：</p>
+<ul>
+<li>type = range ，表示范围扫描</li>
+<li>key = index_staffs_nameAgePos 表示索引生效</li>
+<li>ref = NULL ，且key_len为78，表明了范围搜索使其后面的索引均失效</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;AND age &gt; 25 AND pos &#x3D; &#39;dev&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113163356914.png" alt="image-20201113163356914"></p>
+<p>可以看出来，在范围查询后的索引会失效，所以，<strong>不要使用索引范围右边(也就是后面)的字段(列)，</strong></p>
+<blockquote>
+<p>尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少 select  *</p>
+</blockquote>
+<p>先使用select * 来查询：</p>
+<ul>
+<li>type = ref，表示范围扫描</li>
+<li>key = index_staffs_nameAgePos 表示索引生效</li>
+<li>ref = const,const,const，分别代表了三个常量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &#x3D; &#39;July&#39;AND age &#x3D; 25 AND pos &#x3D; &#39;dev&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113164523102.png" alt="image-20201113164523102"></p>
+<p>再单独查询字段：</p>
+<ul>
+<li>type = ref，表示范围扫描</li>
+<li>key = index_staffs_nameAgePos 表示索引生效</li>
+<li>ref = const,const,const，分别代表了三个常量</li>
+<li>而这里的Extra变为了Using index，这是覆盖索引，表示使用索引列进行查询，很大程度的提高查询的效率，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT name, age, pos FROM staffs WHERE name &#x3D; &#39;July&#39;AND age &#x3D; 25 AND pos &#x3D; &#39;dev&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113164500550.png" alt="image-20201113164500550"></p>
+<p>所以，*<em>最好使用覆盖索引，索引列和查询列保持一致，减少select * 查询*</em>，</p>
+<blockquote>
+<p>mysql在使用不等于（!=或者&lt;&gt;）的时候无法使用索引会导致全表扫描</p>
+</blockquote>
+<p>在使用 != 会 &lt;&gt; 时会导致索引失效：</p>
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name !&#x3D; &#39;July&#39;;</span><br><span class="line">EXPLAIN SELECT * FROM staffs WHERE name &lt;&gt; &#39;July&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113165317184.png" alt="image-20201113165317184"></p>
+<p>有的时候确实一些业务要求这样写，不能为了索引而索引，该写还是要写，只能说在保证业务的情况下去进行优化，</p>
+<blockquote>
+<p>is null，is not null也无法使用索引</p>
+</blockquote>
+<p>使用is null,is not null导致索引失效：</p>
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name is null;</span><br><span class="line">EXPLAIN SELECT * FROM staffs WHERE name is not null;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113165712133.png" alt="image-20201113165712133"></p>
+<blockquote>
+<p>like以通配符开头（’%abc…’）mysql索引失效会变成全表扫描操作，所以like % 写在查询条件的最右边</p>
+</blockquote>
+<p>使用like，前后都添加通配符：</p>
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name like &#39;%July%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113170411196.png" alt="image-20201113170411196"></p>
+<p>使用like，前面加通配符，后面不加：</p>
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name like &#39;%July&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113170500892.png" alt="image-20201113170500892"></p>
+<p>使用like，后面加通配符，前面不加：</p>
+<ul>
+<li>type = range ，表示like是范围扫描</li>
+<li>key = index_staffs_nameAgePos 表示索引生效</li>
+<li>ref = NULL ，表明了范围搜索使其后面的索引均失效，那是不是代表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM staffs WHERE name like &#39;July%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113170536703.png" alt="image-20201113170536703"></p>
+<p>由上面三种情况可以得出，<strong>like的通配符%最好加右边</strong>，但是有的时候就是需要前后加通配符，<strong>如何解决like ‘%字符串%’时索引不被使用的方法？</strong></p>
+<blockquote>
+<p>解决like ‘%字符串%’ 索引失效的问题：覆盖索引</p>
+</blockquote>
+<p>1.创建一张user表，并插入部分数据，执行语句，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;tbl_user&#96;(</span><br><span class="line">    &#96;id&#96; INT(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">    &#96;name&#96; VARCHAR(20) DEFAULT NULL,</span><br><span class="line">    &#96;age&#96;INT(11) DEFAULT NULL,</span><br><span class="line">    &#96;email&#96; VARCHAR(20) DEFAULT NULL,</span><br><span class="line">    PRIMARY KEY(&#96;id&#96;)</span><br><span class="line">)ENGINE&#x3D;INNODB AUTO_INCREMENT&#x3D;1 DEFAULT CHARSET&#x3D;utf8;</span><br><span class="line"></span><br><span class="line">INSERT INTO tbl_user(&#96;name&#96;,&#96;age&#96;,&#96;email&#96;)VALUES(&#39;1aa1&#39;,21,&#39;a@163.com&#39;);</span><br><span class="line">INSERT INTO tbl_user(&#96;name&#96;,&#96;age&#96;,&#96;email&#96;)VALUES(&#39;2bb2&#39;,23,&#39;b@163.com&#39;);</span><br><span class="line">INSERT INTO tbl_user(&#96;name&#96;,&#96;age&#96;,&#96;email&#96;)VALUES(&#39;3cc3&#39;,24,&#39;c@163.com&#39;);</span><br><span class="line">INSERT INTO tbl_user(&#96;name&#96;,&#96;age&#96;,&#96;email&#96;)VALUES(&#39;4dd4&#39;,26,&#39;d@163.com&#39;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113171405716.png" alt="image-20201113171405716"></p>
+<p>2.新建一条复合索引，为了解决通配符问题，使用覆盖索引，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX idx_user_nameAge ON tbl_user(name, age);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113171736749.png" alt="image-20201113171736749"></p>
+<p>3.测试覆盖索引，也就是说name和age这两个字段，在作为索引的情况下，是否能解决通配符后不被引用的问题，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT name, age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT name FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT id FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT id, name FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT id, age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT id, name, age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>查询name，age：</p>
+<ul>
+<li>type=index，索引生效了，</li>
+<li>key = idx_user_nameAge，表明索引生效</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT name, age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172301789.png" alt="image-20201113172301789"></p>
+<p>查询id：</p>
+<ul>
+<li>type=index，索引生效了，默认主键索引</li>
+<li>key = idx_user_nameAge，表明索引生效</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT id FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172547154.png" alt="image-20201113172547154"></p>
+<p>单独查询name和age：</p>
+<ul>
+<li>type=index，索引生效了，</li>
+<li>key = idx_user_nameAge，表明索引生效</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT name FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172459510.png" alt="image-20201113172459510"></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172710719.png" alt="image-20201113172710719"></p>
+<p>查询id和name、age的搭配查询的情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT id, name FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT id, age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;; </span><br><span class="line">EXPLAIN SELECT id, name, age FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>type=index，索引生效了，</li>
+<li>key = idx_user_nameAge，表明索引生效</li>
+</ul>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172857346.png" alt="image-20201113172857346"></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172908822.png" alt="image-20201113172908822"></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113172917802.png" alt="image-20201113172917802"></p>
+<p>上面的sql，查询的东西至少都是和索引有所关联，所以都生效了，那么再测试一个查询不属于索引的字段呢，</p>
+<p>查询id, name, age, email 或者 *：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;;</span><br><span class="line">EXPLAIN SELECT id, name, age, email FROM tbl_user WHERE NAME LIKE &#39;%aa%&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>type=ALL，毫无疑问，进行了全表扫描，</li>
+<li>key = null，表明索引并没有生效</li>
+<li>ref = null，说明ref没有索引字段生效，</li>
+</ul>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113173213108.png" alt="image-20201113173213108"></p>
+<p>从上述的测试可以看出，如果业务中非要用双百分号通配符like，而<strong>要实现索引生效的最好方式，就是使用覆盖索引，也就是查询的字段加入索引，</strong></p>
+<blockquote>
+<p>字符串不加单引号索引失效</p>
+</blockquote>
+<p>先查看正确的情况，也就是正常使用单引号:</p>
+<ul>
+<li>type = ref，表示范围扫描</li>
+<li>key = index_staffs_nameAgePos 表示索引生效</li>
+<li>ref = const，代表了一个常量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain select * from staffs where name&#x3D;&#39;2000&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113173658523.png" alt="image-20201113173658523"></p>
+<p>而忘记写单引号的情况，那么 mysql 会为我们进行隐式的类型转换，但凡进行了类型转换，索引都会失效，如果还记得的话，在第三条准则有说：</p>
+<ul>
+<li>type = ALL，表示全表查询</li>
+<li>key = null表示索引失效</li>
+<li>ref = null，代表没有索引字段</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain select * from staffs where name&#x3D;2000;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113173841162.png" alt="image-20201113173841162"></p>
+<blockquote>
+<p>少用or，用它连接时会索引失效</p>
+</blockquote>
+<p>使用or的情况;</p>
+<ul>
+<li>type = ALL，表示全表查询</li>
+<li>key = null表示索引失效</li>
+<li>ref = null，代表没有索引字段</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain select * from staffs where name&#x3D;&#39;z3&#39; or name &#x3D; &#39;July&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113174214845.png" alt="image-20201113174214845"></p>
+<p>总结，十大失效准则，避免这些情况就是生效原则，一些常见的索引处理会使用到，</p>
+<p>小demo;</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113174719189.png" alt="image-20201113174719189"></p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+		<div>
+     
+	        <div style="text-align:center;color: #ccc;font-size:14px">----------本文结束<i class="fa fa-paw"></i>感谢您的阅读----------</div>
+	 
+</div>
+		
+	</div>
+
+	<div>
+    
+        
+    
+    </div>
+	
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Mysql-%E7%B4%A2%E5%BC%95-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%87%86%E5%88%99-Explain/" rel="tag"># -Mysql -索引 -索引失效准则 -Explain</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%9B%9B-%E6%90%AD%E5%BB%BASpringboot%E9%A1%B9%E7%9B%AE/" rel="prev" title="单点登录-四-搭建Springboot项目">
+      <i class="fa fa-chevron-left"></i> 单点登录-四-搭建Springboot项目
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E4%B8%89%E8%A1%A8%E4%BC%98%E5%8C%96/" rel="next" title="Mysql进阶--索引三表优化">
+      Mysql进阶--索引三表优化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Diamond"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">Diamond</p>
+  <div class="site-description" itemprop="description">黑色的眼睛，注定寻找光明</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zl-Diamon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zl-Diamon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/zllwsy" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;zllwsy" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/DDDDD" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;DDDDD" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">Diamond</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">172k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:36</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+
+<span id="busuanzi_container_site_uv">
+  本站总访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+</div>
+
+
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nLtYdYhOieJn53fMGYIiyU5f-gzGzoHsz',
+      appKey     : '43kflehvxloXN1wOm9R90dRh',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.7' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+ 
+ <!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+  </body>
+</html>

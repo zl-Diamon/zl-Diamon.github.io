@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sweet Candy</title>
+  
+  <subtitle>I will in life and deth</subtitle>
+  <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
+  
+  <link href="http://www.zllwsy.com/"/>
+  <updated>2020-12-02T12:41:45.701Z</updated>
+  <id>http://www.zllwsy.com/</id>
+  
+  <author>
+    <name>Diamond</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Typora写了一个Hello World</title>
+    <link href="http://www.zllwsy.com/2020/12/02/hello-world/"/>
+    <id>http://www.zllwsy.com/2020/12/02/hello-world/</id>
+    <published>2020-12-02T11:53:09.814Z</published>
+    <updated>2020-12-02T12:41:45.701Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-Blog System" scheme="http://www.zllwsy.com/categories/Blog-System/"/>
+    
+    
+    <category term="-Typora" scheme="http://www.zllwsy.com/tags/Typora/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Show Profile进行Sql分析及优化</title>
+    <link href="http://www.zllwsy.com/2020/11/29/Mysql%E8%BF%9B%E9%98%B6-Show-Profile%E8%BF%9B%E8%A1%8CSql%E5%88%86%E6%9E%90%E5%8F%8A%E4%BC%98%E5%8C%96/"/>
+    <id>http://www.zllwsy.com/2020/11/29/Mysql%E8%BF%9B%E9%98%B6-Show-Profile%E8%BF%9B%E8%A1%8CSql%E5%88%86%E6%9E%90%E5%8F%8A%E4%BC%98%E5%8C%96/</id>
+    <published>2020-11-29T14:17:58.000Z</published>
+    <updated>2020-12-02T11:53:09.066Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Show Profile的作用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;是mysql提供可以用来分析当前会话中语句执行的资源消耗情况。可以用于SQL的调优测量，&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -索引 -优化 -Show Profile" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-%E4%BC%98%E5%8C%96-Show-Profile/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--全局查询日志</title>
+    <link href="http://www.zllwsy.com/2020/11/29/Mysql%E8%BF%9B%E9%98%B6-%E5%85%A8%E5%B1%80%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/"/>
+    <id>http://www.zllwsy.com/2020/11/29/Mysql%E8%BF%9B%E9%98%B6-%E5%85%A8%E5%B1%80%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/</id>
+    <published>2020-11-29T14:17:18.000Z</published>
+    <updated>2020-12-02T11:53:09.074Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;首先需要记住的是&lt;strong&gt;永远不要在生产环境开启这个功能，&lt;/strong&gt;一般都是测试环境开启监测。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -全局日志" scheme="http://www.zllwsy.com/tags/Mysql-%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单点登录-九-单点登录功能测试</title>
+    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B9%9D-%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B9%9D-%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95/</id>
+    <published>2020-11-29T13:43:28.000Z</published>
+    <updated>2020-12-02T11:53:07.663Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Sso-server模块、System-a、System-b模块都完成了，还有疑问的请参看：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
+    
+    
+    <category term="-阿里云 -Linux -Docker -nacos" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单点登录-八-模块System-b</title>
+    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AB-%E6%A8%A1%E5%9D%97System-b/"/>
+    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AB-%E6%A8%A1%E5%9D%97System-b/</id>
+    <published>2020-11-29T13:43:02.000Z</published>
+    <updated>2020-12-02T11:53:07.402Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;系统A已经完成了，系统B其实没什么差别，主要的逻辑都已经在Sso-server模块中完成，如果还有所不懂请参看文档：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
+    
+    
+    <category term="-阿里云 -Linux -Docker -nacos -System-b" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos-System-b/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单点登录-七-模块System-a</title>
+    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%83-%E6%A8%A1%E5%9D%97System-a/"/>
+    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%83-%E6%A8%A1%E5%9D%97System-a/</id>
+    <published>2020-11-29T13:42:39.000Z</published>
+    <updated>2020-12-02T11:53:07.597Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;害，Sso-server模块的认证中心已经完成，我自己逻辑很清晰，但是我感觉写的有点乱，但是别慌，我后面会提供完整的源码，Sso-server模块不懂的请参看：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
+    
+    
+    <category term="-阿里云 -Linux -Docker -nacos -System-a" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos-System-a/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单点登录-六-模块Sso-server</title>
+    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AD-%E6%A8%A1%E5%9D%97Sso-server/"/>
+    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AD-%E6%A8%A1%E5%9D%97Sso-server/</id>
+    <published>2020-11-29T13:42:12.000Z</published>
+    <updated>2020-12-02T11:53:07.336Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;nacos安装完成，那么就需要在配置文件中配置，并且在nacos服务中新建命名空间，&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
+    
+    
+    <category term="-阿里云 -Linux -Docker -nacos -Sso-server" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos-Sso-server/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单点登录-五-Doccker安装配置nacos</title>
+    <link href="http://www.zllwsy.com/2020/11/24/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%94-Doccker%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEnacos/"/>
+    <id>http://www.zllwsy.com/2020/11/24/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%94-Doccker%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEnacos/</id>
+    <published>2020-11-24T11:26:51.000Z</published>
+    <updated>2020-12-02T11:53:07.061Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;既然决定使用微服务框架，那肯定还是nacos香，我的nacos依然是放在Linux系统中，并且使用了docker容器，&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
+    
+    
+    <category term="-阿里云 -Linux -Docker -nacos" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--批量新增数据脚本</title>
+    <link href="http://www.zllwsy.com/2020/11/24/Mysql%E8%BF%9B%E9%98%B6-%E6%89%B9%E9%87%8F%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/"/>
+    <id>http://www.zllwsy.com/2020/11/24/Mysql%E8%BF%9B%E9%98%B6-%E6%89%B9%E9%87%8F%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/</id>
+    <published>2020-11-24T11:21:17.000Z</published>
+    <updated>2020-12-02T11:53:08.834Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;编写存储过程应该很多了吧，我记得我面试的时候都问过我有没有写过存储过程，其实存储过程就是函数，就和Mysql中的now()类似，只不过now是Mysql系统为我们提供的，而我们是需要自己写，&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -存储过程 -函数" scheme="http://www.zllwsy.com/tags/Mysql-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B-%E5%87%BD%E6%95%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Springboot定时任务</title>
+    <link href="http://www.zllwsy.com/2020/11/24/Springboot%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/"/>
+    <id>http://www.zllwsy.com/2020/11/24/Springboot%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</id>
+    <published>2020-11-24T11:17:40.000Z</published>
+    <updated>2020-12-02T11:53:07.751Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;定时任务在实际开发中，可以说是应用特别的广泛，以往用的都是Timer对象，而现在用的更多的Scheduled类，那么两个有什么区别呢，这里将一一讲解一下，&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--索引优化梳理总结</title>
+    <link href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A2%B3%E7%90%86%E6%80%BB%E7%BB%93/"/>
+    <id>http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A2%B3%E7%90%86%E6%80%BB%E7%BB%93/</id>
+    <published>2020-11-23T11:17:04.000Z</published>
+    <updated>2020-12-02T11:53:08.548Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;到目前为止，已经了解了索引的原理，分类，结构，失效准则等等，我觉得有必要对其进行一系列的测试和总结，&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -索引 -优化 -Explain" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-%E4%BC%98%E5%8C%96-Explain/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--慢查询日志</title>
+    <link href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/"/>
+    <id>http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/</id>
+    <published>2020-11-23T11:16:37.000Z</published>
+    <updated>2020-12-02T11:53:08.777Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;h4 id=&quot;首先要知道什么是慢查询日志&quot;&gt;&lt;a href=&quot;#首先要知道什么是慢查询日志&quot; class=&quot;headerlink&quot; title=&quot;首先要知道什么是慢查询日志&quot;&gt;&lt;/a&gt;首先要知道什么是慢查询日志&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;MySQL的慢查询日志是MySQL提供的一种日志记录，它用来&lt;strong&gt;记录在MySQL中响应时间超过阀值的语句&lt;/strong&gt;，具体指运行时间超过&lt;strong&gt;long_query_time&lt;/strong&gt;值的SQL，则会被记录到慢查询日志中。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -索引 -慢查询 -Mysqldumpslow" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-%E6%85%A2%E6%9F%A5%E8%AF%A2-Mysqldumpslow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--查询截取优化</title>
+    <link href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%9F%A5%E8%AF%A2%E6%88%AA%E5%8F%96%E4%BC%98%E5%8C%96/"/>
+    <id>http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%9F%A5%E8%AF%A2%E6%88%AA%E5%8F%96%E4%BC%98%E5%8C%96/</id>
+    <published>2020-11-23T11:16:22.000Z</published>
+    <updated>2020-12-02T11:53:09.018Z</updated>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;SQL分析性能步骤：&quot;&gt;&lt;a href=&quot;#SQL分析性能步骤：&quot; class=&quot;headerlink&quot; title=&quot;SQL分析性能步骤：&quot;&gt;&lt;/a&gt;SQL分析性能步骤：&lt;/h4&gt;&lt;p&gt;1.观察，至少跑一天，观察生产的慢SQL情况&lt;/p&gt;
+&lt;p&gt;2.开启慢查询日志，设置阈值，比如超过5秒的就是慢SQL，并将其抓取出来&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -索引 -Exists -Explain -In" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-Exists-Explain-In/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Docker安装Mysql</title>
+    <link href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Docker%E5%AE%89%E8%A3%85Mysql/"/>
+    <id>http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Docker%E5%AE%89%E8%A3%85Mysql/</id>
+    <published>2020-11-21T10:53:19.000Z</published>
+    <updated>2020-12-02T11:53:09.803Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Docker中安装Mysql镜像。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -Docker" scheme="http://www.zllwsy.com/tags/Mysql-Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Mysql配置文件</title>
+    <link href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"/>
+    <id>http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</id>
+    <published>2020-11-21T10:53:06.000Z</published>
+    <updated>2020-12-02T11:53:09.458Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Docker中Mysql配置和普通配置稍有不同。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -Docker" scheme="http://www.zllwsy.com/tags/Mysql-Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Mysql索引分类</title>
+    <link href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB/"/>
+    <id>http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB/</id>
+    <published>2020-11-21T10:52:54.000Z</published>
+    <updated>2020-12-02T11:53:09.515Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;索引的分类：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -索引" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Mysql索引分析</title>
+    <link href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E7%B4%A2%E5%BC%95%E5%88%86%E6%9E%90/"/>
+    <id>http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E7%B4%A2%E5%BC%95%E5%88%86%E6%9E%90/</id>
+    <published>2020-11-21T10:52:41.000Z</published>
+    <updated>2020-12-02T11:53:10.196Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;索引的官方定义：索引(Index)是帮助Mysql高效获取数据的数据结构，由此得到索引的本质：&lt;strong&gt;索引是一种排好序的快速查到数据结构&lt;/strong&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-索引" scheme="http://www.zllwsy.com/tags/%E7%B4%A2%E5%BC%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Mysql索引结构</title>
+    <link href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/"/>
+    <id>http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84/</id>
+    <published>2020-11-21T10:52:28.000Z</published>
+    <updated>2020-12-02T11:53:09.108Z</updated>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;1-Btree索引&quot;&gt;&lt;a href=&quot;#1-Btree索引&quot; class=&quot;headerlink&quot; title=&quot;1.Btree索引&quot;&gt;&lt;/a&gt;1.Btree索引&lt;/h4&gt;&lt;p&gt;【初始化介绍】&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-索引" scheme="http://www.zllwsy.com/tags/%E7%B4%A2%E5%BC%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Mysql性能差分析</title>
+    <link href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E6%80%A7%E8%83%BD%E5%B7%AE%E5%88%86%E6%9E%90/"/>
+    <id>http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Mysql%E6%80%A7%E8%83%BD%E5%B7%AE%E5%88%86%E6%9E%90/</id>
+    <published>2020-11-21T10:52:13.000Z</published>
+    <updated>2020-12-02T11:53:09.205Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;性能下降SQL慢，执行时间长，等待时间长，分析：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-MySQL -索引" scheme="http://www.zllwsy.com/tags/MySQL-%E7%B4%A2%E5%BC%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql进阶--Sql性能分析及优化</title>
+    <link href="http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Explain%E8%BF%9B%E8%A1%8CSql%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%8F%8A%E4%BC%98%E5%8C%96/"/>
+    <id>http://www.zllwsy.com/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-Explain%E8%BF%9B%E8%A1%8CSql%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%8F%8A%E4%BC%98%E5%8C%96/</id>
+    <published>2020-11-21T10:51:55.000Z</published>
+    <updated>2020-12-02T11:53:09.633Z</updated>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;MySQL-Query-Optimizer-的作用&quot;&gt;&lt;a href=&quot;#MySQL-Query-Optimizer-的作用&quot; class=&quot;headerlink&quot; title=&quot;MySQL Query Optimizer 的作用&quot;&gt;&lt;/a&gt;MySQL Query Optimizer 的作用&lt;/h4&gt;</summary>
+    
+    
+    
+    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
+    
+    
+    <category term="-Mysql -索引 -优化 -Explain" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-%E4%BC%98%E5%8C%96-Explain/"/>
+    
+  </entry>
+  
+</feed>

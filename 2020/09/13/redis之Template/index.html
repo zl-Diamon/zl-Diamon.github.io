@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/myCat.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zllwsy.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Spring操作redis和java操作redis(也就是jedis)有所不同，通常有三种，第一个是RedisTemplate，第二个是StringRedisTemplate，第三是bound api，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis之Template">
+<meta property="og:url" content="http://www.zllwsy.com/2020/09/13/redis%E4%B9%8BTemplate/index.html">
+<meta property="og:site_name" content="Sweet Candy">
+<meta property="og:description" content="Spring操作redis和java操作redis(也就是jedis)有所不同，通常有三种，第一个是RedisTemplate，第二个是StringRedisTemplate，第三是bound api，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-13T02:26:57.000Z">
+<meta property="article:modified_time" content="2020-12-02T11:53:07.985Z">
+<meta property="article:author" content="Diamond">
+<meta property="article:tag" content="-redis -redisTemplate -stringRedisTemplate -bound api">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.zllwsy.com/2020/09/13/redis%E4%B9%8BTemplate/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>redis之Template | Sweet Candy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Sweet Candy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweet Candy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I will in life and deth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/13/redis%E4%B9%8BTemplate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          redis之Template
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-13 10:26:57" itemprop="dateCreated datePublished" datetime="2020-09-13T10:26:57+08:00">2020-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">-redis</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/13/redis%E4%B9%8BTemplate/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/13/redis%E4%B9%8BTemplate/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Spring操作redis和java操作redis(也就是jedis)有所不同，通常有三种，第一个是RedisTemplate，第二个是StringRedisTemplate，第三是bound api，</p>
+<a id="more"></a>
+
+<p>1.RedisTemplate</p>
+<p>​         在RedisTemplate中，对k-v都是有要求的，key和value本身都是JdkSerializationRedisSerializer的序列化，而key默认是String类型，value本身就是Object对象，所以只需要重新设置key的序列化方法，使用StringRedisSerializer就可以了，案例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.zl.springbootredis.redis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.zl.springbootredis.SpringbootRedisApplication;</span><br><span class="line"><span class="keyword">import</span> cn.zl.springbootredis.entity.User;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.RedisTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.serializer.StringRedisSerializer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: zl</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/9/7 13:24</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//启动Springboot应用</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = SpringbootRedisApplication.class)</span></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestRedisTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;<span class="comment">//key Object value Object ====&gt;对象序列化</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//opsForxxx Vlaue String List Set Zset hash</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRedisTemplate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//修改key序列化方案 String类型序列</span></span><br><span class="line">        redisTemplate.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//修改hash key的序列化方案</span></span><br><span class="line">        redisTemplate.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line"></span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setId(Long.valueOf(UUID.randomUUID().toString())).setName(<span class="string">&quot;小陈&quot;</span>).setAge(<span class="number">23</span>).setEmail(<span class="string">&quot;zllwsy@outlook.com&quot;</span>);</span><br><span class="line">        redisTemplate.opsForValue().set(<span class="string">&quot;user&quot;</span>,user);<span class="comment">//redis进行设置  对象需要经过序列化</span></span><br><span class="line">        User user1 = (User) redisTemplate.opsForValue().get(<span class="string">&quot;user&quot;</span>);</span><br><span class="line">        System.out.println(user1);</span><br><span class="line"></span><br><span class="line">        redisTemplate.opsForList().leftPush(<span class="string">&quot;list&quot;</span>,user);</span><br><span class="line"></span><br><span class="line">        redisTemplate.opsForSet().add(<span class="string">&quot;set&quot;</span>,user);</span><br><span class="line"></span><br><span class="line">        redisTemplate.opsForZSet().add(<span class="string">&quot;zset&quot;</span>,user,<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        redisTemplate.opsForHash().put(<span class="string">&quot;map&quot;</span>,<span class="string">&quot;name&quot;</span>,user);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2.StringRedisTemplate</p>
+<p>​          StringRedisTemplate意思很明了，key和value都是String类型，下面是一些常见操作，案例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.zl.springbootredis.redis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.zl.springbootredis.SpringbootRedisApplication;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.connection.DataType;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.StringRedisTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.ZSetOperations;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: zl</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/9/7 11:08</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//启动Springboot应用</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = SpringbootRedisApplication.class)</span></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStringRedisTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;<span class="comment">//key ，value都是字符串</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//操作redis中key相关</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testKey</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="comment">//        stringRedisTemplate.delete(&quot;name&quot;);//删除一个key</span></span><br><span class="line">        Boolean hasKey = stringRedisTemplate.hasKey(<span class="string">&quot;name&quot;</span>);<span class="comment">//判断某个key是否存在</span></span><br><span class="line">        System.out.println(hasKey);</span><br><span class="line">        DataType name = stringRedisTemplate.type(<span class="string">&quot;name&quot;</span>);<span class="comment">//判断key所对应值的类型</span></span><br><span class="line">        System.out.println(name);</span><br><span class="line">        Set&lt;String&gt; keys = stringRedisTemplate.keys(<span class="string">&quot;*&quot;</span>);<span class="comment">//获取redis中所有</span></span><br><span class="line">        keys.forEach(key -&gt; System.out.println(<span class="string">&quot;key = &quot;</span>+ key));</span><br><span class="line">        Long expire = stringRedisTemplate.getExpire(<span class="string">&quot;name&quot;</span>);<span class="comment">//获取key的超时时间</span></span><br><span class="line">        System.out.println(expire);<span class="comment">//-1,代表永不超时；-2 key不存在，&gt;=0 超时时间</span></span><br><span class="line">        stringRedisTemplate.randomKey();<span class="comment">//所及获取一个key</span></span><br><span class="line">        stringRedisTemplate.rename(<span class="string">&quot;age&quot;</span>,<span class="string">&quot;age1&quot;</span>);<span class="comment">//修改key的名字，要求key必须存在，不存在会报错</span></span><br><span class="line">        stringRedisTemplate.renameIfAbsent(<span class="string">&quot;age&quot;</span>,<span class="string">&quot;age1&quot;</span>);<span class="comment">//也是修改key的名字，但是会判断key是否存在</span></span><br><span class="line">        stringRedisTemplate.move(<span class="string">&quot;name&quot;</span>,<span class="number">1</span>);<span class="comment">//移动key到指定库</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//操作redis中字符串,opsForValue实际就是操作redis中的String类型</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testString</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;小张&quot;</span>);<span class="comment">//设置 key value</span></span><br><span class="line">        String name = stringRedisTemplate.opsForValue().get(<span class="string">&quot;name&quot;</span>);<span class="comment">//获取value</span></span><br><span class="line">        System.out.println(name);</span><br><span class="line">        stringRedisTemplate.opsForValue().set(<span class="string">&quot;code&quot;</span>,<span class="string">&quot;2357&quot;</span>,<span class="number">60</span>, TimeUnit.SECONDS);<span class="comment">//设置一个key的超时时间</span></span><br><span class="line">        stringRedisTemplate.opsForValue().append(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;你是个好人&quot;</span>);<span class="comment">//追加</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//操作redis中list类型，opsForList实际就是操作redis中list类型</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testList</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForList().leftPush(<span class="string">&quot;names&quot;</span>,<span class="string">&quot;小黑&quot;</span>);<span class="comment">//创建一个列表，并放入一个元素</span></span><br><span class="line">        stringRedisTemplate.opsForList().leftPushAll(<span class="string">&quot;names&quot;</span>,<span class="string">&quot;小花&quot;</span>,<span class="string">&quot;小王&quot;</span>,<span class="string">&quot;小明&quot;</span>);</span><br><span class="line">        ArrayList&lt;Object&gt; names = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        names.add(<span class="string">&quot;xiaoming&quot;</span>);</span><br><span class="line">        names.add(<span class="string">&quot;xiaosan&quot;</span>);</span><br><span class="line">        stringRedisTemplate.opsForList().leftPushAll(<span class="string">&quot;names&quot;</span>, String.valueOf(names));<span class="comment">//创建一个列表，放入多个元素</span></span><br><span class="line">        List&lt;String&gt; stringList = stringRedisTemplate.opsForList().range(<span class="string">&quot;names&quot;</span>, <span class="number">0</span>, -<span class="number">1</span>);<span class="comment">//遍历list</span></span><br><span class="line">        stringList.forEach( value -&gt; System.out.println(<span class="string">&quot;value = &quot;</span>+ value));</span><br><span class="line">        stringRedisTemplate.opsForList().trim(<span class="string">&quot;names&quot;</span>,<span class="number">1</span>,<span class="number">3</span>);<span class="comment">//截取指定区间的list,前三个，</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//操作redis中set类型，opsForSet实际就是操作redis中set类型</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSet</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForSet().add(<span class="string">&quot;sets&quot;</span>,<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;李三&quot;</span>,<span class="string">&quot;xiaoming&quot;</span>);<span class="comment">//添加</span></span><br><span class="line">        Set&lt;String&gt; sets = stringRedisTemplate.opsForSet().members(<span class="string">&quot;sets&quot;</span>);<span class="comment">//成员</span></span><br><span class="line">        sets.forEach( value -&gt; System.out.println(<span class="string">&quot;value = &quot;</span> +value));</span><br><span class="line"></span><br><span class="line">        stringRedisTemplate.opsForSet().size(<span class="string">&quot;sets&quot;</span>);<span class="comment">//获取set集合元素个数</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//操作redis中zset类型，opsForZSet实际就是操作redis中zset类型</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testZset</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForZSet().add(<span class="string">&quot;zsets&quot;</span>,<span class="string">&quot;张三&quot;</span>,<span class="number">100</span>);<span class="comment">//创建并放入元素</span></span><br><span class="line">        Set&lt;String&gt; zsets = stringRedisTemplate.opsForZSet().range(<span class="string">&quot;zsets&quot;</span>, <span class="number">1</span>, -<span class="number">1</span>);<span class="comment">//指定范围查询</span></span><br><span class="line">        zsets.forEach( value -&gt; System.out.println(<span class="string">&quot;value = &quot;</span>+value));</span><br><span class="line">        Set&lt;ZSetOperations.TypedTuple&lt;String&gt;&gt; zsets1 = stringRedisTemplate.opsForZSet().rangeByScoreWithScores(<span class="string">&quot;zsets&quot;</span>, <span class="number">0</span>, <span class="number">100</span>);</span><br><span class="line">        zsets1.forEach( typedTuple-&gt; &#123;</span><br><span class="line">            System.out.println(typedTuple.getValue());</span><br><span class="line">            System.out.println(typedTuple.getScore());</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//操作redis中Hash类型，opsForHash实际就是操作redis中Hash类型</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHash</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForHash().put(<span class="string">&quot;maps&quot;</span>,<span class="string">&quot;name&quot;</span>,<span class="string">&quot;张三&quot;</span>);<span class="comment">//创建一个hash类型，并放入key value</span></span><br><span class="line">        HashMap&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;age&quot;</span>,<span class="string">&quot;12&quot;</span>);</span><br><span class="line">        map.put(<span class="string">&quot;bir&quot;</span>,<span class="string">&quot;2020-2-2&quot;</span>);</span><br><span class="line">        stringRedisTemplate.opsForHash().putAll(<span class="string">&quot;maps&quot;</span>,map);<span class="comment">//放入多个key value</span></span><br><span class="line"></span><br><span class="line">        List&lt;Object&gt; values = stringRedisTemplate.opsForHash().multiGet(<span class="string">&quot;maps&quot;</span>, Arrays.asList(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;age&quot;</span>));<span class="comment">//获取多个key</span></span><br><span class="line">        String value = (String) stringRedisTemplate.opsForHash().get(<span class="string">&quot;maps&quot;</span>,<span class="string">&quot;name&quot;</span>);<span class="comment">//获取hash中某个key的值</span></span><br><span class="line">        List&lt;Object&gt; vals = stringRedisTemplate.opsForHash().values(<span class="string">&quot;maps&quot;</span>);<span class="comment">//获取所有values</span></span><br><span class="line">        Set&lt;Object&gt; keys = stringRedisTemplate.opsForHash().keys(<span class="string">&quot;maps&quot;</span>);<span class="comment">//获取所有key</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3.Bound Api</p>
+<p>​          bound api其实就是一种简化操作，是由Spring data 为了方便对redis进行更友好的操作而提供的，案例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.zl.springbootredis.redis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.zl.springbootredis.SpringbootRedisApplication;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.BoundListOperations;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.BoundValueOperations;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.RedisTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.StringRedisTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.serializer.StringRedisSerializer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: zl</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/9/7 13:51</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//启动Springboot应用</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = SpringbootRedisApplication.class)</span></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestBoundAPI</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testBound</span><span class="params">()</span></span>&#123;</span><br><span class="line">        redisTemplate.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        redisTemplate.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line"></span><br><span class="line">        stringRedisTemplate.opsForValue().set(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;Diamond&quot;</span>);</span><br><span class="line">        stringRedisTemplate.opsForValue().append(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;你是一个好人&quot;</span>);</span><br><span class="line">        String s = stringRedisTemplate.opsForValue().get(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        System.out.println(s);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果确认是对一个key多次操作，则对key进行绑定</span></span><br><span class="line">        <span class="comment">//滴哦字符串类型key进行绑定 后续所有操作都是基于这个key的操作，后续的操作参数就少了key的值</span></span><br><span class="line">        BoundValueOperations&lt;String, String&gt; nameValue = stringRedisTemplate.boundValueOps(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        nameValue.set(<span class="string">&quot;Diamond&quot;</span>);</span><br><span class="line">        nameValue.append(<span class="string">&quot;你是一个好人&quot;</span>);</span><br><span class="line">        String s1 = nameValue.get();</span><br><span class="line">        System.out.println(s1);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//对list set zset hash</span></span><br><span class="line"></span><br><span class="line">        BoundListOperations&lt;String, String&gt; listsValue = stringRedisTemplate.boundListOps(<span class="string">&quot;lists&quot;</span>);</span><br><span class="line">        listsValue.leftPushAll(<span class="string">&quot;张三&quot;</span>,<span class="string">&quot;李四&quot;</span>,<span class="string">&quot;王五&quot;</span>);</span><br><span class="line">        List&lt;String&gt; range = listsValue.range(<span class="number">0</span>, -<span class="number">1</span>);</span><br><span class="line">        range.forEach( value -&gt; System.out.println(value));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//set</span></span><br><span class="line"><span class="comment">//        stringRedisTemplate.boundSetOps();</span></span><br><span class="line">        <span class="comment">//zset</span></span><br><span class="line"><span class="comment">//        stringRedisTemplate.boundZSetOps();</span></span><br><span class="line">        <span class="comment">//hash</span></span><br><span class="line"><span class="comment">//        stringRedisTemplate.boundHashOps();</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 1.针对日后处理key value 都是String 使用StringRedisTemplate</span></span><br><span class="line"><span class="comment">         * 2.针对日后处理key value 存在对象 使用RedisTemplate</span></span><br><span class="line"><span class="comment">         * 3.针对同一个key多次操作可以使用boundXXXops()的api，简化书写</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+		<div>
+     
+	        <div style="text-align:center;color: #ccc;font-size:14px">----------本文结束<i class="fa fa-paw"></i>感谢您的阅读----------</div>
+	 
+</div>
+		
+	</div>
+
+	<div>
+    
+        
+    
+    </div>
+	
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/redis-redisTemplate-stringRedisTemplate-bound-api/" rel="tag"># -redis -redisTemplate -stringRedisTemplate -bound api</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/13/redis%E4%B9%8Bjedis/" rel="prev" title="redis之jedis">
+      <i class="fa fa-chevron-left"></i> redis之jedis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/14/Springboot%E6%95%B4%E5%90%88MybatisPlus/" rel="next" title="Springboot整合MybatisPlus">
+      Springboot整合MybatisPlus <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Diamond"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">Diamond</p>
+  <div class="site-description" itemprop="description">黑色的眼睛，注定寻找光明</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zl-Diamon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zl-Diamon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/zllwsy" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;zllwsy" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/DDDDD" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;DDDDD" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">Diamond</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">172k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:36</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+
+<span id="busuanzi_container_site_uv">
+  本站总访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+</div>
+
+
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nLtYdYhOieJn53fMGYIiyU5f-gzGzoHsz',
+      appKey     : '43kflehvxloXN1wOm9R90dRh',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.7' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+ 
+ <!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+  </body>
+</html>

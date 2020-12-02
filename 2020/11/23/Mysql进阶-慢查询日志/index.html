@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/myCat.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zllwsy.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="首先要知道什么是慢查询日志  MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql进阶--慢查询日志">
+<meta property="og:url" content="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/index.html">
+<meta property="og:site_name" content="Sweet Candy">
+<meta property="og:description" content="首先要知道什么是慢查询日志  MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123153420862.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123153746759.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123154447027.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123154740307.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123154952873.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123155508274.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123160416217.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123160632137.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161029857.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161317000.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161625146.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161642567.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161711236.png">
+<meta property="article:published_time" content="2020-11-23T11:16:37.000Z">
+<meta property="article:modified_time" content="2020-12-02T11:53:08.777Z">
+<meta property="article:author" content="Diamond">
+<meta property="article:tag" content="-Mysql -索引 -慢查询 -Mysqldumpslow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123153420862.png">
+
+<link rel="canonical" href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Mysql进阶--慢查询日志 | Sweet Candy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Sweet Candy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweet Candy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I will in life and deth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mysql进阶--慢查询日志
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-23 19:16:37" itemprop="dateCreated datePublished" datetime="2020-11-23T19:16:37+08:00">2020-11-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">-MySQL进阶</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<h4 id="首先要知道什么是慢查询日志"><a href="#首先要知道什么是慢查询日志" class="headerlink" title="首先要知道什么是慢查询日志"></a>首先要知道什么是慢查询日志</h4></blockquote>
+<ol>
+<li><p>MySQL的慢查询日志是MySQL提供的一种日志记录，它用来<strong>记录在MySQL中响应时间超过阀值的语句</strong>，具体指运行时间超过<strong>long_query_time</strong>值的SQL，则会被记录到慢查询日志中。</p>
+<a id="more"></a>
+</li>
+<li><p>long_query_time的默认值为10，意思是运行10秒以上的SQL语句会被记录下来</p>
+</li>
+<li><p>由他来查看哪些SQL超出了我们的最大忍耐时间值，比如一条sql执行超过5秒钟，我们就算慢SQL，希望能收集超过5秒的sql，结合之前explain进行全面分析。</p>
+</li>
+</ol>
+<blockquote>
+<h4 id="慢查询如何操作"><a href="#慢查询如何操作" class="headerlink" title="慢查询如何操作"></a>慢查询如何操作</h4></blockquote>
+<ol>
+<li>默认情况下，MySQL数据库没有开启慢查询日志，需要我们手动来设置这个参数。</li>
+<li>当然，如果不是调优需要的话，一般不建议启动该参数，因为开启慢查询日志会或多或少带来一定的性能影响。慢查询日志支持将日志记录写入文件</li>
+</ol>
+<p><strong>查看是否开启及如何开启</strong></p>
+<ul>
+<li><p>默认情况下slow_query_log的值为OFF，表示慢查询日志是禁用的</p>
+</li>
+<li><p>可以通过设置<strong>slow_query_log</strong>的值来开启</p>
+</li>
+<li><p>通过命令查看 mysql 的慢查询日志是否开启，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#39;%slow_query_log%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123153420862.png" alt="image-20201123153420862"></p>
+</li>
+<li><p>通过命令来开启慢查询日志，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global slow_query_log&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123153746759.png" alt="image-20201123153746759"></p>
+</li>
+<li><p>可以通过设置配置文件，让慢查询日志永久生效，进入my.cnf文件，在mysqld下增加两行参数，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">slow_query_log &#x3D;1   &#x2F;&#x2F;设置开启</span><br><span class="line">slow_query_log_file&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;ffb64f81b5c7-slow.log   &#x2F;&#x2F;如果不设置则系统会自动生成</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<h5 id="long-query-time参数"><a href="#long-query-time参数" class="headerlink" title="long_query_time参数"></a>long_query_time参数</h5></blockquote>
+<p>1.查看数据库的long_query_time值，一般来说初始默认是10秒，意思超过10秒的SQL就抓取出来，执行命令，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#39;long_query_time%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123154447027.png" alt="image-20201123154447027"></p>
+<p>2.设置或my.cnf中永久修改默认时间，这里先设置为3秒，执行命令，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global long_query_time&#x3D;3;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123154740307.png" alt="image-20201123154740307"></p>
+<p>3.在上一步中可以看到，明明设置成功了，但是查询默认时间还是10秒，这是因为需要重新连接或新开一个，或者使用下面命令，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show global variables like&#39;long_query_time&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123154952873.png" alt="image-20201123154952873"></p>
+<p>4.进行一个超过3秒的sql测试，使用sleep字段，执行语句，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sleep(4); </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123155508274.png" alt="image-20201123155508274"></p>
+<p>5.另外打开一个会话，进入刚刚设置或展示的目录，使用cat命令查看，可以看到刚刚查到语句，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123160416217.png" alt="image-20201123160416217"></p>
+<p>6.可以查看当前系统中慢查询的条数，其实慢查询出现的语句都是有问题的语句，这个命令可以当作检测当前系统Sql运行情况的语句，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show global status like &#39;%Slow_queries%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123160632137.png" alt="image-20201123160632137"></p>
+<blockquote>
+<h5 id="日志分析命令-mysqldumpslow"><a href="#日志分析命令-mysqldumpslow" class="headerlink" title="日志分析命令 mysqldumpslow"></a><strong>日志分析命令 mysqldumpslow</strong></h5></blockquote>
+<p><strong>mysqldumpslow是什么？</strong></p>
+<p>在生产环境中，如果要手工分析日志，查找、分析SQL，显然是个体力活，MySQL提供了日志分析工具mysqldumpslow。</p>
+<p>1.可以使用命令查看一下mysqldumpslow的作用，执行语句，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldumpslow --help</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161029857.png" alt="image-20201123161029857"></p>
+<p><strong>参数详解：</strong></p>
+<p><strong>mysqldumpshow 参数解释</strong></p>
+<ol>
+<li>s：是表示按何种方式排序</li>
+<li>c：访问次数</li>
+<li>l：锁定时间</li>
+<li>r：返回记录</li>
+<li>t：查询时间</li>
+<li>al：平均锁定时间</li>
+<li>ar：平均返回记录数</li>
+<li>at：平均查询时间</li>
+<li>t：即为返回前面多少条的数据</li>
+<li>g：后边搭配一个正则匹配模式，大小写不敏感的</li>
+</ol>
+<p>2.得到范围记录集最多的10条SQL，注意由于我本身就在mysql路径下，所以直接写的log的文件名，其他位置需要加上路径，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldumpslow -s r -t 10 ffb64f81b5c7-slow.log</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161317000.png" alt="image-20201123161317000"></p>
+<p>3.得到访问次数最多的10条SQL，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldumpslow -s c -t 10 ffb64f81b5c7-slow.log</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161625146.png" alt="image-20201123161625146"></p>
+<p>4.得到按照时间排序的前10条里面含有左连接的查询语句,没有返回表示没有，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldumpslow -s t -t 10 -g &quot;left join&quot; ffb64f81b5c7-slow.log</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161642567.png" alt="image-20201123161642567"></p>
+<p>5.另外建议在使用这些命令时结合 | 和more使用，否则有可能出现爆屏情况,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldumpslow -s r -t 10 ffb64f81b5c7-slow.log|more</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201123161711236.png" alt="image-20201123161711236"></p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+		<div>
+     
+	        <div style="text-align:center;color: #ccc;font-size:14px">----------本文结束<i class="fa fa-paw"></i>感谢您的阅读----------</div>
+	 
+</div>
+		
+	</div>
+
+	<div>
+    
+        
+    
+    </div>
+	
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Mysql-%E7%B4%A2%E5%BC%95-%E6%85%A2%E6%9F%A5%E8%AF%A2-Mysqldumpslow/" rel="tag"># -Mysql -索引 -慢查询 -Mysqldumpslow</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%9F%A5%E8%AF%A2%E6%88%AA%E5%8F%96%E4%BC%98%E5%8C%96/" rel="prev" title="Mysql进阶--查询截取优化">
+      <i class="fa fa-chevron-left"></i> Mysql进阶--查询截取优化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A2%B3%E7%90%86%E6%80%BB%E7%BB%93/" rel="next" title="Mysql进阶--索引优化梳理总结">
+      Mysql进阶--索引优化梳理总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E8%A6%81%E7%9F%A5%E9%81%93%E4%BB%80%E4%B9%88%E6%98%AF%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-number">1.</span> <span class="nav-text">首先要知道什么是慢查询日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E5%A6%82%E4%BD%95%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">慢查询如何操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#long-query-time%E5%8F%82%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">long_query_time参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%91%BD%E4%BB%A4-mysqldumpslow"><span class="nav-number">2.2.</span> <span class="nav-text">日志分析命令 mysqldumpslow</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Diamond"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">Diamond</p>
+  <div class="site-description" itemprop="description">黑色的眼睛，注定寻找光明</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zl-Diamon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zl-Diamon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/zllwsy" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;zllwsy" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/DDDDD" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;DDDDD" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">Diamond</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">172k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:36</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+
+<span id="busuanzi_container_site_uv">
+  本站总访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+</div>
+
+
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nLtYdYhOieJn53fMGYIiyU5f-gzGzoHsz',
+      appKey     : '43kflehvxloXN1wOm9R90dRh',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.7' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+ 
+ <!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+  </body>
+</html>

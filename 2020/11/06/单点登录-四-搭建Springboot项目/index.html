@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/myCat.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zllwsy.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="云服务器的搭建先暂停一下，这里谈论一下思路，搭建之前肯定要确认思路，我是打算试用Springboot+Redis来实现单点登录的，具体的思路：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单点登录-四-搭建Springboot项目">
+<meta property="og:url" content="http://www.zllwsy.com/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%9B%9B-%E6%90%AD%E5%BB%BASpringboot%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="Sweet Candy">
+<meta property="og:description" content="云服务器的搭建先暂停一下，这里谈论一下思路，搭建之前肯定要确认思路，我是打算试用Springboot+Redis来实现单点登录的，具体的思路：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/18.1.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/18.2.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/18.3.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/18.5.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/18.4.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201124090913651.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201124090953452.png">
+<meta property="article:published_time" content="2020-11-06T11:34:31.000Z">
+<meta property="article:modified_time" content="2020-12-02T11:53:07.065Z">
+<meta property="article:author" content="Diamond">
+<meta property="article:tag" content="-阿里云 -Linux -Docker -Redis -Springboot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/18.1.png">
+
+<link rel="canonical" href="http://www.zllwsy.com/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%9B%9B-%E6%90%AD%E5%BB%BASpringboot%E9%A1%B9%E7%9B%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>单点登录-四-搭建Springboot项目 | Sweet Candy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Sweet Candy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweet Candy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I will in life and deth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%9B%9B-%E6%90%AD%E5%BB%BASpringboot%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          单点登录-四-搭建Springboot项目
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-06 19:34:31" itemprop="dateCreated datePublished" datetime="2020-11-06T19:34:31+08:00">2020-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">-单点登录</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%9B%9B-%E6%90%AD%E5%BB%BASpringboot%E9%A1%B9%E7%9B%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%9B%9B-%E6%90%AD%E5%BB%BASpringboot%E9%A1%B9%E7%9B%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>云服务器的搭建先暂停一下，这里谈论一下思路，搭建之前肯定要确认思路，我是打算试用Springboot+Redis来实现单点登录的，具体的思路：</p>
+<a id="more"></a>
+
+<p>A.首先将三个服务都启动，分别端口为8080、8081、8082；</p>
+<p>B.用户调用系统a的接口，后台对所有请求进行拦截，如果当前用户没有登录，则重定向登录页面；</p>
+<p>C.登录页面登录成功后会跳转到系统a的登录成功页面，同时sso服务中心会生成一个唯一的ticket，存储到redis中，设置一个过期时间；</p>
+<p>D.用户继续调用系统b的接口，这个时候的b的Domain已经获取到了ticket，它会将带有ticket的url请求提交到sso服务中心，服务中心会将这个ticket和redis中的ticket进行比较，然后肯定相同，因为系统b的ticket本来就和系统a的ticket一样，验证通过直接放行，然后将ticket再次存入到cookie和redis中，同时更新ticket的过期时间；</p>
+<p>E.用户退出任意一个系统，就会清空cookie，这个时候访问另一个系统的功能，会发现也已经处于未登录状态，这样就实现了单点登录。</p>
+<p>1.搭建一下后台项目结构，新建一个Springboot项目，什么依赖都不需要加，这是作为父项目的，新建成功后，将除了pom文件外的其他文件全部删除，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/18.1.png" alt="18.1"></p>
+<p>2.右键刚刚新建的项目，new一个module，还是Springboot项目Sso-server，专门作为sso的服务认证中心，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/18.2.png" alt="18.2"></p>
+<p>3.右键父项目，new一个module，还是Springboot项目System-a，作为系统a，一会用来登录，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/18.3.png" alt="18.3"></p>
+<p>4.右键父项目，new一个module，还是Springboot项目System-b，作为系统b，一会a系统登录成功，b系统则应该不用登录就能调用结果,</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/18.5.png" alt="18.5"></p>
+<p>5.这是整体项目结构，思路和项目结构都明确下来，就开始一步一步编写，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/18.4.png" alt="18.4"></p>
+<p>6.做到这里，我以为已经很完善了，但是我尝试了一下Springboot的拦截器，它拦截不到其他模块的请求！无奈想了半天，我觉得这里有两种解决方案，一个是不做两个系统，在一个系统里面，然后使用postman来直接测试接口，另一个当然就复杂了，使用gateway网关拦截，我思考了一会，选择了使用gateway网关，既然都使用了gateway网关，那不如直接搞个小型的微服务架构出来，所以搭建新模块System-gateway，这里做网关拦截过滤，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201124090913651.png" alt="image-20201124090913651"></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201124090953452.png" alt="image-20201124090953452"></p>
+<p>总结，这一步其实尤为关键，说实话，现在代码复用率和工具的便捷性那么高，很少需要自原生的去写了，所有思路变得更加重要，要明白实现一个功能点的逻辑，而不是走一步看一步，一个bug改半天，最后发现出发点就不对，诸君共勉。</p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+		<div>
+     
+	        <div style="text-align:center;color: #ccc;font-size:14px">----------本文结束<i class="fa fa-paw"></i>感谢您的阅读----------</div>
+	 
+</div>
+		
+	</div>
+
+	<div>
+    
+        
+    
+    </div>
+	
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-Redis-Springboot/" rel="tag"># -阿里云 -Linux -Docker -Redis -Springboot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%89-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85Docker%E5%92%8CRedis/" rel="prev" title="单点登录-三-阿里云安装Docker和Redis">
+      <i class="fa fa-chevron-left"></i> 单点登录-三-阿里云安装Docker和Redis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/21/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%87%86%E5%88%99/" rel="next" title="Mysql进阶--索引失效准则">
+      Mysql进阶--索引失效准则 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Diamond"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">Diamond</p>
+  <div class="site-description" itemprop="description">黑色的眼睛，注定寻找光明</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zl-Diamon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zl-Diamon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/zllwsy" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;zllwsy" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/DDDDD" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;DDDDD" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">Diamond</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">172k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:36</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+
+<span id="busuanzi_container_site_uv">
+  本站总访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+</div>
+
+
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nLtYdYhOieJn53fMGYIiyU5f-gzGzoHsz',
+      appKey     : '43kflehvxloXN1wOm9R90dRh',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.7' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+ 
+ <!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+  </body>
+</html>

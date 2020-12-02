@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/myCat.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zllwsy.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="MQTT数据测试也没得问题了，虽然我也不知道为啥消息要存储要数据库，但是老大有需求，责无旁贷嘛，顺便我还想试试Knife4j框架，是基于Swagger搭建的，不会Swagger和MQTT消息发布接受请参看：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MQTT接收消息存储到数据库-使用Knife4j框架">
+<meta property="og:url" content="http://www.zllwsy.com/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="Sweet Candy">
+<meta property="og:description" content="MQTT数据测试也没得问题了，虽然我也不知道为啥消息要存储要数据库，但是老大有需求，责无旁贷嘛，顺便我还想试试Knife4j框架，是基于Swagger搭建的，不会Swagger和MQTT消息发布接受请参看：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.1.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.2.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.3.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.4.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.5.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.6.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.7.png">
+<meta property="article:published_time" content="2020-11-06T11:31:12.000Z">
+<meta property="article:modified_time" content="2020-12-02T11:53:10.224Z">
+<meta property="article:author" content="Diamond">
+<meta property="article:tag" content="-MQTT -Apollo -Emqx -Mqttfx -Knife4j -Jpa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/16.1.png">
+
+<link rel="canonical" href="http://www.zllwsy.com/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MQTT接收消息存储到数据库-使用Knife4j框架 | Sweet Candy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Sweet Candy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweet Candy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I will in life and deth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MQTT接收消息存储到数据库-使用Knife4j框架
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-06 19:31:12" itemprop="dateCreated datePublished" datetime="2020-11-06T19:31:12+08:00">2020-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:10" itemprop="dateModified" datetime="2020-12-02T19:53:10+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MQTT/" itemprop="url" rel="index"><span itemprop="name">-MQTT</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>MQTT数据测试也没得问题了，虽然我也不知道为啥消息要存储要数据库，但是老大有需求，责无旁贷嘛，顺便我还想试试Knife4j框架，是基于Swagger搭建的，不会Swagger和MQTT消息发布接受请参看：</p>
+<a id="more"></a>
+
+<p><a href="../Springboot%E6%95%B4%E5%90%88Swagger/index.xml">Springboot整合Swagger</a></p>
+<p><a href="../MQTT%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%AE%89%E8%A3%85%E5%B9%B6%E8%BF%9E%E6%8E%A5%E4%B8%A4%E7%A7%8D%E6%9C%8D%E5%8A%A1%E5%99%A8/index.xml">MQTT客户端的安装并连接两种服务器</a></p>
+<p><a href="../MQTT%E4%B8%A4%E7%A7%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/index.xml">MQTT两种服务器的安装使用</a></p>
+<p><a href="../MQTT%E4%BD%BF%E7%94%A8Java%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95-%E4%B8%80/index.xml">MQTT使用Java连接测试-一</a></p>
+<p><a href="../MQTT%E4%BD%BF%E7%94%A8Java%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95-%E4%BA%8C/index.xml">MQTT使用Java连接测试-二</a></p>
+<p>1.毫无疑问先导包，导入Knife4j、Druid、MybatisPlus以及Mysql的依赖，需要更换其他版本，可以去中央仓库更换(md，两次非人类验证就很烦)，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--        引入mybatis-plus的依赖--&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;com.baomidou&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;mybatis-plus-boot-starter&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;3.3.2&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;!--        引入数据源连接池德鲁伊Druid--&gt;</span><br><span class="line">   &lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;com.alibaba&#x2F;druid --&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;com.alibaba&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;druid&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;1.1.20&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;com.github.xiaoymin&#x2F;swagger-bootstrap-ui --&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;com.github.xiaoymin&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;swagger-bootstrap-ui&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;1.9.6&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;spring-boot-starter-validation&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">   &lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;com.github.xiaoymin&#x2F;knife4j-spring-boot-starter --&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;com.github.xiaoymin&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;knife4j-spring-boot-starter&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;2.0.4&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.新建实体类，这里主要说一下主键生成策略，我试了一下MybatisPlus提供的@TableId(value = “ID”,type = IdType.AUTO)方式，又试了一下JPA提供的@GeneratedValue(strategy = GenerationType.IDENTITY)方式，说实话，md，一模一样，随便用哪种，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/16.1.png" alt="16.1"></p>
+<p>3.新建一个Mapper，用于继承MybatisPlus的baseMapper，简单的CRUD我真觉得没必要写啊，你说复杂的连表多表之类谢谢sql，这种还写sql纯属有点浪费时间了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.zl.springbootmqtt.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.zl.springbootmqtt.entity.AlertInfo;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.mapper.BaseMapper;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: zllwsy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/11/5 16:59</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AlertInfoMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">AlertInfo</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.好像忘了说Knife4j的框架，主要是和Swagger一模一样，就给忘了，就是换一下依赖，登录的路径不一样，其他？md，一样的啊，说一下开启Authorize加token吧，(虽然我这里没用到，但是在我上一个项目用了，感觉很舒服),注意和我上一篇文章对比一下，就知道了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.zl.springbootmqtt.config;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.classmate.TypeResolver;</span><br><span class="line"><span class="keyword">import</span> com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;</span><br><span class="line"><span class="keyword">import</span> com.github.xiaoymin.swaggerbootstrapui.service.SpringAddtionalModelService;</span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.Lists;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Import;</span><br><span class="line"><span class="keyword">import</span> springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.PathSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.RequestHandlerSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.*;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spi.DocumentationType;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spi.service.contexts.SecurityContext;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spring.web.plugins.Docket;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.swagger2.annotations.EnableSwagger2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: zllwsy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/11/5 11:45</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger2</span>  <span class="comment">//开启Swagger2</span></span><br><span class="line"><span class="meta">@EnableKnife4j</span></span><br><span class="line"><span class="meta">@Import(BeanValidatorPluginsConfiguration.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean(value = &quot;groupRestApi&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">groupRestApi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .groupName(<span class="string">&quot;设备模块&quot;</span>)</span><br><span class="line">                .select()</span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;cn.zl.springbootmqtt.controller&quot;</span>))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build()</span><br><span class="line">                .securityContexts(Lists.newArrayList(securityContext(),securityContext())).securitySchemes(Lists.&lt;SecurityScheme&gt;newArrayList(apiKey()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiKey <span class="title">apiKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiKey(<span class="string">&quot;token&quot;</span>, <span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;header&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> SecurityContext <span class="title">securityContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SecurityContext.builder()</span><br><span class="line">                .securityReferences(defaultAuth())</span><br><span class="line">                .forPaths(PathSelectors.regex(<span class="string">&quot;/.*&quot;</span>))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;SecurityReference&gt; <span class="title">defaultAuth</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AuthorizationScope authorizationScope = <span class="keyword">new</span> AuthorizationScope(<span class="string">&quot;global&quot;</span>, <span class="string">&quot;accessEverything&quot;</span>);</span><br><span class="line">        AuthorizationScope[] authorizationScopes = <span class="keyword">new</span> AuthorizationScope[<span class="number">1</span>];</span><br><span class="line">        authorizationScopes[<span class="number">0</span>] = authorizationScope;</span><br><span class="line">        <span class="keyword">return</span> Lists.newArrayList(<span class="keyword">new</span> SecurityReference(<span class="string">&quot;token&quot;</span>, authorizationScopes));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//配置Swagger信息-apiInfo</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//作者信息</span></span><br><span class="line">        Contact contact = <span class="keyword">new</span> Contact(<span class="string">&quot;ZL&quot;</span>,<span class="string">&quot;http://www.zllwsy.com&quot;</span>,<span class="string">&quot;zllwsy@outlook.com&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfo(</span><br><span class="line">                <span class="string">&quot;ZL的SwaggerAPI文档&quot;</span>,</span><br><span class="line">                <span class="string">&quot;学习永无止境&quot;</span>,</span><br><span class="line">                <span class="string">&quot;v1.0&quot;</span>,</span><br><span class="line">                <span class="string">&quot;localhost:8088/doc.html&quot;</span>,</span><br><span class="line">                contact,</span><br><span class="line">                <span class="string">&quot;Apache 2.0&quot;</span>,</span><br><span class="line">                <span class="string">&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;</span>,</span><br><span class="line">                <span class="keyword">new</span> ArrayList()</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.写一写Controller，我把发布和订阅放在一起了，方便调用接口，参数是我为了测试一下Knife4j的功能展示，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Api(tags = &quot;订阅发布&quot;)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/topic&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MqttController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Random RANDOM = <span class="keyword">new</span> Random();</span><br><span class="line">    <span class="meta">@ApiOperationSupport(author = &quot;zllwsy&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(value=&quot;发布消息&quot;, notes=&quot;发布消息&quot;, produces=&quot;application/json&quot;)</span></span><br><span class="line">    <span class="meta">@ApiImplicitParams(&#123;</span></span><br><span class="line"><span class="meta">            @ApiImplicitParam(name = &quot;word&quot;, value = &quot;单词&quot;, paramType = &quot;query&quot;, required = true, dataType = &quot;String&quot;),</span></span><br><span class="line"><span class="meta">            @ApiImplicitParam(name = &quot;name&quot;, value = &quot;名字&quot;, paramType = &quot;query&quot;, required = true, dataType = &quot;String&quot;)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/push&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pushTopic</span><span class="params">(String word,String name)</span> </span>&#123;</span><br><span class="line">        MqttPushClient instance = MqttPushClient.getInstance();</span><br><span class="line">        MqttMessage message = <span class="keyword">new</span> MqttMessage();</span><br><span class="line">        AlertInfo alertInfo = <span class="keyword">new</span> AlertInfo();</span><br><span class="line">        alertInfo.setWdaDeviceCode(<span class="string">&quot;007&quot;</span>);</span><br><span class="line">        alertInfo.setWdaDeviceType(<span class="string">&quot;21&quot;</span>);</span><br><span class="line">        alertInfo.setWdaAlarmType(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        alertInfo.setWdaAlarmTime(<span class="keyword">new</span> Date());</span><br><span class="line">        alertInfo.setWdaAlarmContent(<span class="string">&quot;到底啥数据呀&quot;</span>);</span><br><span class="line">        alertInfo.setWdaRemark(<span class="string">&quot;我傻了&quot;</span>);</span><br><span class="line">        String s = JSONObject.toJSONString(alertInfo);</span><br><span class="line">        message.setPayload(s.getBytes());</span><br><span class="line">        instance.publish(<span class="string">&quot;topicPub&quot;</span>, message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiOperationSupport(author = &quot;zllwsy&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(value=&quot;订阅消息&quot;, notes=&quot;订阅消息&quot;, produces=&quot;application/json&quot;)</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/sub&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subTopic</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MqttSubClient instance = MqttSubClient.getInstance();</span><br><span class="line">        instance.subscribe(<span class="string">&quot;topicPub&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>6.在订阅客户端的回调函数里面对接收到的消息进行处理，也是在上次的基础上添加的，不懂得一定要看看另外几篇，我觉得挺详细的，因为MQTT接收的数据是byte[]格式，我就把它放进队列里面，然后再取出来转为了String，再将String转换为实体类，然后就插入数据库了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 消息已经送达，接收到消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> topic</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> mqttMessage</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">messageArrived</span><span class="params">(String topic, MqttMessage mqttMessage)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// subscribe后得到的消息会执行到这里面</span></span><br><span class="line">    System.out.println(<span class="string">&quot;接收消息主题 : &quot;</span> + topic);</span><br><span class="line">    System.out.println(<span class="string">&quot;接收消息Qos : &quot;</span> + mqttMessage.getQos());</span><br><span class="line">    System.out.println(<span class="string">&quot;接收消息内容 : &quot;</span> + <span class="keyword">new</span> String(mqttMessage.getPayload()));</span><br><span class="line">    Queue&lt;<span class="keyword">byte</span>[]&gt; q = <span class="keyword">new</span> LinkedList&lt;<span class="keyword">byte</span>[]&gt;();</span><br><span class="line">    q.add(mqttMessage.getPayload()); <span class="comment">//放入队列</span></span><br><span class="line">    <span class="keyword">byte</span>[] c = q.peek(); <span class="comment">//取得队头元素</span></span><br><span class="line">    String res = <span class="keyword">new</span> String(c);<span class="comment">//使用构造函数转换成字符串</span></span><br><span class="line">    AlertInfo alertInfo = JSONObject.parseObject(res , AlertInfo.class);</span><br><span class="line">    System.out.println(alertInfo);</span><br><span class="line">    <span class="keyword">if</span> (alertInfo != <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            alertInfoMapper = BeanUtil.getBean(AlertInfoMapper.class);</span><br><span class="line">            alertInfoMapper.insert(alertInfo);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            logger.debug(<span class="string">&quot;error&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;device的值为null&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>7.如果是认真在看再学的已经发现了一下问题，这里我使用了手动获取bean，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/16.2.png" alt="16.2"></p>
+<p>8.为啥手动获取？(手动黑脸)，没办法啊，不知道为啥注入一直失败报alertInfoMapper为null，Mapper和Service都失败，我找了好久的问题，最后可能是这个回调方法运行的时候，Mapper都还没有开始加载，反正就一直alertInfoMapper报空指针，最后实在没办法，我就只有手动写个工具获取bean，(可别说我没写@MapperScan注解了，谁试谁知道，)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.zl.springbootmqtt.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContextAware;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: zllwsy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/11/5 10:25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanUtil</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> ApplicationContext applicationContext;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContextParam)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">            applicationContext=applicationContextParam;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getObject</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">            Object object = <span class="keyword">null</span>;</span><br><span class="line">            object = applicationContext.getBean(id);</span><br><span class="line">            <span class="keyword">return</span> object;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getObject</span><span class="params">(Class&lt;T&gt; tClass)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> applicationContext.getBean(tClass);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getBean</span><span class="params">(String tClass)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> applicationContext.getBean(tClass);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getBean</span><span class="params">(Class&lt;T&gt; tClass)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> applicationContext.getBean(tClass);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>9.害，勉强过得去，启动项目，记得加上@EnableSwagger2注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@EnableSwagger2</span><br><span class="line">@MapperScan(&quot;cn.zl.springbootmqtt.mapper&quot;)</span><br><span class="line">public class SpringbootMqttApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(SpringbootMqttApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>10.在浏览器输入路径，<a target="_blank" rel="noopener" href="http://localhost:8088/doc.html%EF%BC%8C%E5%BD%93%E7%84%B6%E4%BD%A0%E8%BE%93%E5%85%A5%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84ip%E5%92%8C%E7%AB%AF%E5%8F%A3%EF%BC%8C%E5%88%AB%E8%AF%B4%EF%BC%8C%E8%BF%98%E6%8C%BA%E5%A5%BD%E7%9C%8B%EF%BC%8C">http://localhost:8088/doc.html，当然你输入你自己的ip和端口，别说，还挺好看，</a></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/16.3.png" alt="16.3"></p>
+<p>11.测试，先订阅，再发布，很抱歉，这里是回调函数，没得返回的参数，就很尴尬，所以还是看控制台的输出和数据库数据的生成把，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/16.4.png" alt="16.4"></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/16.5.png" alt="16.5"></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/16.6.png" alt="16.6"></p>
+<p>12.差点忘了，还有个yml配置，还是需要给一份，万一以后我自己忘了呢，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#mq配置</span><br><span class="line">com:</span><br><span class="line">  mqtt:</span><br><span class="line">    host: tcp:&#x2F;&#x2F;x.x.x.x:1883</span><br><span class="line">    clientId: SubServer  #一定要唯一</span><br><span class="line">    topic: good,test,yes</span><br><span class="line">    username: admin</span><br><span class="line">    password: public</span><br><span class="line">    timeout: 10</span><br><span class="line">    keepalive: 20</span><br><span class="line"></span><br><span class="line">#配置数据库</span><br><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    username: xxxx</span><br><span class="line">    password: xxxx</span><br><span class="line">    url: jdbc:mysql:&#x2F;&#x2F;x.x.x.x:3306&#x2F;lslmp?characterEncoding&#x3D;UTF-8&amp;serverTimezone&#x3D;UTC</span><br><span class="line">    type: com.alibaba.druid.pool.DruidDataSource</span><br><span class="line">    driver-class-name: com.mysql.cj.jdbc.Driver</span><br><span class="line"></span><br><span class="line">#日志</span><br><span class="line">logging:</span><br><span class="line">  level:</span><br><span class="line">    root: info</span><br><span class="line">    cn:</span><br><span class="line">      zl:</span><br><span class="line">       springbootmqtt: debug</span><br><span class="line"></span><br><span class="line">mybatis-plus:</span><br><span class="line">  configuration:</span><br><span class="line">    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl</span><br><span class="line">    map-underscore-to-camel-case: true</span><br><span class="line">  type-aliases-package: cn.zl.springbootmqtt.entity</span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">  port: 8088</span><br></pre></td></tr></table></figure>
+
+<p>13.有一个时区的问题，将数据库连接的时候serverTimezone=UTC改为serverTimezone=GMT%2B8就可以了，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/16.7.png" alt="16.7"></p>
+<p>14.给一下接口框架的常用注解解析，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Api：修饰整个类，描述Controller的作用</span><br><span class="line"></span><br><span class="line">@ApiOperation：描述一个类的一个方法，或者说一个接口</span><br><span class="line"></span><br><span class="line">@ApiParam：单个参数描述</span><br><span class="line"></span><br><span class="line">@ApiModel：用对象来接收参数</span><br><span class="line"></span><br><span class="line">@ApiProperty：用对象接收参数时，描述对象的一个字段</span><br><span class="line"></span><br><span class="line">@ApiResponse：HTTP响应其中1个描述</span><br><span class="line"></span><br><span class="line">@ApiResponses：HTTP响应整体描述</span><br><span class="line"></span><br><span class="line">@ApiIgnore：使用该注解忽略这个API</span><br><span class="line"></span><br><span class="line">@ApiError ：发生错误返回的信息</span><br><span class="line"></span><br><span class="line">@ApiImplicitParam：描述一个请求参数，可以配置参数的中文含义，还可以给参数设置默认值</span><br><span class="line"></span><br><span class="line">@ApiImplicitParams：描述由多个 @ApiImplicitParam 注解的参数组成的请求参数列表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>总结，遇到了一些问题，尤其是Mapper那里为null的时候，真的找了好久，其实现在也不是很确定原因，总归是实现了，你学到了嘛，</p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+		<div>
+     
+	        <div style="text-align:center;color: #ccc;font-size:14px">----------本文结束<i class="fa fa-paw"></i>感谢您的阅读----------</div>
+	 
+</div>
+		
+	</div>
+
+	<div>
+    
+        
+    
+    </div>
+	
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MQTT-Apollo-Emqx-Mqttfx-Knife4j-Jpa/" rel="tag"># -MQTT -Apollo -Emqx -Mqttfx -Knife4j -Jpa</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/06/MQTT%E9%83%A8%E7%BD%B2EMQX%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="prev" title="MQTT部署EMQX到云服务器">
+      <i class="fa fa-chevron-left"></i> MQTT部署EMQX到云服务器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BACAS/" rel="next" title="单点登录-一-阿里云服务器搭建CAS">
+      单点登录-一-阿里云服务器搭建CAS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Diamond"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">Diamond</p>
+  <div class="site-description" itemprop="description">黑色的眼睛，注定寻找光明</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zl-Diamon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zl-Diamon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/zllwsy" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;zllwsy" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/DDDDD" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;DDDDD" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">Diamond</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">172k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:36</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+
+<span id="busuanzi_container_site_uv">
+  本站总访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+</div>
+
+
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nLtYdYhOieJn53fMGYIiyU5f-gzGzoHsz',
+      appKey     : '43kflehvxloXN1wOm9R90dRh',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.7' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+ 
+ <!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+  </body>
+</html>
