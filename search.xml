@@ -2988,4 +2988,168 @@
         <tag>-阿里云 -Linux -Docker -nacos -Sso-server</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java集合的快速失败机制</title>
+    <url>/2021/01/06/Java%E9%9B%86%E5%90%88%E7%9A%84%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<p><strong>”fail-fast“</strong></p>
+<p>这是Java集合的一种错误监测机制，当多个线程对集合进行结构上的改变的操作的时候，就可能会产生fail-fast机制，</p>
+<p><strong>原因</strong>：迭代器在遍历时直接访问集合中的内容，并且在遍历过程中使用一个 modCount 变量。集合在被遍历期间如果内容发生变化，就会改变modCount的值。每当迭代器使用hashNext()/next()遍历下一个元素之前，都会检测modCount变量是否为expectedmodCount值，是的话就返回遍历；否则抛出异常，终止遍历</p>
+<p><strong>解决方案：</strong>1.使用synchornized关键字</p>
+<p>​                   2.使用CopyOnWriteArrayList代替ArrayList</p>
+]]></content>
+      <categories>
+        <category>-随笔</category>
+      </categories>
+      <tags>
+        <tag>-Fail-fast</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Servlet线程是否安全及原因</title>
+    <url>/2021/01/06/Servlet%E7%BA%BF%E7%A8%8B%E6%98%AF%E5%90%A6%E5%AE%89%E5%85%A8%E5%8F%8A%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>线程安全是编程中的术语，指某个方法在多线程环境中被调用时，能够正确地处理多个线程之间的共享变量，使程序功能正确完成。</p>
+<p>Servlet 不是线程安全的，servlet 是单实例多线程的，当多个线程同时访问同一个方法，是不能保证共享变量的线程安全性的。</p>
+<p>Struts2 的 action 是多实例多线程的，是线程安全的，每个请求过来都会 new 一个新的 action 分配给这个请求，请求完成后销毁。</p>
+<p>SpringMVC 的 Controller 是线程安全的吗？不是的，和 Servlet 类似的处理流程。</p>
+<p>Struts2 好处是不用考虑线程安全问题；Servlet 和 SpringMVC 需要考虑线程安全问题，但是性能可以提升不用处理太多的 gc，可以使用 ThreadLocal 来处理多线程的问题。</p>
+]]></content>
+      <categories>
+        <category>-随笔</category>
+      </categories>
+      <tags>
+        <tag>-Servlet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>单例模式总结</title>
+    <url>/2021/01/06/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>要点：     </p>
+<p>1.是某个类只能有一个实例， 构造器私有化  </p>
+<p>2.是它必须自行创建这个实例，含有一个该类的静态变量来保存这个唯一的实例  </p>
+<p>3.是它必须自行向整个系统提供这个实例，对外提供获取该实例对象的方式：直接暴露、用静态变量的get方法获取</p>
+<a id="more"></a>
+
+<p>常见形式：       </p>
+<p>饿汉式：直接创建对象，不存在线程安全问题   </p>
+<p>懒汉式：延迟创建对象，用的时候创建</p>
+<p>简单点说，就是一个应用程序中，某个类的实例对象只有一个，你没有办法去new，因为构造器是被private修饰的，一般通过getInstance()的方法来获取它们的实例。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;懒汉式-线程安全的懒汉式，可以在静态方法后面加synchronized关键字加锁变为安全</span><br><span class="line">public class Singleton&#123;</span><br><span class="line">    &#x2F;&#x2F;将自身实例化对象设置为一个属性，并用static修饰</span><br><span class="line">    private static Singleton instance；</span><br><span class="line">  &#x2F;&#x2F;构造方法私有化</span><br><span class="line">  private Singleton()&#123; &#125;</span><br><span class="line">  &#x2F;&#x2F;静态方法返回该实例</span><br><span class="line">  public static (synchronized) Singleton getInstance()&#123;</span><br><span class="line">    if(instance&#x3D;&#x3D;null)&#123;</span><br><span class="line">        instance&#x3D;new Singleton();</span><br><span class="line">    &#125;</span><br><span class="line">    return instane;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;饿汉式</span><br><span class="line">public class Singleton&#123;</span><br><span class="line">            &#x2F;&#x2F;直接创建对象</span><br><span class="line">            private static Singleton instance&#x3D;new Singleton()；</span><br><span class="line">            &#x2F;&#x2F;构造方法私有化</span><br><span class="line">            private Singleton()&#123;  &#125;</span><br><span class="line">            &#x2F;&#x2F;静态方法返回该实例</span><br><span class="line">            public static Singleton getInstance()&#123;</span><br><span class="line">              return instance;</span><br><span class="line">        &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;静态内部类</span><br><span class="line">public class Singleton&#123;</span><br><span class="line">             private static class SingletonHolder&#123;</span><br><span class="line">             private static final Singleton INSTANCE&#x3D;new Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">             private Singleton()&#123; &#125;</span><br><span class="line">             private static final Singleton getInstance()&#123;</span><br><span class="line">             return SingletonHolder.INSTANCE;</span><br><span class="line">        &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;枚举</span><br><span class="line">public enum Singleton&#123;</span><br><span class="line">             INSTANCE;</span><br><span class="line">             public void whateverMethod()&#123;&#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;双重校验锁</span><br><span class="line">public class Singleton&#123;</span><br><span class="line">             &#x2F;&#x2F;将自身实例化对象设置为一个属性，并用static修饰</span><br><span class="line">             private static Singleton instance;</span><br><span class="line">             &#x2F;&#x2F;构造方法私有化</span><br><span class="line">             private Singleton()&#123;&#125;</span><br><span class="line">             &#x2F;&#x2F;静态方法返回该实例</span><br><span class="line">             public static Singleton getInstance()&#123;</span><br><span class="line">             &#x2F;&#x2F; 第一次检查instance是否被实例化出来，如果没有进入if块</span><br><span class="line">             if(instance&#x3D;&#x3D;null)&#123;</span><br><span class="line">                    synchronized(Singleton.class)&#123;</span><br><span class="line">                      &#x2F;&#x2F; 某个线程取得了类锁，实例化对象前第二次检查instance是否已经被实例化出来，如果没有，才最终实例出对象</span><br><span class="line">                     if(instance&#x3D;&#x3D;null)&#123;</span><br><span class="line">                        instance&#x3D;new Singleton();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">             &#125;</span><br><span class="line">               return instance;</span><br><span class="line">        &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>-随笔</category>
+      </categories>
+      <tags>
+        <tag>-Singleton</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ConcurrentHashMap原理</title>
+    <url>/2021/01/06/ConcurrentHashMap%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<p>1.在了解ConcurrentHashMap之前一定需要知道HashMap和HashTable的区别？</p>
+<p>这是一个老生常谈的问题：</p>
+<ol>
+<li><p>线程安全方面：HashMap是非线程安全的，HashTable是线程安全的；HashTable内部的方法基本都经过synchronized修饰；</p>
+</li>
+<li><p>效率方面：因为线程安全的问题，HashMap要不HashTable效率高一点；</p>
+<a id="more"></a>
+</li>
+<li><p>对Null的支持方面：HashMap中，null可以作为i键，这样的键只能有一个，可以有一个或多个键所对应的值为null，但是在HashTable中put进的键值只要有一个为null，会直接空指针异常(NullPointerException);</p>
+</li>
+<li><p>**初始容量大小和每次扩充容量大小的不同 **： ①创建时如果不指定容量初始值，Hashtable 默认的初始大小为11，之后每次扩充，容量变为原来的2n+1。HashMap 默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。②创建时如果给定了容量初始值，那么 Hashtable 会直接使用你给定的大小，而 HashMap 会将其扩充为2的幂次方大小。也就是说 HashMap 总是使用2的幂作为哈希表的大小，后面会介绍到为什么是2的幂次方。</p>
+</li>
+<li><p><strong>底层数据结构</strong>： JDK1.8 以后的 HashMap 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8且数组长度大于64）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
+</li>
+</ol>
+<p>2.还需要知道HashMap和ConcurrentHashMap的区别？</p>
+<ol>
+<li>ConcurrentHashMap对整个桶数组进行了分割分段(Segment)，然后在每一个分段上都用lock锁进行保护，相对于HashTable的synchronized锁的粒度更精细了一些，并发性能更好，而HashMap没有锁机制，不是线程安全的。（JDK1.8之后ConcurrentHashMap启用了一种全新的方式实现,利用CAS算法。）</li>
+<li>HashMap的键值对允许有null，但是ConCurrentHashMap都不允许。</li>
+</ol>
+<p>3.还需要HashTable和ConcurrentHashMap的区别？</p>
+<p>ConcurrentHashMap 和 Hashtable 的区别主要体现在实现线程安全的方式上不同。</p>
+<ul>
+<li><strong>底层数据结构</strong>： JDK1.7的 ConcurrentHashMap 底层采用 <strong>分段的数组+链表</strong> 实现，JDK1.8 采用的数据结构跟HashMap1.8的结构一样，数组+链表/红黑二叉树。Hashtable 和 JDK1.8 之前的 HashMap 的底层数据结构类似都是采用 <strong>数组+链表</strong> 的形式，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的；</li>
+<li><strong>实现线程安全的方式（重要）</strong>： ① <strong>在JDK1.7的时候，ConcurrentHashMap（分段锁）</strong> 对整个桶数组进行了分割分段(Segment)，每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。（默认分配16个Segment，比Hashtable效率提高16倍。） <strong>到了 JDK1.8 的时候已经摒弃了Segment的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。（JDK1.6以后 对 synchronized锁做了很多优化）</strong> 整个看起来就像是优化过且线程安全的 HashMap，虽然在JDK1.8中还能看到 Segment 的数据结构，但是已经简化了属性，只是为了兼容旧版本；② <strong>Hashtable(同一把锁)</strong> :使用 synchronized 来保证线程安全，效率非常低下。当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或轮询状态，如使用 put 添加元素，另一个线程不能使用 put 添加元素，也不能使用 get，竞争会越来越激烈效率越低。</li>
+</ul>
+<p>对比图：</p>
+<p>HashTable：</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/HashMap.png"></p>
+<p>JDK1.7的ConcurrentHashMap：</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/1.7ConcurrentHashMap.png"></p>
+<p>JDK1.8的ConcurrentHashMap：</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/1.8ConcurrentHashMap.png"></p>
+<p>总结：ConcurrentHashMap 结合了 HashMap 和 HashTable 二者的优势。HashMap 没有考虑同步，HashTable 考虑了同步的问题。但是 HashTable 在每次同步执行时都要锁住整个结构。 ConcurrentHashMap 锁的方式是稍微细粒度的。</p>
+<p>4.最后需要知道ConcurrentHashMap的底层实现原理？</p>
+<p><strong>JDK1.7</strong></p>
+<p>首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。</p>
+<p>在JDK1.7中，ConcurrentHashMap采用Segment + HashEntry的方式进行实现，结构如下：</p>
+<p>一个 ConcurrentHashMap 里包含一个 Segment 数组。Segment 的结构和HashMap类似，是一种数组和链表结构，一个 Segment 包含一个 HashEntry 数组，每个 HashEntry 是一个链表结构的元素，每个 Segment 守护着一个HashEntry数组里的元素，当对 HashEntry 数组的数据进行修改时，必须首先获得对应的 Segment的锁。</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/low1.7.png"></p>
+<ol>
+<li>该类包含两个静态内部类 HashEntry 和 Segment ；前者用来封装映射表的键值对，后者用来充当锁的角色；</li>
+<li>Segment 是一种可重入的锁 ReentrantLock，每个 Segment 守护一个HashEntry 数组里得元素，当对 HashEntry 数组的数据进行修改时，必须首先获得对应的 Segment 锁。</li>
+</ol>
+<p><strong>JDK1.8</strong></p>
+<p>在<strong>JDK1.8中，放弃了Segment臃肿的设计，取而代之的是采用Node + CAS + Synchronized来保证并发安全进行实现</strong>，synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，效率又提升N倍。</p>
+<p>结构如下：</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/low1.8.png"></p>
+<p>来源于<a href="https://thinkwon.blog.csdn.net/article/details/104588551" target="_blank">Thinkwon</a></p>
+]]></content>
+      <categories>
+        <category>-随笔</category>
+      </categories>
+      <tags>
+        <tag>-ConcurrentHashMap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>调用start()方法为什么会执行run()方法</title>
+    <url>/2021/01/06/%E8%B0%83%E7%94%A8start-%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%89%A7%E8%A1%8Crun-%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>new 一个 Thread，线程进入了新建状态。调用 start() 方法，会启动一个线程并使线程进入了就绪状态，当分配到时间片后就可以开始运行了。 start() 会执行线程的相应准备工作，然后自动执行 run() 方法的内容，这是真正的多线程工作。</p>
+<p>而直接执行 run() 方法，会把 run 方法当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它，所以这并不是多线程工作。</p>
+<p>总结： 调用 start 方法方可启动线程并使线程进入就绪状态，而 run 方法只是 thread 的一个普通方法调用，还是在主线程里执行。</p>
+]]></content>
+      <categories>
+        <category>-随笔</category>
+      </categories>
+      <tags>
+        <tag>-Start -Run</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>边遍历边移除Collection的元素</title>
+    <url>/2021/01/06/%E8%BE%B9%E9%81%8D%E5%8E%86%E8%BE%B9%E7%A7%BB%E9%99%A4Collection%E7%9A%84%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<p>边遍历边移除Collection的唯一正确方式是使用Iterator.remove()方法，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Iterator&lt;Interger&gt; it &#x3D; list.iterator();</span><br><span class="line">wuhile(it.haasNext())&#123;</span><br><span class="line">    it.remove();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">常见的错误代码：</span><br><span class="line">    for(Integer i : list)&#123;</span><br><span class="line">        list.remove();&#x2F;&#x2F;会报异常</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>-随笔</category>
+      </categories>
+      <tags>
+        <tag>-Remove</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重写HashCode的原理</title>
+    <url>/2021/01/06/%E9%87%8D%E5%86%99HashCode%E7%9A%84%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<p>​       hashCode()的作用是获取哈希码，它实际上返回了一个int整数，这个哈希码的作用就是确定该对象在哈希表中的索引位置，并且hashCode()方法被定义在Object.java中，这就意味着java中任何类都包含了hashCode()函数；</p>
+<p>为什么要有hashCode呢？</p>
+<a id="more"></a>
+
+<p>通过HashSet查重来理解：</p>
+<p>​             当把对象加入HashSet时，HashSet会先计算对象的hashCode值来判断对象加入的位置，同时也会与其他已经加入的对象的hashCode值作比较，如果没有相同的hashCode，但是如果发现有相同的hashCode值的对象，这时就会调用equals()方法来检查equals相等的对象是否真的相同，如果相同，则HashSet不会让其加入操作成功，如果不同，则重新散列到其他位置，这样大大减少了equals的次数，提高了执行效率，</p>
+<p>由此得到hashCode和equals的规定：</p>
+<p>​                如果两个对象相等，则hashCode值一定相同；</p>
+<p>​                如果两个对象相等，则两个对象分别调用equals都返回true；</p>
+<p>​                如果两个对象的hashCode相等，则两个对象并不一定相等；</p>
+]]></content>
+      <categories>
+        <category>-随笔</category>
+      </categories>
+      <tags>
+        <tag>-HashCode</tag>
+      </tags>
+  </entry>
 </search>
