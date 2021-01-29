@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bstring/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/13/redis%E4%B9%8B%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -211,7 +211,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bstring/" class="post-title-link" itemprop="url">redis基本类型之string</a>
+            <a href="/2020/09/13/redis%E4%B9%8B%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">redis之哨兵机制</a>
         </h2>
 
         <div class="post-meta">
@@ -221,14 +221,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-09-12 11:11:23" itemprop="dateCreated datePublished" datetime="2020-09-12T11:11:23+08:00">2020-09-12</time>
+              <time title="创建时间：2020-09-13 10:19:13" itemprop="dateCreated datePublished" datetime="2020-09-13T10:19:13+08:00">2020-09-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
+                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,8 +249,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bstring/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bstring/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/09/13/redis%E4%B9%8B%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/13/redis%E4%B9%8B%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -260,7 +260,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -279,11 +279,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>​          redis、docker都已经安装成功(没看的朋友可以点击<a href="../redis%E5%9C%A8docker%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">redis在docker中的使用</a>)，那么接下来肯定就到里redis的数据类型了，这里先说一说string类型。</p>
-<p>​          string字符串是作为Redis最基本的类型，一个key对应一个value，并且string类型是二进制安全的，那么意味着Redis的string可以包含任何数据，比如jpg图片或者序列化的对象，而一个Redis中字符串value的大小最多可以是512M，下列是string的一些常用命令：</p>
+          <p>简单来说哨兵就是带有自动故障转移功能的主从架构 </p>
+<p>1.下载配置sentinel文件，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;download.redis.io&#x2F;redis-stable&#x2F;sentinel.conf</span><br></pre></td></tr></table></figure>
+
+<p>2./var/lib/docker/sentinel/sentinel.conf/修改配置文件，然后复制一份到容器外部/etc/redis/sentinel.conf，</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bstring/#more" rel="contents">
+              <a class="btn" href="/2020/09/13/redis%E4%B9%8B%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -316,7 +319,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/12/redis%E5%9C%A8docker%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/13/redis%E4%B9%8B%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -330,7 +333,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/12/redis%E5%9C%A8docker%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">redis在docker中的使用</a>
+            <a href="/2020/09/13/redis%E4%B9%8B%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="post-title-link" itemprop="url">redis之主从复制</a>
         </h2>
 
         <div class="post-meta">
@@ -340,14 +343,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-09-12 10:31:23" itemprop="dateCreated datePublished" datetime="2020-09-12T10:31:23+08:00">2020-09-12</time>
+              <time title="创建时间：2020-09-13 10:18:57" itemprop="dateCreated datePublished" datetime="2020-09-13T10:18:57+08:00">2020-09-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
+                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -368,8 +371,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/09/12/redis%E5%9C%A8docker%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/12/redis%E5%9C%A8docker%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/09/13/redis%E4%B9%8B%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/13/redis%E4%B9%8B%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -379,7 +382,126 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>969</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1.拷贝两份redis.conf；</p>
+<p>2.分别设置replicaof配置：196.168.139.188 6379(在redis6.0.7版本中，slaveof单词已经被replicaof替换)，注意：主机不要打开replicaof的配置；</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/13/redis%E4%B9%8B%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/13/redis%E4%B9%8B%E6%8C%81%E4%B9%85%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/13/redis%E4%B9%8B%E6%8C%81%E4%B9%85%E5%8C%96/" class="post-title-link" itemprop="url">redis之持久化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-13 10:10:43" itemprop="dateCreated datePublished" datetime="2020-09-13T10:10:43+08:00">2020-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">-redis</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/13/redis%E4%B9%8B%E6%8C%81%E4%B9%85%E5%8C%96/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/13/redis%E4%B9%8B%E6%8C%81%E4%B9%85%E5%8C%96/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -398,12 +520,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>​          最近闲来无事，公司无活，索性把redis从基本操作到集群操作，全部操作了一遍，Linux是使用VM，ssh工具是使用Xshell7，文件传输是用的Xftp，Linux使用的centos7系统，运行环境是docker，redis可视化软件用的RedisDesktopManager，docker可视化界面用的portainer，宿主机是windows10，编辑器使用的IDEA2020.2，项目使用的Springboot框架，Mysql可视化工具是Navicat，观看的视频来源为<a href="https://www.bilibili.com/video/BV1jD4y1Q7tU" target="_blank">编程不良人</a>，视频中并未使用docker容器，本博客仅仅是用于学习积累，谢谢。</p>
-<p>1.centos7的安装由于网上资源众多，且本博客为博主学习积累使用，安装流程鄙人已经十分了然于胸，就不再记录，记得将yum源更新并更换阿里源，否则速度较慢，在此基础上，安装docker</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2 </span><br></pre></td></tr></table></figure>
+          <h4 id="redis持久化："><a href="#redis持久化：" class="headerlink" title="redis持久化："></a>redis持久化：</h4><p>​                    redis的持久化一般有两种方式，一个是快照，也就是常说的RDB持久化，另一个就是AOF持久化，两则之间的差别其实挺大，希望看完本篇文章后您能找到合适你的方法。</p>
+<h5 id="方式一：快照snapshot：保存这一时刻的数据状态，这是默认开启快照，由于保存的文件是以-rdb形式结尾的文件，因此这种方式也称之为RDB持久化方式。"><a href="#方式一：快照snapshot：保存这一时刻的数据状态，这是默认开启快照，由于保存的文件是以-rdb形式结尾的文件，因此这种方式也称之为RDB持久化方式。" class="headerlink" title="方式一：快照snapshot：保存这一时刻的数据状态，这是默认开启快照，由于保存的文件是以.rdb形式结尾的文件，因此这种方式也称之为RDB持久化方式。"></a>方式一：快照snapshot：保存这一时刻的数据状态，这是默认开启快照，由于保存的文件是以.rdb形式结尾的文件，因此这种方式也称之为RDB持久化方式。</h5>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/09/12/redis%E5%9C%A8docker%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/#more" rel="contents">
+              <a class="btn" href="/2020/09/13/redis%E4%B9%8B%E6%8C%81%E4%B9%85%E5%8C%96/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -436,7 +557,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/08/13/%E7%AC%AC%E4%B8%80%E7%AF%87blog/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bzset/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -450,7 +571,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/08/13/%E7%AC%AC%E4%B8%80%E7%AF%87blog/" class="post-title-link" itemprop="url">第一篇blog</a>
+            <a href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bzset/" class="post-title-link" itemprop="url">redis基本类型之zset</a>
         </h2>
 
         <div class="post-meta">
@@ -460,14 +581,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-08-13 10:31:51" itemprop="dateCreated datePublished" datetime="2020-08-13T10:31:51+08:00">2020-08-13</time>
+              <time title="创建时间：2020-09-12 13:18:59" itemprop="dateCreated datePublished" datetime="2020-09-12T13:18:59+08:00">2020-09-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
+                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -475,7 +596,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog-System/" itemprop="url" rel="index"><span itemprop="name">-Blog System</span></a>
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">-redis</span></a>
                 </span>
             </span>
 
@@ -488,8 +609,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/08/13/%E7%AC%AC%E4%B8%80%E7%AF%87blog/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/13/%E7%AC%AC%E4%B8%80%E7%AF%87blog/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bzset/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bzset/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -499,7 +620,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>849</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -518,10 +639,246 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>读书与人生(测试博客上传)<br>哲学家吉尔伯特曾经讽刺人类不过是剃净了毛的猴子，史密斯据以反驳的理由是：人类会著书，会读书。人类能将心灵的精华诉诸文字，流传后世，也只有人类，才能阅读先哲的智慧，从中获益。<br>拿破仑有句名言：“真正的征服，唯一不令人遗憾的征服，就是对于无知的征服。”此话从这位雄霸欧洲的帝王口中道出，更添一番深意，令人回味无穷。无疑。对于知识的追求，令人身心愉快。</p>
+          <p>Redis有序集合zset与set非常相似，是一个没有重复元素的字符串集合，不同之处是有序集合的每个成员都关联了一个评分（score），常用命令：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/08/13/%E7%AC%AC%E4%B8%80%E7%AF%87blog/#more" rel="contents">
+              <a class="btn" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bzset/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bset/" class="post-title-link" itemprop="url">redis基本类型之set</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-12 13:18:43" itemprop="dateCreated datePublished" datetime="2020-09-12T13:18:43+08:00">2020-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">-redis</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bset/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bset/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>741</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Redis set对外提供的功能与list类似，是一个列表的功能，1.特殊之处在于set是可以自动排重的，当你需要存储一个列表数据，又不希望出现重复数据时，set是一个好的选择，2.并且set提供了判断某个成员是否在一个set集合内的重要接口<br>Redis的set是string类型的无序不可重复的集合，它的底层其实是一个value为null的hash表，所以添加、删除和查找的复杂度都是O(1)，常用命令：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bset/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bhash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bhash/" class="post-title-link" itemprop="url">redis基本类型之hash</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-12 13:18:35" itemprop="dateCreated datePublished" datetime="2020-09-12T13:18:35+08:00">2020-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">-redis</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bhash/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bhash/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>605</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Redis hash是一个键值对集合<br>Redis hash是一个string类型的key和value的映射表，hash特别适合用于存储对象<br>类是Java里面的Map&lt;String.Object&gt;，常用命令：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/12/redis%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B9%8Bhash/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -553,7 +910,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -621,20 +978,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -682,13 +1039,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">178k</span>
+    <span title="站点总字数">190k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:42</span>
+    <span title="站点阅读时长">2:52</span>
 </div>
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div>

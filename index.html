@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/06/ConcurrentHashMap%E5%8E%9F%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -211,7 +211,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/06/ConcurrentHashMap%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">ConcurrentHashMap原理</a>
+            <a href="/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">FeignClient远程调用</a>
         </h2>
 
         <div class="post-meta">
@@ -222,7 +222,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-06 09:16:19 / 修改时间：10:01:43" itemprop="dateCreated datePublished" datetime="2021-01-06T09:16:19+08:00">2021-01-06</time>
+              <time title="创建时间：2021-01-29 14:58:33 / 修改时间：15:06:14" itemprop="dateCreated datePublished" datetime="2021-01-29T14:58:33+08:00">2021-01-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,8 +243,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/06/ConcurrentHashMap%E5%8E%9F%E7%90%86/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/06/ConcurrentHashMap%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -254,14 +254,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>309</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -273,15 +273,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>1.在了解ConcurrentHashMap之前一定需要知道HashMap和HashTable的区别？</p>
-<p>这是一个老生常谈的问题：</p>
-<ol>
-<li><p>线程安全方面：HashMap是非线程安全的，HashTable是线程安全的；HashTable内部的方法基本都经过synchronized修饰；</p>
+          <ul>
+<li><p>引入OpenFeign依赖</p>
 </li>
-<li><p>效率方面：因为线程安全的问题，HashMap要不HashTable效率高一点；</p>
+<li><p>定义FeignClient接口类（注解<code>@FeignClient</code>），声明这个接口类是用来远程调用其他服务的</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/01/06/ConcurrentHashMap%E5%8E%9F%E7%90%86/#more" rel="contents">
+              <a class="btn" href="/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -314,7 +312,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/06/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -328,7 +326,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/06/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">单例模式总结</a>
+            <a href="/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Oracle分组过滤数据总结</a>
         </h2>
 
         <div class="post-meta">
@@ -339,7 +337,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-06 09:14:10 / 修改时间：09:15:24" itemprop="dateCreated datePublished" datetime="2021-01-06T09:14:10+08:00">2021-01-06</time>
+              <time title="创建时间：2021-01-29 14:58:08 / 修改时间：15:12:44" itemprop="dateCreated datePublished" datetime="2021-01-29T14:58:08+08:00">2021-01-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -347,7 +345,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">-随笔</span></a>
+                  <a href="/categories/oracle/" itemprop="url" rel="index"><span itemprop="name">-oracle</span></a>
                 </span>
             </span>
 
@@ -360,8 +358,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/06/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/06/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -371,14 +369,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
+              <span>527</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -390,13 +388,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>要点：     </p>
-<p>1.是某个类只能有一个实例， 构造器私有化  </p>
-<p>2.是它必须自行创建这个实例，含有一个该类的静态变量来保存这个唯一的实例  </p>
-<p>3.是它必须自行向整个系统提供这个实例，对外提供获取该实例对象的方式：直接暴露、用静态变量的get方法获取</p>
+          <p>没怎么用过Oracle，以为差不多，这不就遇到一个坑，因为连表查询，表关系为一对多，要把连查出来的数据过滤为两条，也就是对b表数据进行分组或者说过滤吧，</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/01/06/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/#more" rel="contents">
+              <a class="btn" href="/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -429,7 +424,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/06/%E8%BE%B9%E9%81%8D%E5%8E%86%E8%BE%B9%E7%A7%BB%E9%99%A4Collection%E7%9A%84%E5%85%83%E7%B4%A0/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -443,7 +438,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/06/%E8%BE%B9%E9%81%8D%E5%8E%86%E8%BE%B9%E7%A7%BB%E9%99%A4Collection%E7%9A%84%E5%85%83%E7%B4%A0/" class="post-title-link" itemprop="url">边遍历边移除Collection的元素</a>
+            <a href="/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">探索equals必须重写hashCode方法的原理</a>
         </h2>
 
         <div class="post-meta">
@@ -454,7 +449,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-06 09:12:50 / 修改时间：09:13:40" itemprop="dateCreated datePublished" datetime="2021-01-06T09:12:50+08:00">2021-01-06</time>
+              <time title="创建时间：2021-01-29 14:57:18 / 修改时间：15:05:14" itemprop="dateCreated datePublished" datetime="2021-01-29T14:57:18+08:00">2021-01-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -475,8 +470,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/06/%E8%BE%B9%E9%81%8D%E5%8E%86%E8%BE%B9%E7%A7%BB%E9%99%A4Collection%E7%9A%84%E5%85%83%E7%B4%A0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/06/%E8%BE%B9%E9%81%8D%E5%8E%86%E8%BE%B9%E7%A7%BB%E9%99%A4Collection%E7%9A%84%E5%85%83%E7%B4%A0/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -486,7 +481,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>219</span>
+              <span>483</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -505,225 +500,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>边遍历边移除Collection的唯一正确方式是使用Iterator.remove()方法，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Interger&gt; it &#x3D; list.iterator();</span><br><span class="line">wuhile(it.haasNext())&#123;</span><br><span class="line">    it.remove();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">常见的错误代码：</span><br><span class="line">    for(Integer i : list)&#123;</span><br><span class="line">        list.remove();&#x2F;&#x2F;会报异常</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/06/%E8%B0%83%E7%94%A8start-%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%89%A7%E8%A1%8Crun-%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/06/%E8%B0%83%E7%94%A8start-%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%89%A7%E8%A1%8Crun-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">调用start()方法为什么会执行run()方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-01-06 09:10:26 / 修改时间：09:11:44" itemprop="dateCreated datePublished" datetime="2021-01-06T09:10:26+08:00">2021-01-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">-随笔</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/06/%E8%B0%83%E7%94%A8start-%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%89%A7%E8%A1%8Crun-%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/06/%E8%B0%83%E7%94%A8start-%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%89%A7%E8%A1%8Crun-%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>246</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>new 一个 Thread，线程进入了新建状态。调用 start() 方法，会启动一个线程并使线程进入了就绪状态，当分配到时间片后就可以开始运行了。 start() 会执行线程的相应准备工作，然后自动执行 run() 方法的内容，这是真正的多线程工作。</p>
-<p>而直接执行 run() 方法，会把 run 方法当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它，所以这并不是多线程工作。</p>
-<p>总结： 调用 start 方法方可启动线程并使线程进入就绪状态，而 run 方法只是 thread 的一个普通方法调用，还是在主线程里执行。</p>
-
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/06/%E9%87%8D%E5%86%99HashCode%E7%9A%84%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/06/%E9%87%8D%E5%86%99HashCode%E7%9A%84%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">重写HashCode的原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-01-06 09:09:10 / 修改时间：09:11:28" itemprop="dateCreated datePublished" datetime="2021-01-06T09:09:10+08:00">2021-01-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">-随笔</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/06/%E9%87%8D%E5%86%99HashCode%E7%9A%84%E5%8E%9F%E7%90%86/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/06/%E9%87%8D%E5%86%99HashCode%E7%9A%84%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>484</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>​       hashCode()的作用是获取哈希码，它实际上返回了一个int整数，这个哈希码的作用就是确定该对象在哈希表中的索引位置，并且hashCode()方法被定义在Object.java中，这就意味着java中任何类都包含了hashCode()函数；</p>
-<p>为什么要有hashCode呢？</p>
+          <p>hashCode()的作用是获取哈希码，它实际上返回了一个int整数，这个哈希码的作用就是确定该对象在哈希表中的索引位置，并且hashCode()方法被定义在Object.java中，这就意味着java中任何类都包含了hashCode()函数；</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/01/06/%E9%87%8D%E5%86%99HashCode%E7%9A%84%E5%8E%9F%E7%90%86/#more" rel="contents">
+              <a class="btn" href="/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -756,7 +536,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/06/Servlet%E7%BA%BF%E7%A8%8B%E6%98%AF%E5%90%A6%E5%AE%89%E5%85%A8%E5%8F%8A%E5%8E%9F%E5%9B%A0/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -770,7 +550,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/06/Servlet%E7%BA%BF%E7%A8%8B%E6%98%AF%E5%90%A6%E5%AE%89%E5%85%A8%E5%8F%8A%E5%8E%9F%E5%9B%A0/" class="post-title-link" itemprop="url">Servlet线程是否安全及原因</a>
+            <a href="/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">DockerFile文件开发</a>
         </h2>
 
         <div class="post-meta">
@@ -781,7 +561,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-06 09:07:21 / 修改时间：09:09:17" itemprop="dateCreated datePublished" datetime="2021-01-06T09:07:21+08:00">2021-01-06</time>
+              <time title="创建时间：2021-01-29 14:55:45 / 修改时间：15:22:22" itemprop="dateCreated datePublished" datetime="2021-01-29T14:55:45+08:00">2021-01-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -789,7 +569,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">-随笔</span></a>
+                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">-Docker</span></a>
                 </span>
             </span>
 
@@ -802,8 +582,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/06/Servlet%E7%BA%BF%E7%A8%8B%E6%98%AF%E5%90%A6%E5%AE%89%E5%85%A8%E5%8F%8A%E5%8E%9F%E5%9B%A0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/06/Servlet%E7%BA%BF%E7%A8%8B%E6%98%AF%E5%90%A6%E5%AE%89%E5%85%A8%E5%8F%8A%E5%8E%9F%E5%9B%A0/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -813,7 +593,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>328</span>
+              <span>964</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -832,12 +612,239 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>线程安全是编程中的术语，指某个方法在多线程环境中被调用时，能够正确地处理多个线程之间的共享变量，使程序功能正确完成。</p>
-<p>Servlet 不是线程安全的，servlet 是单实例多线程的，当多个线程同时访问同一个方法，是不能保证共享变量的线程安全性的。</p>
-<p>Struts2 的 action 是多实例多线程的，是线程安全的，每个请求过来都会 new 一个新的 action 分配给这个请求，请求完成后销毁。</p>
-<p>SpringMVC 的 Controller 是线程安全的吗？不是的，和 Servlet 类似的处理流程。</p>
-<p>Struts2 好处是不用考虑线程安全问题；Servlet 和 SpringMVC 需要考虑线程安全问题，但是性能可以提升不用处理太多的 gc，可以使用 ThreadLocal 来处理多线程的问题。</p>
+          <p>Docker！真香，谁用谁知道，软件安装简单，部署简单，这是一个简单的dockerfile测试。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">SpringBoot自动装配原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-29 14:54:53 / 修改时间：15:25:06" itemprop="dateCreated datePublished" datetime="2021-01-29T14:54:53+08:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SpringBoot/" itemprop="url" rel="index"><span itemprop="name">-SpringBoot</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>672</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>读了一下源码，找了一下自动装配的原因。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/" class="post-title-link" itemprop="url">SpringBoot整合Shiro</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-29 14:54:37 / 修改时间：15:24:28" itemprop="dateCreated datePublished" datetime="2021-01-29T14:54:37+08:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/shiro/" itemprop="url" rel="index"><span itemprop="name">-shiro</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>shiro是较为轻量的权限框架，学习使用一下，但是现在确实这个用的不多了，<strong>Spring Security</strong>确实更香。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -864,7 +871,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -932,20 +939,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -993,13 +1000,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">178k</span>
+    <span title="站点总字数">190k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:42</span>
+    <span title="站点阅读时长">2:52</span>
 </div>
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div>

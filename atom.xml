@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-01-06T02:01:43.106Z</updated>
+  <updated>2021-01-29T07:06:14.704Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -15,6 +15,180 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>FeignClient远程调用</title>
+    <link href="http://www.zllwsy.com/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
+    <id>http://www.zllwsy.com/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/</id>
+    <published>2021-01-29T06:58:33.000Z</published>
+    <updated>2021-01-29T07:06:14.704Z</updated>
+    
+    
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;引入OpenFeign依赖&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;定义FeignClient接口类（注解&lt;code&gt;@FeignClient&lt;/code&gt;），声明这个接口类是用来远程调用其他服务的&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-OpenFeign" scheme="http://www.zllwsy.com/tags/OpenFeign/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Oracle分组过滤数据总结</title>
+    <link href="http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
+    <id>http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/</id>
+    <published>2021-01-29T06:58:08.000Z</published>
+    <updated>2021-01-29T07:12:44.107Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;没怎么用过Oracle，以为差不多，这不就遇到一个坑，因为连表查询，表关系为一对多，要把连查出来的数据过滤为两条，也就是对b表数据进行分组或者说过滤吧，&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-oracle" scheme="http://www.zllwsy.com/categories/oracle/"/>
+    
+    
+    <category term="-oracle -过滤" scheme="http://www.zllwsy.com/tags/oracle-%E8%BF%87%E6%BB%A4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>探索equals必须重写hashCode方法的原理</title>
+    <link href="http://www.zllwsy.com/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/"/>
+    <id>http://www.zllwsy.com/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/</id>
+    <published>2021-01-29T06:57:18.000Z</published>
+    <updated>2021-01-29T07:05:14.853Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;hashCode()的作用是获取哈希码，它实际上返回了一个int整数，这个哈希码的作用就是确定该对象在哈希表中的索引位置，并且hashCode()方法被定义在Object.java中，这就意味着java中任何类都包含了hashCode()函数；&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-@CacheEvict" scheme="http://www.zllwsy.com/tags/CacheEvict/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DockerFile文件开发</title>
+    <link href="http://www.zllwsy.com/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
+    <id>http://www.zllwsy.com/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/</id>
+    <published>2021-01-29T06:55:45.000Z</published>
+    <updated>2021-01-29T07:22:22.192Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Docker！真香，谁用谁知道，软件安装简单，部署简单，这是一个简单的dockerfile测试。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-Docker" scheme="http://www.zllwsy.com/categories/Docker/"/>
+    
+    
+    <category term="-DockerFile -Linux" scheme="http://www.zllwsy.com/tags/DockerFile-Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot自动装配原理</title>
+    <link href="http://www.zllwsy.com/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/"/>
+    <id>http://www.zllwsy.com/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/</id>
+    <published>2021-01-29T06:54:53.000Z</published>
+    <updated>2021-01-29T07:25:06.514Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;读了一下源码，找了一下自动装配的原因。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-SpringBoot" scheme="http://www.zllwsy.com/categories/SpringBoot/"/>
+    
+    
+    <category term="-自动装配" scheme="http://www.zllwsy.com/tags/%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot整合Shiro</title>
+    <link href="http://www.zllwsy.com/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/"/>
+    <id>http://www.zllwsy.com/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/</id>
+    <published>2021-01-29T06:54:37.000Z</published>
+    <updated>2021-01-29T07:24:28.322Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;shiro是较为轻量的权限框架，学习使用一下，但是现在确实这个用的不多了，&lt;strong&gt;Spring Security&lt;/strong&gt;确实更香。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-shiro" scheme="http://www.zllwsy.com/categories/shiro/"/>
+    
+    
+    <category term="-shiro" scheme="http://www.zllwsy.com/tags/shiro/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>本地包导入pom依赖方法总结</title>
+    <link href="http://www.zllwsy.com/2021/01/29/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%AF%BC%E5%85%A5pom%E4%BE%9D%E8%B5%96%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/"/>
+    <id>http://www.zllwsy.com/2021/01/29/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%AF%BC%E5%85%A5pom%E4%BE%9D%E8%B5%96%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</id>
+    <published>2021-01-29T06:54:18.000Z</published>
+    <updated>2021-01-29T07:27:16.780Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;一般来说，都是直接使用依赖，但总有一些情况想要把本地包加入maven依赖，有两种实现方法。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-mvn -pom" scheme="http://www.zllwsy.com/tags/mvn-pom/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>缓存失效模式</title>
+    <link href="http://www.zllwsy.com/2021/01/29/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://www.zllwsy.com/2021/01/29/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E6%A8%A1%E5%BC%8F/</id>
+    <published>2021-01-29T06:53:58.000Z</published>
+    <updated>2021-01-29T07:04:01.078Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;注解@CacheEvict，修改数据后，就自动清空缓存，下次执行后再重新生成缓存&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-@CacheEvict" scheme="http://www.zllwsy.com/tags/CacheEvict/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高并发下缓存失效问题</title>
+    <link href="http://www.zllwsy.com/2021/01/29/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/"/>
+    <id>http://www.zllwsy.com/2021/01/29/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/</id>
+    <published>2021-01-29T06:53:47.000Z</published>
+    <updated>2021-01-29T07:20:02.827Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;是缓存是在开发中最长遇到的问题，这是总结的经常遇到的几种情况。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-缓存失效" scheme="http://www.zllwsy.com/tags/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88/"/>
+    
+  </entry>
   
   <entry>
     <title>ConcurrentHashMap原理</title>
@@ -260,177 +434,6 @@
     
     
     <category term="-阿里云 -Linux -Docker -nacos" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>单点登录-八-模块System-b</title>
-    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AB-%E6%A8%A1%E5%9D%97System-b/"/>
-    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AB-%E6%A8%A1%E5%9D%97System-b/</id>
-    <published>2020-11-29T13:43:02.000Z</published>
-    <updated>2020-12-02T11:53:07.402Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;系统A已经完成了，系统B其实没什么差别，主要的逻辑都已经在Sso-server模块中完成，如果还有所不懂请参看文档：&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
-    
-    
-    <category term="-阿里云 -Linux -Docker -nacos -System-b" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos-System-b/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>单点登录-七-模块System-a</title>
-    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%83-%E6%A8%A1%E5%9D%97System-a/"/>
-    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%83-%E6%A8%A1%E5%9D%97System-a/</id>
-    <published>2020-11-29T13:42:39.000Z</published>
-    <updated>2020-12-02T11:53:07.597Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;害，Sso-server模块的认证中心已经完成，我自己逻辑很清晰，但是我感觉写的有点乱，但是别慌，我后面会提供完整的源码，Sso-server模块不懂的请参看：&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
-    
-    
-    <category term="-阿里云 -Linux -Docker -nacos -System-a" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos-System-a/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>单点登录-六-模块Sso-server</title>
-    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AD-%E6%A8%A1%E5%9D%97Sso-server/"/>
-    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E5%85%AD-%E6%A8%A1%E5%9D%97Sso-server/</id>
-    <published>2020-11-29T13:42:12.000Z</published>
-    <updated>2020-12-02T11:53:07.336Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;nacos安装完成，那么就需要在配置文件中配置，并且在nacos服务中新建命名空间，&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
-    
-    
-    <category term="-阿里云 -Linux -Docker -nacos -Sso-server" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos-Sso-server/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>单点登录-五-Doccker安装配置nacos</title>
-    <link href="http://www.zllwsy.com/2020/11/24/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%94-Doccker%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEnacos/"/>
-    <id>http://www.zllwsy.com/2020/11/24/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%94-Doccker%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEnacos/</id>
-    <published>2020-11-24T11:26:51.000Z</published>
-    <updated>2020-12-02T11:53:07.061Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;既然决定使用微服务框架，那肯定还是nacos香，我的nacos依然是放在Linux系统中，并且使用了docker容器，&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
-    
-    
-    <category term="-阿里云 -Linux -Docker -nacos" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql进阶--批量新增数据脚本</title>
-    <link href="http://www.zllwsy.com/2020/11/24/Mysql%E8%BF%9B%E9%98%B6-%E6%89%B9%E9%87%8F%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/"/>
-    <id>http://www.zllwsy.com/2020/11/24/Mysql%E8%BF%9B%E9%98%B6-%E6%89%B9%E9%87%8F%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/</id>
-    <published>2020-11-24T11:21:17.000Z</published>
-    <updated>2020-12-02T11:53:08.834Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;编写存储过程应该很多了吧，我记得我面试的时候都问过我有没有写过存储过程，其实存储过程就是函数，就和Mysql中的now()类似，只不过now是Mysql系统为我们提供的，而我们是需要自己写，&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
-    
-    
-    <category term="-Mysql -存储过程 -函数" scheme="http://www.zllwsy.com/tags/Mysql-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B-%E5%87%BD%E6%95%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Springboot定时任务</title>
-    <link href="http://www.zllwsy.com/2020/11/24/Springboot%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/"/>
-    <id>http://www.zllwsy.com/2020/11/24/Springboot%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</id>
-    <published>2020-11-24T11:17:40.000Z</published>
-    <updated>2020-12-02T11:53:07.751Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;定时任务在实际开发中，可以说是应用特别的广泛，以往用的都是Timer对象，而现在用的更多的Scheduled类，那么两个有什么区别呢，这里将一一讲解一下，&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql进阶--索引优化梳理总结</title>
-    <link href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A2%B3%E7%90%86%E6%80%BB%E7%BB%93/"/>
-    <id>http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A2%B3%E7%90%86%E6%80%BB%E7%BB%93/</id>
-    <published>2020-11-23T11:17:04.000Z</published>
-    <updated>2020-12-02T11:53:08.548Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;到目前为止，已经了解了索引的原理，分类，结构，失效准则等等，我觉得有必要对其进行一系列的测试和总结，&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
-    
-    
-    <category term="-Mysql -索引 -优化 -Explain" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-%E4%BC%98%E5%8C%96-Explain/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql进阶--慢查询日志</title>
-    <link href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/"/>
-    <id>http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97/</id>
-    <published>2020-11-23T11:16:37.000Z</published>
-    <updated>2020-12-02T11:53:08.777Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;h4 id=&quot;首先要知道什么是慢查询日志&quot;&gt;&lt;a href=&quot;#首先要知道什么是慢查询日志&quot; class=&quot;headerlink&quot; title=&quot;首先要知道什么是慢查询日志&quot;&gt;&lt;/a&gt;首先要知道什么是慢查询日志&lt;/h4&gt;&lt;/blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;MySQL的慢查询日志是MySQL提供的一种日志记录，它用来&lt;strong&gt;记录在MySQL中响应时间超过阀值的语句&lt;/strong&gt;，具体指运行时间超过&lt;strong&gt;long_query_time&lt;/strong&gt;值的SQL，则会被记录到慢查询日志中。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
-    
-    
-    <category term="-Mysql -索引 -慢查询 -Mysqldumpslow" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-%E6%85%A2%E6%9F%A5%E8%AF%A2-Mysqldumpslow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql进阶--查询截取优化</title>
-    <link href="http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%9F%A5%E8%AF%A2%E6%88%AA%E5%8F%96%E4%BC%98%E5%8C%96/"/>
-    <id>http://www.zllwsy.com/2020/11/23/Mysql%E8%BF%9B%E9%98%B6-%E6%9F%A5%E8%AF%A2%E6%88%AA%E5%8F%96%E4%BC%98%E5%8C%96/</id>
-    <published>2020-11-23T11:16:22.000Z</published>
-    <updated>2020-12-02T11:53:09.018Z</updated>
-    
-    
-    <summary type="html">&lt;h4 id=&quot;SQL分析性能步骤：&quot;&gt;&lt;a href=&quot;#SQL分析性能步骤：&quot; class=&quot;headerlink&quot; title=&quot;SQL分析性能步骤：&quot;&gt;&lt;/a&gt;SQL分析性能步骤：&lt;/h4&gt;&lt;p&gt;1.观察，至少跑一天，观察生产的慢SQL情况&lt;/p&gt;
-&lt;p&gt;2.开启慢查询日志，设置阈值，比如超过5秒的就是慢SQL，并将其抓取出来&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-MySQL进阶" scheme="http://www.zllwsy.com/categories/MySQL%E8%BF%9B%E9%98%B6/"/>
-    
-    
-    <category term="-Mysql -索引 -Exists -Explain -In" scheme="http://www.zllwsy.com/tags/Mysql-%E7%B4%A2%E5%BC%95-Exists-Explain-In/"/>
     
   </entry>
   
