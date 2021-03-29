@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-01-29T07:06:14.704Z</updated>
+  <updated>2021-03-29T06:56:26.789Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mysql数据库连表获取子表Json类型字段内容</title>
+    <link href="http://www.zllwsy.com/2021/03/29/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E8%A1%A8%E8%8E%B7%E5%8F%96%E5%AD%90%E8%A1%A8Json%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%86%85%E5%AE%B9/"/>
+    <id>http://www.zllwsy.com/2021/03/29/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E8%A1%A8%E8%8E%B7%E5%8F%96%E5%AD%90%E8%A1%A8Json%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%86%85%E5%AE%B9/</id>
+    <published>2021-03-29T06:05:56.000Z</published>
+    <updated>2021-03-29T06:56:26.789Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;实际开发过程中，总会遇到一些特定的问题，所以也需要一些特殊的解决方法，记录一次最近的SQL例子，A,B表连表查询，关系为一对多，但是查询结果只能为一条，也就是一条A的数据，对应B表很多条数据，但是只取B表最新的一条数据，然后再B表最新的数据中读取一个Json类型字段中的多个值，其中一个值又是一个json类型，还要更深层次获取json中的json中的属性值，再用as建立别名查询出来，你能想到几种方式呢？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-Mysql -JSON_EXTRACT -子查询" scheme="http://www.zllwsy.com/tags/Mysql-JSON-EXTRACT-%E5%AD%90%E6%9F%A5%E8%AF%A2/"/>
+    
+  </entry>
   
   <entry>
     <title>FeignClient远程调用</title>
@@ -43,7 +62,7 @@
     <link href="http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
     <id>http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/</id>
     <published>2021-01-29T06:58:08.000Z</published>
-    <updated>2021-01-29T07:12:44.107Z</updated>
+    <updated>2021-03-08T01:19:11.547Z</updated>
     
     
     <summary type="html">&lt;p&gt;没怎么用过Oracle，以为差不多，这不就遇到一个坑，因为连表查询，表关系为一对多，要把连查出来的数据过滤为两条，也就是对b表数据进行分组或者说过滤吧，&lt;/p&gt;</summary>
@@ -415,25 +434,6 @@
     
     
     <category term="-Mysql -全局日志" scheme="http://www.zllwsy.com/tags/Mysql-%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>单点登录-九-单点登录功能测试</title>
-    <link href="http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B9%9D-%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
-    <id>http://www.zllwsy.com/2020/11/29/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B9%9D-%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95/</id>
-    <published>2020-11-29T13:43:28.000Z</published>
-    <updated>2020-12-02T11:53:07.663Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Sso-server模块、System-a、System-b模块都完成了，还有疑问的请参看：&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-单点登录" scheme="http://www.zllwsy.com/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/"/>
-    
-    
-    <category term="-阿里云 -Linux -Docker -nacos" scheme="http://www.zllwsy.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91-Linux-Docker-nacos/"/>
     
   </entry>
   
