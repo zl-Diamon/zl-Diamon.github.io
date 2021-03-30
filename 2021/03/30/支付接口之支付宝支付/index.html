@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/myCat.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zllwsy.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="无论做多少项目，除了一些系统管理类的项目，大部分小程序、公众号、App或者网站都是需要支付接口的，而目前最常用的支付方法肯定就是微信和支付宝，今天来探讨一下支付宝支付功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支付接口之支付宝支付">
+<meta property="og:url" content="http://www.zllwsy.com/2021/03/30/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3%E4%B9%8B%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98/index.html">
+<meta property="og:site_name" content="Sweet Candy">
+<meta property="og:description" content="无论做多少项目，除了一些系统管理类的项目，大部分小程序、公众号、App或者网站都是需要支付接口的，而目前最常用的支付方法肯定就是微信和支付宝，今天来探讨一下支付宝支付功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330143432965.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330143814041.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330144052183.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330143941132.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330144226176.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330144344563.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145035197.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145217377.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/E15F6A7E966548FEAC0EA8B52E79F5BB.jpg">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145903176.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/90470A8C1DC0AE68A1F63705509E64B8.jpg">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/34C545549BB3E3F26B0DF273A9502986.jpg">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145433825.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/7FADDD7B29466F8BF1CF02E892C877C4.jpg">
+<meta property="article:published_time" content="2021-03-30T06:26:29.000Z">
+<meta property="article:modified_time" content="2021-03-30T07:12:37.376Z">
+<meta property="article:author" content="Diamond">
+<meta property="article:tag" content="-支付宝 -Alipay">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330143432965.png">
+
+<link rel="canonical" href="http://www.zllwsy.com/2021/03/30/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3%E4%B9%8B%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>支付接口之支付宝支付 | Sweet Candy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Sweet Candy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweet Candy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I will in life and deth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/03/30/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3%E4%B9%8B%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          支付接口之支付宝支付
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-30 14:26:29 / 修改时间：15:12:37" itemprop="dateCreated datePublished" datetime="2021-03-30T14:26:29+08:00">2021-03-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3/" itemprop="url" rel="index"><span itemprop="name">-支付接口</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/30/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3%E4%B9%8B%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/30/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3%E4%B9%8B%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>无论做多少项目，除了一些系统管理类的项目，大部分小程序、公众号、App或者网站都是需要支付接口的，而目前最常用的支付方法肯定就是微信和支付宝，今天来探讨一下支付宝支付功能。</p>
+<a id="more"></a>
+
+<h6 id="1-首先，我是使用的沙盒环境，进入支付宝开放平台，点击研发服务，"><a href="#1-首先，我是使用的沙盒环境，进入支付宝开放平台，点击研发服务，" class="headerlink" title="1.首先，我是使用的沙盒环境，进入支付宝开放平台，点击研发服务，"></a>1.首先，我是使用的沙盒环境，进入<a href="https://open.alipay.com/platform/home.htm" target="_blank">支付宝开放平台</a>，点击研发服务，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330143432965.png" alt="image-20210330143432965" style="zoom: 25%;" />
+
+<h6 id="2-申请一个沙盒应用，RSA2密匙需要下载工具进行生成，但是我看了一下，现在是可以在线生成了，"><a href="#2-申请一个沙盒应用，RSA2密匙需要下载工具进行生成，但是我看了一下，现在是可以在线生成了，" class="headerlink" title="2.申请一个沙盒应用，RSA2密匙需要下载工具进行生成，但是我看了一下，现在是可以在线生成了，"></a>2.申请一个沙盒应用，RSA2密匙需要下载工具进行生成，但是我看了一下，现在是可以在线生成了，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330143814041.png" alt="image-20210330143814041" style="zoom: 25%;" />
+
+<h6 id="3-打开地址：https-opendocs-alipay-com-open-291-105971，再点击如图所示的地方，"><a href="#3-打开地址：https-opendocs-alipay-com-open-291-105971，再点击如图所示的地方，" class="headerlink" title="3.打开地址：https://opendocs.alipay.com/open/291/105971，再点击如图所示的地方，"></a>3.打开地址：<a target="_blank" rel="noopener" href="https://opendocs.alipay.com/open/291/105971%EF%BC%8C%E5%86%8D%E7%82%B9%E5%87%BB%E5%A6%82%E5%9B%BE%E6%89%80%E7%A4%BA%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%8C">https://opendocs.alipay.com/open/291/105971，再点击如图所示的地方，</a></h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330144052183.png" alt="image-20210330144052183" style="zoom: 25%;" />
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330143941132.png" alt="image-20210330143941132" style="zoom: 25%;" />
+
+<h6 id="4-生成对应的私钥和公钥，复制拷贝到申请的沙盒应用中，"><a href="#4-生成对应的私钥和公钥，复制拷贝到申请的沙盒应用中，" class="headerlink" title="4.生成对应的私钥和公钥，复制拷贝到申请的沙盒应用中，"></a>4.生成对应的私钥和公钥，复制拷贝到申请的沙盒应用中，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330144226176.png" alt="image-20210330144226176" style="zoom: 25%;" />
+
+<h6 id="5-申请成功后，可以查看沙盒账号，并且下载支付宝沙盒版，用于后面的测试，"><a href="#5-申请成功后，可以查看沙盒账号，并且下载支付宝沙盒版，用于后面的测试，" class="headerlink" title="5.申请成功后，可以查看沙盒账号，并且下载支付宝沙盒版，用于后面的测试，"></a>5.申请成功后，可以查看沙盒账号，并且下载支付宝沙盒版，用于后面的测试，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330144344563.png" alt="image-20210330144344563" style="zoom: 25%;" />
+
+<h6 id="6-支付宝沙盒的申请好了，打开编译器新建一个SpringBoot项目，导入支付宝的SDK依赖，"><a href="#6-支付宝沙盒的申请好了，打开编译器新建一个SpringBoot项目，导入支付宝的SDK依赖，" class="headerlink" title="6.支付宝沙盒的申请好了，打开编译器新建一个SpringBoot项目，导入支付宝的SDK依赖，"></a>6.支付宝沙盒的申请好了，打开编译器新建一个SpringBoot项目，导入支付宝的SDK依赖，</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alipay.sdk&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;alipay-sdk-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.0.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="7-随便在public文件夹下面新建一个Html文件，作为填写订单的页面，"><a href="#7-随便在public文件夹下面新建一个Html文件，作为填写订单的页面，" class="headerlink" title="7.随便在public文件夹下面新建一个Html文件，作为填写订单的页面，"></a>7.随便在public文件夹下面新建一个Html文件，作为填写订单的页面，</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;form action&#x3D;&quot;&#x2F;pay&quot; method&#x3D;&quot;post&quot;&gt;</span><br><span class="line">        订单号：&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;WIDout_trade_no&quot; required&gt;&lt;br&#x2F;&gt;</span><br><span class="line">        订单名称：&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;WIDsubject&quot; required&gt;&lt;br&#x2F;&gt;</span><br><span class="line">        付款金额：&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;WIDtotal_amount&quot; required&gt;&lt;br&#x2F;&gt;</span><br><span class="line">        WIDbody：&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;WIDbody&quot;&gt;&lt;br&#x2F;&gt;</span><br><span class="line">        &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;下单&quot;&gt; &lt;input type&#x3D;&quot;reset&quot; value&#x3D;&quot;重置&quot;&gt;</span><br><span class="line">    &lt;&#x2F;form&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="8-新建一个配置文件，配置支付宝的一些相关配置，"><a href="#8-新建一个配置文件，配置支付宝的一些相关配置，" class="headerlink" title="8.新建一个配置文件，配置支付宝的一些相关配置，"></a>8.新建一个配置文件，配置支付宝的一些相关配置，</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">package com.alipay.alipay.config;</span><br><span class="line"></span><br><span class="line">import java.io.FileWriter;</span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @author zhanglang</span><br><span class="line"> * @Date 2020&#x2F;5&#x2F;7</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class AlipayConfig &#123;</span><br><span class="line">    &#x2F;&#x2F; 应用ID,您的APPID，收款账号既是您的APPID对应支付宝账号,开发时使用沙箱提供的APPID，生产环境改成自己的APPID</span><br><span class="line">    public static String APP_ID &#x3D; &quot;刚刚申请的沙盒应用的APPID&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 商户私钥，您的PKCS8格式RSA2私钥</span><br><span class="line">    public static String APP_PRIVATE_KEY &#x3D; &quot;刚刚自己生成的&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 支付宝公钥,查看地址：https:&#x2F;&#x2F;openhome.alipay.com&#x2F;platform&#x2F;keyManage.htm 对应APPID下的支付宝公钥。</span><br><span class="line">    public static String ALIPAY_PUBLIC_KEY &#x3D; &quot;刚刚自己生成的&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 服务器异步通知页面路径  需http:&#x2F;&#x2F;格式的完整路径，不能加?id&#x3D;123这类自定义参数，必须外网可以正常访问</span><br><span class="line">    public static String notify_url &#x3D; &quot;http:&#x2F;&#x2F;localhost:8080&#x2F;alipay.trade.page.pay-JAVA-UTF-8&#x2F;notify_url.jsp&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 页面跳转同步通知页面路径 需http:&#x2F;&#x2F;格式的完整路径，不能加?id&#x3D;123这类自定义参数，必须外网可以正常访问(其实就是支付成功后返回的页面)</span><br><span class="line">    public static String return_url &#x3D; &quot;http:&#x2F;&#x2F;localhost:8080&#x2F;alipay.trade.page.pay-JAVA-UTF-8&#x2F;return_url.jsp&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 签名方式</span><br><span class="line">    public static String sign_type &#x3D; &quot;RSA2&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 字符编码格式</span><br><span class="line">    public static String CHARSET &#x3D; &quot;utf-8&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 支付宝网关，这是沙箱的网关</span><br><span class="line">    public static String gatewayUrl &#x3D; &quot;https:&#x2F;&#x2F;openapi.alipaydev.com&#x2F;gateway.do&quot;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 支付宝网关</span><br><span class="line">    public static String log_path &#x3D; &quot;&#x2F;log&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）</span><br><span class="line">     * @param sWord 要写入日志里的文本内容</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public static void logResult(String sWord) &#123;</span><br><span class="line">        FileWriter writer &#x3D; null;</span><br><span class="line">        try &#123;</span><br><span class="line">            writer &#x3D; new FileWriter(log_path + &quot;alipay_log_&quot; + System.currentTimeMillis()+&quot;.txt&quot;);</span><br><span class="line">            writer.write(sWord);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            if (writer !&#x3D; null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    writer.close();</span><br><span class="line">                &#125; catch (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="9-新建一个Controller类，用来发起请求，"><a href="#9-新建一个Controller类，用来发起请求，" class="headerlink" title="9.新建一个Controller类，用来发起请求，"></a>9.新建一个Controller类，用来发起请求，</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">package com.alipay.alipay.controller;</span><br><span class="line"></span><br><span class="line">import com.alipay.alipay.config.AlipayConfig;</span><br><span class="line">import com.alipay.api.AlipayApiException;</span><br><span class="line">import com.alipay.api.AlipayClient;</span><br><span class="line">import com.alipay.api.DefaultAlipayClient;</span><br><span class="line">import com.alipay.api.request.AlipayTradePagePayRequest;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @author zhanglang</span><br><span class="line"> * @Date 2020&#x2F;5&#x2F;7</span><br><span class="line"> *&#x2F;</span><br><span class="line">@RestController</span><br><span class="line">public class PayController &#123;</span><br><span class="line">    @RequestMapping(&quot;&#x2F;pay&quot;)</span><br><span class="line">    public void payController(HttpServletRequest request, HttpServletResponse response) throws IOException &#123;</span><br><span class="line">        &#x2F;&#x2F;获得初始化的AlipayClient</span><br><span class="line">        AlipayClient alipayClient &#x3D; new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.APP_ID, AlipayConfig.APP_PRIVATE_KEY, &quot;json&quot;, AlipayConfig.CHARSET, AlipayConfig.ALIPAY_PUBLIC_KEY, AlipayConfig.sign_type);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;设置请求参数</span><br><span class="line">        AlipayTradePagePayRequest alipayRequest &#x3D; new AlipayTradePagePayRequest();</span><br><span class="line">        alipayRequest.setReturnUrl(AlipayConfig.return_url);</span><br><span class="line">        alipayRequest.setNotifyUrl(AlipayConfig.notify_url);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;商户订单号，商户网站订单系统中唯一订单号，必填</span><br><span class="line">        String out_trade_no &#x3D; new String(request.getParameter(&quot;WIDout_trade_no&quot;).getBytes(&quot;ISO-8859-1&quot;), &quot;UTF-8&quot;);</span><br><span class="line">        &#x2F;&#x2F;付款金额，必填</span><br><span class="line">        String total_amount &#x3D; new String(request.getParameter(&quot;WIDtotal_amount&quot;).getBytes(&quot;ISO-8859-1&quot;), &quot;UTF-8&quot;);</span><br><span class="line">        &#x2F;&#x2F;订单名称，必填</span><br><span class="line">        String subject &#x3D; new String(request.getParameter(&quot;WIDsubject&quot;).getBytes(&quot;ISO-8859-1&quot;), &quot;UTF-8&quot;);</span><br><span class="line">        &#x2F;&#x2F;商品描述，可空</span><br><span class="line">        String body &#x3D; new String(request.getParameter(&quot;WIDbody&quot;).getBytes(&quot;ISO-8859-1&quot;), &quot;UTF-8&quot;);</span><br><span class="line"></span><br><span class="line">        alipayRequest.setBizContent(&quot;&#123;\&quot;out_trade_no\&quot;:\&quot;&quot; + out_trade_no + &quot;\&quot;,&quot;</span><br><span class="line">                + &quot;\&quot;total_amount\&quot;:\&quot;&quot; + total_amount + &quot;\&quot;,&quot;</span><br><span class="line">                + &quot;\&quot;subject\&quot;:\&quot;&quot; + subject + &quot;\&quot;,&quot;</span><br><span class="line">                + &quot;\&quot;body\&quot;:\&quot;&quot; + body + &quot;\&quot;,&quot;</span><br><span class="line">                + &quot;\&quot;product_code\&quot;:\&quot;FAST_INSTANT_TRADE_PAY\&quot;&#125;&quot;);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;若想给BizContent增加其他可选请求参数，以增加自定义超时时间参数timeout_express来举例说明</span><br><span class="line">        &#x2F;&#x2F;alipayRequest.setBizContent(&quot;&#123;\&quot;out_trade_no\&quot;:\&quot;&quot;+ out_trade_no +&quot;\&quot;,&quot;</span><br><span class="line">        &#x2F;&#x2F;        + &quot;\&quot;total_amount\&quot;:\&quot;&quot;+ total_amount +&quot;\&quot;,&quot;</span><br><span class="line">        &#x2F;&#x2F;        + &quot;\&quot;subject\&quot;:\&quot;&quot;+ subject +&quot;\&quot;,&quot;</span><br><span class="line">        &#x2F;&#x2F;        + &quot;\&quot;body\&quot;:\&quot;&quot;+ body +&quot;\&quot;,&quot;</span><br><span class="line">        &#x2F;&#x2F;        + &quot;\&quot;timeout_express\&quot;:\&quot;10m\&quot;,&quot;</span><br><span class="line">        &#x2F;&#x2F;        + &quot;\&quot;product_code\&quot;:\&quot;FAST_INSTANT_TRADE_PAY\&quot;&#125;&quot;);</span><br><span class="line">        &#x2F;&#x2F;请求参数可查阅【电脑网站支付的API文档-alipay.trade.page.pay-请求参数】章节</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;请求</span><br><span class="line">        String form &#x3D; &quot;&quot;;</span><br><span class="line">        try &#123;</span><br><span class="line">            form &#x3D; alipayClient.pageExecute(alipayRequest).getBody(); &#x2F;&#x2F;调用SDK生成表单</span><br><span class="line">        &#125; catch (AlipayApiException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        response.setContentType(&quot;text&#x2F;html;charset&#x3D;&quot; + AlipayConfig.CHARSET);</span><br><span class="line">        response.getWriter().write(form);&#x2F;&#x2F;直接将完整的表单html输出到页面</span><br><span class="line">        response.getWriter().flush();</span><br><span class="line">        response.getWriter().close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="10-运行启动器，查看路径和端口，我的是8889-index-html"><a href="#10-运行启动器，查看路径和端口，我的是8889-index-html" class="headerlink" title="10.运行启动器，查看路径和端口，我的是8889/index.html,"></a>10.运行启动器，查看路径和端口，我的是8889/index.html,</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145035197.png" alt="image-20210330145035197" style="zoom: 25%;" />
+
+<h6 id="11-随便输入信息，点击下单，会自动跳转到支付页面，"><a href="#11-随便输入信息，点击下单，会自动跳转到支付页面，" class="headerlink" title="11.随便输入信息，点击下单，会自动跳转到支付页面，"></a>11.随便输入信息，点击下单，会自动跳转到支付页面，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145217377.png" alt="image-20210330145217377" style="zoom: 25%;" />
+
+<h6 id="12-打开手机中下载的支付宝沙盒版，下载地址：https-openhome-alipay-com-platform-appDaily-htm-tab-tool，"><a href="#12-打开手机中下载的支付宝沙盒版，下载地址：https-openhome-alipay-com-platform-appDaily-htm-tab-tool，" class="headerlink" title="12.打开手机中下载的支付宝沙盒版，下载地址：https://openhome.alipay.com/platform/appDaily.htm?tab=tool，"></a>12.打开手机中下载的支付宝沙盒版，下载地址：<a target="_blank" rel="noopener" href="https://openhome.alipay.com/platform/appDaily.htm?tab=tool%EF%BC%8C">https://openhome.alipay.com/platform/appDaily.htm?tab=tool，</a></h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/E15F6A7E966548FEAC0EA8B52E79F5BB.jpg" alt="img" style="zoom: 25%;" />
+
+<h6 id="13-打开登录刚刚申请的沙盒账号中的买家账号，"><a href="#13-打开登录刚刚申请的沙盒账号中的买家账号，" class="headerlink" title="13.打开登录刚刚申请的沙盒账号中的买家账号，"></a>13.打开登录刚刚申请的沙盒账号中的买家账号，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145903176.png" alt="image-20210330145903176" style="zoom:25%;" />
+
+<h6 id="14-直接对支付页面的二维码进行扫码支付，"><a href="#14-直接对支付页面的二维码进行扫码支付，" class="headerlink" title="14.直接对支付页面的二维码进行扫码支付，"></a>14.直接对支付页面的二维码进行扫码支付，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/90470A8C1DC0AE68A1F63705509E64B8.jpg" alt="img" style="zoom:25%;" />
+
+<h6 id="15-输入密码，支付成功后查看账单，"><a href="#15-输入密码，支付成功后查看账单，" class="headerlink" title="15.输入密码，支付成功后查看账单，"></a>15.输入密码，支付成功后查看账单，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/34C545549BB3E3F26B0DF273A9502986.jpg" alt="img" style="zoom:25%;" />
+
+<h6 id="16-同时可以看到页面上已经显示支付成功，五秒后自动返回自己定义的页面，"><a href="#16-同时可以看到页面上已经显示支付成功，五秒后自动返回自己定义的页面，" class="headerlink" title="16.同时可以看到页面上已经显示支付成功，五秒后自动返回自己定义的页面，"></a>16.同时可以看到页面上已经显示支付成功，五秒后自动返回自己定义的页面，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210330145433825.png" alt="image-20210330145433825" style="zoom: 25%;" />
+
+<h6 id="17-然后可以登录一下沙盒应用中的卖家账号，可以查看到刚刚的收入信息，"><a href="#17-然后可以登录一下沙盒应用中的卖家账号，可以查看到刚刚的收入信息，" class="headerlink" title="17.然后可以登录一下沙盒应用中的卖家账号，可以查看到刚刚的收入信息，"></a>17.然后可以登录一下沙盒应用中的卖家账号，可以查看到刚刚的收入信息，</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/7FADDD7B29466F8BF1CF02E892C877C4.jpg" alt="img" style="zoom:25%;" />
+
+<h6 id="18-总结"><a href="#18-总结" class="headerlink" title="18.总结"></a>18.总结</h6><p>到此，就完成了沙盒环境下的支付宝支付，等有时间再试一下微信支付，确实不是很难，主要需要细心，按照文档的步骤一步一步的做，是一次不错的学习经验，共勉之。</p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+		<div>
+     
+	        <div style="text-align:center;color: #ccc;font-size:14px">----------本文结束<i class="fa fa-paw"></i>感谢您的阅读----------</div>
+	 
+</div>
+		
+	</div>
+
+	<div>
+    
+        
+    
+    </div>
+	
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%94%AF%E4%BB%98%E5%AE%9D-Alipay/" rel="tag"># -支付宝 -Alipay</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/29/Python%E4%B9%8BSerial%E8%BF%9E%E6%8E%A5%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3/" rel="prev" title="Python之Serial连接硬件串口">
+      <i class="fa fa-chevron-left"></i> Python之Serial连接硬件串口
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E9%A6%96%E5%85%88%EF%BC%8C%E6%88%91%E6%98%AF%E4%BD%BF%E7%94%A8%E7%9A%84%E6%B2%99%E7%9B%92%E7%8E%AF%E5%A2%83%EF%BC%8C%E8%BF%9B%E5%85%A5%E6%94%AF%E4%BB%98%E5%AE%9D%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0%EF%BC%8C%E7%82%B9%E5%87%BB%E7%A0%94%E5%8F%91%E6%9C%8D%E5%8A%A1%EF%BC%8C"><span class="nav-number">1.</span> <span class="nav-text">1.首先，我是使用的沙盒环境，进入支付宝开放平台，点击研发服务，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E7%94%B3%E8%AF%B7%E4%B8%80%E4%B8%AA%E6%B2%99%E7%9B%92%E5%BA%94%E7%94%A8%EF%BC%8CRSA2%E5%AF%86%E5%8C%99%E9%9C%80%E8%A6%81%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E7%94%9F%E6%88%90%EF%BC%8C%E4%BD%86%E6%98%AF%E6%88%91%E7%9C%8B%E4%BA%86%E4%B8%80%E4%B8%8B%EF%BC%8C%E7%8E%B0%E5%9C%A8%E6%98%AF%E5%8F%AF%E4%BB%A5%E5%9C%A8%E7%BA%BF%E7%94%9F%E6%88%90%E4%BA%86%EF%BC%8C"><span class="nav-number">2.</span> <span class="nav-text">2.申请一个沙盒应用，RSA2密匙需要下载工具进行生成，但是我看了一下，现在是可以在线生成了，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-%E6%89%93%E5%BC%80%E5%9C%B0%E5%9D%80%EF%BC%9Ahttps-opendocs-alipay-com-open-291-105971%EF%BC%8C%E5%86%8D%E7%82%B9%E5%87%BB%E5%A6%82%E5%9B%BE%E6%89%80%E7%A4%BA%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%8C"><span class="nav-number">3.</span> <span class="nav-text">3.打开地址：https:&#x2F;&#x2F;opendocs.alipay.com&#x2F;open&#x2F;291&#x2F;105971，再点击如图所示的地方，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-%E7%94%9F%E6%88%90%E5%AF%B9%E5%BA%94%E7%9A%84%E7%A7%81%E9%92%A5%E5%92%8C%E5%85%AC%E9%92%A5%EF%BC%8C%E5%A4%8D%E5%88%B6%E6%8B%B7%E8%B4%9D%E5%88%B0%E7%94%B3%E8%AF%B7%E7%9A%84%E6%B2%99%E7%9B%92%E5%BA%94%E7%94%A8%E4%B8%AD%EF%BC%8C"><span class="nav-number">4.</span> <span class="nav-text">4.生成对应的私钥和公钥，复制拷贝到申请的沙盒应用中，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-%E7%94%B3%E8%AF%B7%E6%88%90%E5%8A%9F%E5%90%8E%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%9F%A5%E7%9C%8B%E6%B2%99%E7%9B%92%E8%B4%A6%E5%8F%B7%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%B8%8B%E8%BD%BD%E6%94%AF%E4%BB%98%E5%AE%9D%E6%B2%99%E7%9B%92%E7%89%88%EF%BC%8C%E7%94%A8%E4%BA%8E%E5%90%8E%E9%9D%A2%E7%9A%84%E6%B5%8B%E8%AF%95%EF%BC%8C"><span class="nav-number">5.</span> <span class="nav-text">5.申请成功后，可以查看沙盒账号，并且下载支付宝沙盒版，用于后面的测试，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-%E6%94%AF%E4%BB%98%E5%AE%9D%E6%B2%99%E7%9B%92%E7%9A%84%E7%94%B3%E8%AF%B7%E5%A5%BD%E4%BA%86%EF%BC%8C%E6%89%93%E5%BC%80%E7%BC%96%E8%AF%91%E5%99%A8%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AASpringBoot%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%AF%BC%E5%85%A5%E6%94%AF%E4%BB%98%E5%AE%9D%E7%9A%84SDK%E4%BE%9D%E8%B5%96%EF%BC%8C"><span class="nav-number">6.</span> <span class="nav-text">6.支付宝沙盒的申请好了，打开编译器新建一个SpringBoot项目，导入支付宝的SDK依赖，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#7-%E9%9A%8F%E4%BE%BF%E5%9C%A8public%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E9%9D%A2%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AAHtml%E6%96%87%E4%BB%B6%EF%BC%8C%E4%BD%9C%E4%B8%BA%E5%A1%AB%E5%86%99%E8%AE%A2%E5%8D%95%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C"><span class="nav-number">7.</span> <span class="nav-text">7.随便在public文件夹下面新建一个Html文件，作为填写订单的页面，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#8-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%8C%E9%85%8D%E7%BD%AE%E6%94%AF%E4%BB%98%E5%AE%9D%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%EF%BC%8C"><span class="nav-number">8.</span> <span class="nav-text">8.新建一个配置文件，配置支付宝的一些相关配置，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#9-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AAController%E7%B1%BB%EF%BC%8C%E7%94%A8%E6%9D%A5%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82%EF%BC%8C"><span class="nav-number">9.</span> <span class="nav-text">9.新建一个Controller类，用来发起请求，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#10-%E8%BF%90%E8%A1%8C%E5%90%AF%E5%8A%A8%E5%99%A8%EF%BC%8C%E6%9F%A5%E7%9C%8B%E8%B7%AF%E5%BE%84%E5%92%8C%E7%AB%AF%E5%8F%A3%EF%BC%8C%E6%88%91%E7%9A%84%E6%98%AF8889-index-html"><span class="nav-number">10.</span> <span class="nav-text">10.运行启动器，查看路径和端口，我的是8889&#x2F;index.html,</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#11-%E9%9A%8F%E4%BE%BF%E8%BE%93%E5%85%A5%E4%BF%A1%E6%81%AF%EF%BC%8C%E7%82%B9%E5%87%BB%E4%B8%8B%E5%8D%95%EF%BC%8C%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%B7%B3%E8%BD%AC%E5%88%B0%E6%94%AF%E4%BB%98%E9%A1%B5%E9%9D%A2%EF%BC%8C"><span class="nav-number">11.</span> <span class="nav-text">11.随便输入信息，点击下单，会自动跳转到支付页面，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#12-%E6%89%93%E5%BC%80%E6%89%8B%E6%9C%BA%E4%B8%AD%E4%B8%8B%E8%BD%BD%E7%9A%84%E6%94%AF%E4%BB%98%E5%AE%9D%E6%B2%99%E7%9B%92%E7%89%88%EF%BC%8C%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%EF%BC%9Ahttps-openhome-alipay-com-platform-appDaily-htm-tab-tool%EF%BC%8C"><span class="nav-number">12.</span> <span class="nav-text">12.打开手机中下载的支付宝沙盒版，下载地址：https:&#x2F;&#x2F;openhome.alipay.com&#x2F;platform&#x2F;appDaily.htm?tab&#x3D;tool，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#13-%E6%89%93%E5%BC%80%E7%99%BB%E5%BD%95%E5%88%9A%E5%88%9A%E7%94%B3%E8%AF%B7%E7%9A%84%E6%B2%99%E7%9B%92%E8%B4%A6%E5%8F%B7%E4%B8%AD%E7%9A%84%E4%B9%B0%E5%AE%B6%E8%B4%A6%E5%8F%B7%EF%BC%8C"><span class="nav-number">13.</span> <span class="nav-text">13.打开登录刚刚申请的沙盒账号中的买家账号，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#14-%E7%9B%B4%E6%8E%A5%E5%AF%B9%E6%94%AF%E4%BB%98%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81%E8%BF%9B%E8%A1%8C%E6%89%AB%E7%A0%81%E6%94%AF%E4%BB%98%EF%BC%8C"><span class="nav-number">14.</span> <span class="nav-text">14.直接对支付页面的二维码进行扫码支付，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#15-%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%EF%BC%8C%E6%94%AF%E4%BB%98%E6%88%90%E5%8A%9F%E5%90%8E%E6%9F%A5%E7%9C%8B%E8%B4%A6%E5%8D%95%EF%BC%8C"><span class="nav-number">15.</span> <span class="nav-text">15.输入密码，支付成功后查看账单，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#16-%E5%90%8C%E6%97%B6%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E9%A1%B5%E9%9D%A2%E4%B8%8A%E5%B7%B2%E7%BB%8F%E6%98%BE%E7%A4%BA%E6%94%AF%E4%BB%98%E6%88%90%E5%8A%9F%EF%BC%8C%E4%BA%94%E7%A7%92%E5%90%8E%E8%87%AA%E5%8A%A8%E8%BF%94%E5%9B%9E%E8%87%AA%E5%B7%B1%E5%AE%9A%E4%B9%89%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C"><span class="nav-number">16.</span> <span class="nav-text">16.同时可以看到页面上已经显示支付成功，五秒后自动返回自己定义的页面，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#17-%E7%84%B6%E5%90%8E%E5%8F%AF%E4%BB%A5%E7%99%BB%E5%BD%95%E4%B8%80%E4%B8%8B%E6%B2%99%E7%9B%92%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E5%8D%96%E5%AE%B6%E8%B4%A6%E5%8F%B7%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%9F%A5%E7%9C%8B%E5%88%B0%E5%88%9A%E5%88%9A%E7%9A%84%E6%94%B6%E5%85%A5%E4%BF%A1%E6%81%AF%EF%BC%8C"><span class="nav-number">17.</span> <span class="nav-text">17.然后可以登录一下沙盒应用中的卖家账号，可以查看到刚刚的收入信息，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#18-%E6%80%BB%E7%BB%93"><span class="nav-number">18.</span> <span class="nav-text">18.总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Diamond"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">Diamond</p>
+  <div class="site-description" itemprop="description">黑色的眼睛，注定寻找光明</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zl-Diamon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zl-Diamon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/zllwsy" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;zllwsy" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/DDDDD" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;DDDDD" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">Diamond</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">202k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:04</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+
+<span id="busuanzi_container_site_uv">
+  本站总访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+</div>
+
+
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nLtYdYhOieJn53fMGYIiyU5f-gzGzoHsz',
+      appKey     : '43kflehvxloXN1wOm9R90dRh',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.7' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+ 
+ <!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+  </body>
+</html>
