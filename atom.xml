@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-03-30T07:12:37.376Z</updated>
+  <updated>2021-04-01T08:09:02.535Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>忙碌中别忘记了生活的样子</title>
+    <link href="http://www.zllwsy.com/2021/04/01/%E5%BF%99%E7%A2%8C%E4%B8%AD%E5%88%AB%E5%BF%98%E8%AE%B0%E4%BA%86%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/"/>
+    <id>http://www.zllwsy.com/2021/04/01/%E5%BF%99%E7%A2%8C%E4%B8%AD%E5%88%AB%E5%BF%98%E8%AE%B0%E4%BA%86%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/</id>
+    <published>2021-04-01T07:30:15.000Z</published>
+    <updated>2021-04-01T08:09:02.535Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;每天往返于公司和家之间，不知道是否真的把自己都全部扔进了工作里，好像每天都在匆忙中度过，似乎显得充实而满足，但内心的压力和彷徨却无处可去，有时候可能真的是矫情，又或者是当物质生活得到满足后的空虚，人似乎真的也需要一点精神上的慰藉，曾在美篇写过一篇&lt;a href=&quot;https://www.meipian.cn/editor?mask_id=on0tcca&amp;getArticleListsParams=%7B%22page%22%3A%201,%20%22hasSureKeyword%22%3A%20%22%22,%20%22curListType%22%3A%20%22list%22%7D&quot; target=&quot;_blank&quot;&gt;&amp;lt;&amp;lt;唯美家庭所蕴含的真谛&amp;gt;&amp;gt;&lt;/a&gt;，可能是内心的索求，又或许是梦中的幻想。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-生活的样子" scheme="http://www.zllwsy.com/categories/%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/"/>
+    
+    
+    <category term="-单车 -微风 -湖面" scheme="http://www.zllwsy.com/tags/%E5%8D%95%E8%BD%A6-%E5%BE%AE%E9%A3%8E-%E6%B9%96%E9%9D%A2/"/>
+    
+  </entry>
   
   <entry>
     <title>支付接口之支付宝支付</title>
@@ -40,10 +59,10 @@
     <link href="http://www.zllwsy.com/2021/03/29/Python%E4%B9%8BSerial%E8%BF%9E%E6%8E%A5%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3/"/>
     <id>http://www.zllwsy.com/2021/03/29/Python%E4%B9%8BSerial%E8%BF%9E%E6%8E%A5%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3/</id>
     <published>2021-03-29T07:13:54.000Z</published>
-    <updated>2021-03-29T07:42:37.240Z</updated>
+    <updated>2021-03-30T07:30:45.779Z</updated>
     
     
-    <summary type="html">&lt;p&gt;万万没想到，我有一天会搞一搞Python，唯一对Python的影响就是爬虫，爬取数据，但是以前我写过的爬数据也是用的Webmagic，真是第一次接触Python语言，老大要求，那搞就完事了，一起看看吧。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;万万没想到，我有一天会搞一搞Python，唯一对Python的印象就是爬虫，爬取数据，但是以前我写过的爬数据也是用的Webmagic，真是第一次接触Python语言，老大要求，那搞就完事了，一起看看吧。&lt;/p&gt;</summary>
     
     
     
@@ -414,25 +433,6 @@
     
     
     <category term="-Fail-fast" scheme="http://www.zllwsy.com/tags/Fail-fast/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Typora写了一个Hello World</title>
-    <link href="http://www.zllwsy.com/2020/12/02/hello-world/"/>
-    <id>http://www.zllwsy.com/2020/12/02/hello-world/</id>
-    <published>2020-12-02T11:53:09.814Z</published>
-    <updated>2020-12-02T12:41:45.701Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-Blog System" scheme="http://www.zllwsy.com/categories/Blog-System/"/>
-    
-    
-    <category term="-Typora" scheme="http://www.zllwsy.com/tags/Typora/"/>
     
   </entry>
   
