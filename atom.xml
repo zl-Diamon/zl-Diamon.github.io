@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-04-01T08:09:02.535Z</updated>
+  <updated>2021-04-07T09:37:32.998Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -17,11 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>计算几天前的两种方法</title>
+    <link href="http://www.zllwsy.com/2021/04/07/%E8%AE%A1%E7%AE%97%E5%87%A0%E5%A4%A9%E5%89%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/"/>
+    <id>http://www.zllwsy.com/2021/04/07/%E8%AE%A1%E7%AE%97%E5%87%A0%E5%A4%A9%E5%89%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</id>
+    <published>2021-04-07T02:28:19.000Z</published>
+    <updated>2021-04-07T09:37:32.998Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;时间处理总是很常见，最近需要处理月内和两周的数据，两个小方法，记录一波，真想找一个特牛的工具类，不管什么时间处理都能一步到位就安逸了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-Utils" scheme="http://www.zllwsy.com/categories/Utils/"/>
+    
+    
+    <category term="-SimpleDateFormat" scheme="http://www.zllwsy.com/tags/SimpleDateFormat/"/>
+    
+  </entry>
+  
+  <entry>
     <title>忙碌中别忘记了生活的样子</title>
     <link href="http://www.zllwsy.com/2021/04/01/%E5%BF%99%E7%A2%8C%E4%B8%AD%E5%88%AB%E5%BF%98%E8%AE%B0%E4%BA%86%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/"/>
     <id>http://www.zllwsy.com/2021/04/01/%E5%BF%99%E7%A2%8C%E4%B8%AD%E5%88%AB%E5%BF%98%E8%AE%B0%E4%BA%86%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/</id>
     <published>2021-04-01T07:30:15.000Z</published>
-    <updated>2021-04-01T08:09:02.535Z</updated>
+    <updated>2021-04-01T08:22:35.963Z</updated>
     
     
     <summary type="html">&lt;p&gt;每天往返于公司和家之间，不知道是否真的把自己都全部扔进了工作里，好像每天都在匆忙中度过，似乎显得充实而满足，但内心的压力和彷徨却无处可去，有时候可能真的是矫情，又或者是当物质生活得到满足后的空虚，人似乎真的也需要一点精神上的慰藉，曾在美篇写过一篇&lt;a href=&quot;https://www.meipian.cn/editor?mask_id=on0tcca&amp;getArticleListsParams=%7B%22page%22%3A%201,%20%22hasSureKeyword%22%3A%20%22%22,%20%22curListType%22%3A%20%22list%22%7D&quot; target=&quot;_blank&quot;&gt;&amp;lt;&amp;lt;唯美家庭所蕴含的真谛&amp;gt;&amp;gt;&lt;/a&gt;，可能是内心的索求，又或许是梦中的幻想。&lt;/p&gt;</summary>
@@ -406,33 +425,6 @@
     
     
     <category term="-Servlet" scheme="http://www.zllwsy.com/tags/Servlet/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java集合的快速失败机制</title>
-    <link href="http://www.zllwsy.com/2021/01/06/Java%E9%9B%86%E5%90%88%E7%9A%84%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5%E6%9C%BA%E5%88%B6/"/>
-    <id>http://www.zllwsy.com/2021/01/06/Java%E9%9B%86%E5%90%88%E7%9A%84%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5%E6%9C%BA%E5%88%B6/</id>
-    <published>2021-01-06T01:05:01.000Z</published>
-    <updated>2021-01-06T01:11:49.664Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;strong&gt;”fail-fast“&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这是Java集合的一种错误监测机制，当多个线程对集合进行结构上的改变的操作的时候，就可能会产生fail-fast机制，&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;原因&lt;/strong&gt;：迭代器在遍历时直接访问集合中</summary>
-        
-      
-    
-    
-    
-    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="-Fail-fast" scheme="http://www.zllwsy.com/tags/Fail-fast/"/>
     
   </entry>
   
