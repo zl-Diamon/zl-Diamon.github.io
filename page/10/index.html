@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%BA%8C-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85mysql/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%89-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85Docker%E5%92%8CRedis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -211,7 +211,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%BA%8C-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85mysql/" class="post-title-link" itemprop="url">云服务器部署jpress-二-阿里云安装mysql</a>
+            <a href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%89-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85Docker%E5%92%8CRedis/" class="post-title-link" itemprop="url">单点登录-三-阿里云安装Docker和Redis</a>
         </h2>
 
         <div class="post-meta">
@@ -221,7 +221,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-11-02 19:04:41" itemprop="dateCreated datePublished" datetime="2020-11-02T19:04:41+08:00">2020-11-02</time>
+              <time title="创建时间：2020-11-06 19:32:31" itemprop="dateCreated datePublished" datetime="2020-11-06T19:32:31+08:00">2020-11-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -236,7 +236,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">-云服务器</span></a>
+                  <a href="/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">-单点登录</span></a>
                 </span>
             </span>
 
@@ -249,8 +249,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%BA%8C-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85mysql/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%BA%8C-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85mysql/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%89-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85Docker%E5%92%8CRedis/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%89-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85Docker%E5%92%8CRedis/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -260,14 +260,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -279,10 +279,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>服务器已经购买(试用)好了，并且能够成功远程连接成功了，如果还有问题，请参看：</p>
+          <p>然后需要安装一下Redis，其实可以不用docker，个人爱好，其实这里和普通centos系统安装几乎一模一样，只有细微的区别，centos7安装docker和redis请参看：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%BA%8C-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85mysql/#more" rel="contents">
+              <a class="btn" href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%89-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E8%A3%85Docker%E5%92%8CRedis/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -315,7 +315,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%8C-CAS%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -329,7 +329,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">云服务器部署jpress-一-阿里云服务器配置</a>
+            <a href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%8C-CAS%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/" class="post-title-link" itemprop="url">单点登录-二-CAS配置修改</a>
         </h2>
 
         <div class="post-meta">
@@ -339,7 +339,479 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-11-02 19:04:22" itemprop="dateCreated datePublished" datetime="2020-11-02T19:04:22+08:00">2020-11-02</time>
+              <time title="创建时间：2020-11-06 19:32:13" itemprop="dateCreated datePublished" datetime="2020-11-06T19:32:13+08:00">2020-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">-单点登录</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%8C-CAS%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%8C-CAS%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>978</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>上一篇已经安装并访问成功，这里需要对配置进行一些修改，必须登录的账户密码等等，上一篇安装请参看：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%BA%8C-CAS%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BACAS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BACAS/" class="post-title-link" itemprop="url">单点登录-一-阿里云服务器搭建CAS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-06 19:31:52" itemprop="dateCreated datePublished" datetime="2020-11-06T19:31:52+08:00">2020-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">-单点登录</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BACAS/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BACAS/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>791</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有了云服务器，我是真的就停不下来，啥都想学，啥都想干，这不，单点登录它来了，结合云服务器进行一次单点登录的实现，如果不知道啥是单点登录的，百度百科欢迎你，其实就是多个系统一次登录，就像我最近报名考研，我登录了研招网，然后报名是单独一个系统我就不用登录可以直接使用接口功能，然后又需要到学信网进行学历校验，直接跳转，也不需要登录，不知道能不能理解，简单来说就是相互信任的系统一次登录，开整！</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/06/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BACAS/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">MQTT接收消息存储到数据库-使用Knife4j框架</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-06 19:31:12" itemprop="dateCreated datePublished" datetime="2020-11-06T19:31:12+08:00">2020-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:10" itemprop="dateModified" datetime="2020-12-02T19:53:10+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MQTT/" itemprop="url" rel="index"><span itemprop="name">-MQTT</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>MQTT数据测试也没得问题了，虽然我也不知道为啥消息要存储要数据库，但是老大有需求，责无旁贷嘛，顺便我还想试试Knife4j框架，是基于Swagger搭建的，不会Swagger和MQTT消息发布接受请参看：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/06/MQTT%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93-%E4%BD%BF%E7%94%A8Knife4j%E6%A1%86%E6%9E%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/06/MQTT%E9%83%A8%E7%BD%B2EMQX%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/06/MQTT%E9%83%A8%E7%BD%B2EMQX%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">MQTT部署EMQX到云服务器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-06 19:30:40" itemprop="dateCreated datePublished" datetime="2020-11-06T19:30:40+08:00">2020-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 19:53:10" itemprop="dateModified" datetime="2020-12-02T19:53:10+08:00">2020-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MQTT/" itemprop="url" rel="index"><span itemprop="name">-MQTT</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/06/MQTT%E9%83%A8%E7%BD%B2EMQX%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/06/MQTT%E9%83%A8%E7%BD%B2EMQX%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>517</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>因为是试用的云服务器，迫切的想尝试一切可以试用的，我也把Mqtt的Emqx放到了云服务器中，然后IDEA修改配置即可，其他没有差别，稍微记录一下，Windows可以参看:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/06/MQTT%E9%83%A8%E7%BD%B2EMQX%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E5%9B%9B-%E9%83%A8%E7%BD%B2jpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E5%9B%9B-%E9%83%A8%E7%BD%B2jpress/" class="post-title-link" itemprop="url">云服务器部署jpress-四-部署jpress</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-02 19:05:48" itemprop="dateCreated datePublished" datetime="2020-11-02T19:05:48+08:00">2020-11-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -367,8 +839,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E5%9B%9B-%E9%83%A8%E7%BD%B2jpress/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E5%9B%9B-%E9%83%A8%E7%BD%B2jpress/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -378,7 +850,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>606</span>
+              <span>611</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -397,483 +869,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>和朋友闲聊的时候，刚好马上双十一，说他要买云服务器，我一想，这有必要吗，买个云服务器还是安装linux系统，和虚拟机没啥区别呀，我给他说死也不会用云服务器(没钱买)，然后他说可以试用一个月，嗯？其实还是可以试试的，刚好我觉得可能还没有虚拟机好用呢(真香),然后就想尝试一下云服务器部署，找了一个开源的jpress项目，开搞。</p>
+          <p>服务器OK，mysql没毛病，tomcat也启动访问成功，如果还有问题请参看：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/01/Linux%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85jdk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/01/Linux%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85jdk/" class="post-title-link" itemprop="url">Linux快捷安装jdk</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-01 10:51:18" itemprop="dateCreated datePublished" datetime="2020-11-01T10:51:18+08:00">2020-11-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:10" itemprop="dateModified" datetime="2020-12-02T19:53:10+08:00">2020-12-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">-Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/01/Linux%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85jdk/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/01/Linux%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85jdk/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>153</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>快捷的在Linux系统中安装Java环境，</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/01/Linux%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85jdk/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/11/01/Springboot%E9%9B%86%E6%88%90netty/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/01/Springboot%E9%9B%86%E6%88%90netty/" class="post-title-link" itemprop="url">Springboot集成netty</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-01 10:42:03" itemprop="dateCreated datePublished" datetime="2020-11-01T10:42:03+08:00">2020-11-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Netty/" itemprop="url" rel="index"><span itemprop="name">-Netty</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/01/Springboot%E9%9B%86%E6%88%90netty/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/01/Springboot%E9%9B%86%E6%88%90netty/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>9.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在尝试了Mqtt、Kafka、RabbitMq几种有关消息的技术后，我越发对消息的通信感兴趣，无意中了解到了netty，没错，第一时间我还是懵逼的，但是我看好多人都说netty是深入学习Java的必经之路，那，我，胖虎，要学，</p>
-<p>首先什么是netty？</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/01/Springboot%E9%9B%86%E6%88%90netty/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/10/28/Springboot%E8%BF%9E%E6%8E%A5Docker%E4%B8%AD%E7%9A%84Kafka%E6%B5%8B%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/28/Springboot%E8%BF%9E%E6%8E%A5Docker%E4%B8%AD%E7%9A%84Kafka%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">Springboot连接Docker中的Kafka测试</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-28 19:34:43" itemprop="dateCreated datePublished" datetime="2020-10-28T19:34:43+08:00">2020-10-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:07" itemprop="dateModified" datetime="2020-12-02T19:53:07+08:00">2020-12-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kafka/" itemprop="url" rel="index"><span itemprop="name">-Kafka</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/10/28/Springboot%E8%BF%9E%E6%8E%A5Docker%E4%B8%AD%E7%9A%84Kafka%E6%B5%8B%E8%AF%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/28/Springboot%E8%BF%9E%E6%8E%A5Docker%E4%B8%AD%E7%9A%84Kafka%E6%B5%8B%E8%AF%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在Linux中安装了docker，在docker安装了kafka和zookeeper，如有不懂得，请参看：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/28/Springboot%E8%BF%9E%E6%8E%A5Docker%E4%B8%AD%E7%9A%84Kafka%E6%B5%8B%E8%AF%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2020/10/28/Docker%E5%AE%89%E8%A3%85Kafka%E5%92%8CZookeeper%E5%8F%8A%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/28/Docker%E5%AE%89%E8%A3%85Kafka%E5%92%8CZookeeper%E5%8F%8A%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">Docker安装Kafka和Zookeeper及简单测试</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-28 19:32:27" itemprop="dateCreated datePublished" datetime="2020-10-28T19:32:27+08:00">2020-10-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:10" itemprop="dateModified" datetime="2020-12-02T19:53:10+08:00">2020-12-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kafka/" itemprop="url" rel="index"><span itemprop="name">-Kafka</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/10/28/Docker%E5%AE%89%E8%A3%85Kafka%E5%92%8CZookeeper%E5%8F%8A%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/28/Docker%E5%AE%89%E8%A3%85Kafka%E5%92%8CZookeeper%E5%8F%8A%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>学完了Mqtt，我又想试试很热门的kafka，我在几个项目中都用过，但是未曾自己搭建一次，所以再次记录，我准备安装在linux系统中，使用Centos7系统，这次又加上了我很喜欢的docker容器，希望一切顺利，</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/28/Docker%E5%AE%89%E8%A3%85Kafka%E5%92%8CZookeeper%E5%8F%8A%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95/#more" rel="contents">
+              <a class="btn" href="/2020/11/02/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2jpress-%E5%9B%9B-%E9%83%A8%E7%BD%B2jpress/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -905,7 +904,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -973,20 +972,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">89</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-count">79</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1034,13 +1033,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">204k</span>
+    <span title="站点总字数">207k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:05</span>
+    <span title="站点阅读时长">3:08</span>
 </div>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
