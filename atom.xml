@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-05-07T01:53:52.707Z</updated>
+  <updated>2021-05-07T02:00:21.541Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -21,14 +21,17 @@
     <link href="http://www.zllwsy.com/2021/05/07/Hexo%E9%83%A8%E7%BD%B2%E6%8A%A5%E9%94%99Spawn-failed/"/>
     <id>http://www.zllwsy.com/2021/05/07/Hexo%E9%83%A8%E7%BD%B2%E6%8A%A5%E9%94%99Spawn-failed/</id>
     <published>2021-05-07T01:51:58.000Z</published>
-    <updated>2021-05-07T01:53:52.707Z</updated>
+    <updated>2021-05-07T02:00:21.541Z</updated>
     
     
-    <summary type="html">&lt;p&gt;s&lt;/p&gt;
-&lt;p&gt;使用hexo d命令部署的时候总是出现Spawn failed错误。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;使用hexo d命令部署的时候总是出现Spawn failed错误，这里面分两种，一个是连接端口失败，一种是erron 10054。&lt;/p&gt;</summary>
     
     
     
+    <category term="-Hexo" scheme="http://www.zllwsy.com/categories/Hexo/"/>
+    
+    
+    <category term="-Spawn failed" scheme="http://www.zllwsy.com/tags/Spawn-failed/"/>
     
   </entry>
   
@@ -296,14 +299,14 @@
     <link href="http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
     <id>http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/</id>
     <published>2021-01-29T06:58:08.000Z</published>
-    <updated>2021-03-08T01:19:11.547Z</updated>
+    <updated>2021-05-07T02:01:43.651Z</updated>
     
     
     <summary type="html">&lt;p&gt;没怎么用过Oracle，以为差不多，这不就遇到一个坑，因为连表查询，表关系为一对多，要把连查出来的数据过滤为两条，也就是对b表数据进行分组或者说过滤吧，&lt;/p&gt;</summary>
     
     
     
-    <category term="-oracle" scheme="http://www.zllwsy.com/categories/oracle/"/>
+    <category term="-Oracle" scheme="http://www.zllwsy.com/categories/Oracle/"/>
     
     
     <category term="-oracle -过滤" scheme="http://www.zllwsy.com/tags/oracle-%E8%BF%87%E6%BB%A4/"/>
@@ -372,14 +375,14 @@
     <link href="http://www.zllwsy.com/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/"/>
     <id>http://www.zllwsy.com/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/</id>
     <published>2021-01-29T06:54:37.000Z</published>
-    <updated>2021-01-29T07:24:28.322Z</updated>
+    <updated>2021-05-07T02:03:29.852Z</updated>
     
     
     <summary type="html">&lt;p&gt;shiro是较为轻量的权限框架，学习使用一下，但是现在确实这个用的不多了，&lt;strong&gt;Spring Security&lt;/strong&gt;确实更香。&lt;/p&gt;</summary>
     
     
     
-    <category term="-shiro" scheme="http://www.zllwsy.com/categories/shiro/"/>
+    <category term="-Shiro" scheme="http://www.zllwsy.com/categories/Shiro/"/>
     
     
     <category term="-shiro" scheme="http://www.zllwsy.com/tags/shiro/"/>
