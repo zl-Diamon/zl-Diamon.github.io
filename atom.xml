@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-05-06T11:27:49.732Z</updated>
+  <updated>2021-05-07T01:53:52.707Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -15,6 +15,22 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo部署报错Spawn failed</title>
+    <link href="http://www.zllwsy.com/2021/05/07/Hexo%E9%83%A8%E7%BD%B2%E6%8A%A5%E9%94%99Spawn-failed/"/>
+    <id>http://www.zllwsy.com/2021/05/07/Hexo%E9%83%A8%E7%BD%B2%E6%8A%A5%E9%94%99Spawn-failed/</id>
+    <published>2021-05-07T01:51:58.000Z</published>
+    <updated>2021-05-07T01:53:52.707Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;s&lt;/p&gt;
+&lt;p&gt;使用hexo d命令部署的时候总是出现Spawn failed错误。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>考研计划</title>
@@ -386,25 +402,6 @@
     
     
     <category term="-mvn -pom" scheme="http://www.zllwsy.com/tags/mvn-pom/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>缓存失效模式</title>
-    <link href="http://www.zllwsy.com/2021/01/29/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://www.zllwsy.com/2021/01/29/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E6%A8%A1%E5%BC%8F/</id>
-    <published>2021-01-29T06:53:58.000Z</published>
-    <updated>2021-01-29T07:04:01.078Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;注解@CacheEvict，修改数据后，就自动清空缓存，下次执行后再重新生成缓存&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="-@CacheEvict" scheme="http://www.zllwsy.com/tags/CacheEvict/"/>
     
   </entry>
   

@@ -3709,4 +3709,15 @@
         <tag>-阿里云 -Linux -Docker -nacos -Sso-server</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Hexo部署报错Spawn failed</title>
+    <url>/2021/05/07/Hexo%E9%83%A8%E7%BD%B2%E6%8A%A5%E9%94%99Spawn-failed/</url>
+    <content><![CDATA[<p>s</p>
+<p>使用hexo d命令部署的时候总是出现Spawn failed错误。</p>
+<a id="more"></a>
+
+<p>错误详情：</p>
+<p><img src="C:\Users\zllwsy\AppData\Roaming\Typora\typora-user-images\image-20210507095238150.png" alt="image-20210507095238150"></p>
+]]></content>
+  </entry>
 </search>
