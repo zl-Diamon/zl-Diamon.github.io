@@ -3030,7 +3030,7 @@
 <p>总能实现一个吧，第一个难度太高，第二个有希望，第三个必然实现！</p>
 ]]></content>
       <categories>
-        <category>-hide</category>
+        <category>-Hide</category>
       </categories>
       <tags>
         <tag>-Myself -hide</tag>
@@ -3161,7 +3161,7 @@
 
 <h5 id="2-成都信息工程大学"><a href="#2-成都信息工程大学" class="headerlink" title="2.成都信息工程大学"></a>2.成都信息工程大学</h5><h6 id="2-1-专业招生："><a href="#2-1-专业招生：" class="headerlink" title="2.1.专业招生："></a>2.1.专业招生：</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/zhaosheng.png" alt="zhaosheng" style="zoom: 50%;" />
 
-<h6 id="2-2-专业课书籍："><a href="#2-2-专业课书籍：" class="headerlink" title="2.2.专业课书籍："></a>2.2.专业课书籍：</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/shuji.png" alt="shuji" style="zoom: 33%;" />
+<h6 id="2-2-专业课书籍：s"><a href="#2-2-专业课书籍：s" class="headerlink" title="2.2.专业课书籍：s"></a>2.2.专业课书籍：s</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/shuji.png" alt="shuji" style="zoom: 33%;" />
 
 <h5 id="3-西南财经大学"><a href="#3-西南财经大学" class="headerlink" title="3.西南财经大学"></a>3.西南财经大学</h5><h6 id="3-1-专业招生："><a href="#3-1-专业招生：" class="headerlink" title="3.1.专业招生："></a>3.1.专业招生：</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/shu.png" alt="shu" style="zoom: 33%;" />
 
@@ -3172,6 +3172,11 @@
 <h6 id="4-3-公共课"><a href="#4-3-公共课" class="headerlink" title="4.3.公共课"></a>4.3.公共课</h6><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210506144722651.png" alt="image-20210506144722651" style="zoom: 33%;" />
 
 <p>注：非全似乎都是数学二，英语二，数学二的考试科目只有高等数学和线性代数</p>
+<p>由于工作事情较多，暂定复习策略：</p>
+<p>政治：决定从九月份开始，跟随徐涛完事，冲刺阶段刷真题</p>
+<p>数学：线代跟随李永乐，高数跟随汤家凤，习题使用高数《1800》、线代《600》，最后加上复习全书，冲刺阶段刷真题</p>
+<p>英语：无脑背单词，刷题，口语，冲刺阶段刷真题</p>
+<p>专业课：840数据结构与程序设计，807程序综合设计皆为C语言版，《大话数据结构》看完，刷题，冲刺阶段刷真题，</p>
 ]]></content>
       <categories>
         <category>-考研</category>
@@ -3721,7 +3726,8 @@
 <a id="more"></a>
 
 <p>错误一详情：</p>
-<p><img src="C:\Users\zllwsy\AppData\Roaming\Typora\typora-user-images\image-20210507095238150.png" alt="image-20210507095238150"></p>
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210507095238150.png" alt="image-20210507095238150" style="zoom:50%;" />
+
 <p>解决方案：</p>
 <p>使用命令取消git的代理：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
