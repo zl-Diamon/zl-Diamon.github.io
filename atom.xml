@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-05-07T02:12:19.695Z</updated>
+  <updated>2021-05-26T11:03:09.151Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>调用阿里云Python SDK</title>
+    <link href="http://www.zllwsy.com/2021/05/26/%E8%B0%83%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91Python%20SDK/"/>
+    <id>http://www.zllwsy.com/2021/05/26/%E8%B0%83%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91Python%20SDK/</id>
+    <published>2021-05-26T10:52:38.000Z</published>
+    <updated>2021-05-26T11:03:09.151Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;1.执行命令，安装aliyun-python-sdk-core&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    <category term="-Docker" scheme="http://www.zllwsy.com/categories/Docker/"/>
+    
+    
+    <category term="-aliyun-python-sdk-core" scheme="http://www.zllwsy.com/tags/aliyun-python-sdk-core/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker容器中忘记Mysql密码</title>
+    <link href="http://www.zllwsy.com/2021/05/26/Docker%E5%AE%B9%E5%99%A8%E4%B8%AD%E5%BF%98%E8%AE%B0Mysql%E5%AF%86%E7%A0%81/"/>
+    <id>http://www.zllwsy.com/2021/05/26/Docker%E5%AE%B9%E5%99%A8%E4%B8%AD%E5%BF%98%E8%AE%B0Mysql%E5%AF%86%E7%A0%81/</id>
+    <published>2021-05-26T03:39:55.000Z</published>
+    <updated>2021-05-26T10:51:54.052Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;1.docker exec -it mysql /bin/bash&lt;/p&gt;
+&lt;p&gt;2.cd etc/mysql，修改my.cnf文件&lt;/p&gt;
+&lt;p&gt;3.在下面添加一行&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    <category term="-Docker" scheme="http://www.zllwsy.com/categories/Docker/"/>
+    
+    
+    <category term="-Docker -Mysql" scheme="http://www.zllwsy.com/tags/Docker-Mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo部署报错Spawn failed</title>
@@ -182,7 +236,7 @@
     <link href="http://www.zllwsy.com/2021/04/07/%E8%AE%A1%E7%AE%97%E5%87%A0%E5%A4%A9%E5%89%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/"/>
     <id>http://www.zllwsy.com/2021/04/07/%E8%AE%A1%E7%AE%97%E5%87%A0%E5%A4%A9%E5%89%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</id>
     <published>2021-04-07T02:28:19.000Z</published>
-    <updated>2021-04-17T02:36:32.287Z</updated>
+    <updated>2021-05-07T02:01:11.986Z</updated>
     
     
     <summary type="html">&lt;p&gt;时间处理总是很常见，最近需要处理月内和两周的数据，两个小方法，记录一波，真想找一个特牛的工具类，不管什么时间处理都能一步到位就安逸了。&lt;/p&gt;</summary>
@@ -356,7 +410,7 @@
     <link href="http://www.zllwsy.com/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/"/>
     <id>http://www.zllwsy.com/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/</id>
     <published>2021-01-29T06:54:53.000Z</published>
-    <updated>2021-03-29T08:39:22.954Z</updated>
+    <updated>2021-05-07T02:04:11.759Z</updated>
     
     
     <summary type="html">&lt;p&gt;读了一下源码，找了一下自动装配的原因。&lt;/p&gt;</summary>
@@ -367,44 +421,6 @@
     
     
     <category term="-自动装配" scheme="http://www.zllwsy.com/tags/%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringBoot整合Shiro</title>
-    <link href="http://www.zllwsy.com/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/"/>
-    <id>http://www.zllwsy.com/2021/01/29/SpringBoot%E6%95%B4%E5%90%88Shiro/</id>
-    <published>2021-01-29T06:54:37.000Z</published>
-    <updated>2021-05-07T02:03:29.852Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;shiro是较为轻量的权限框架，学习使用一下，但是现在确实这个用的不多了，&lt;strong&gt;Spring Security&lt;/strong&gt;确实更香。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-Shiro" scheme="http://www.zllwsy.com/categories/Shiro/"/>
-    
-    
-    <category term="-shiro" scheme="http://www.zllwsy.com/tags/shiro/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>本地包导入pom依赖方法总结</title>
-    <link href="http://www.zllwsy.com/2021/01/29/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%AF%BC%E5%85%A5pom%E4%BE%9D%E8%B5%96%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/"/>
-    <id>http://www.zllwsy.com/2021/01/29/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%AF%BC%E5%85%A5pom%E4%BE%9D%E8%B5%96%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</id>
-    <published>2021-01-29T06:54:18.000Z</published>
-    <updated>2021-01-29T07:27:16.780Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;一般来说，都是直接使用依赖，但总有一些情况想要把本地包加入maven依赖，有两种实现方法。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="-mvn -pom" scheme="http://www.zllwsy.com/tags/mvn-pom/"/>
     
   </entry>
   
