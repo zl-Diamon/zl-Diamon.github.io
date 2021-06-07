@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-05-26T11:03:09.151Z</updated>
+  <updated>2021-06-07T02:18:28.681Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -21,17 +21,10 @@
     <link href="http://www.zllwsy.com/2021/05/26/%E8%B0%83%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91Python%20SDK/"/>
     <id>http://www.zllwsy.com/2021/05/26/%E8%B0%83%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91Python%20SDK/</id>
     <published>2021-05-26T10:52:38.000Z</published>
-    <updated>2021-05-26T11:03:09.151Z</updated>
+    <updated>2021-06-07T02:18:28.681Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;1.执行命令，安装aliyun-python-sdk-core&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span</summary>
-        
-      
+    <summary type="html">&lt;p&gt;Linxu系统中调用阿里云的Python SDK。&lt;/p&gt;</summary>
     
     
     
