@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-06-07T02:18:28.681Z</updated>
+  <updated>2021-07-06T03:38:16.686Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -15,6 +15,63 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从yml配置读取数据工具类</title>
+    <link href="http://www.zllwsy.com/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
+    <id>http://www.zllwsy.com/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/</id>
+    <published>2021-07-06T03:36:27.000Z</published>
+    <updated>2021-07-06T03:38:16.686Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;不知道为什么，有时候@Value注解读取不到配置文件的数据，所以搞了一个工具类来读取。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-yml" scheme="http://www.zllwsy.com/tags/yml/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OkHttp使用</title>
+    <link href="http://www.zllwsy.com/2021/07/05/OkHttp%E4%BD%BF%E7%94%A8/"/>
+    <id>http://www.zllwsy.com/2021/07/05/OkHttp%E4%BD%BF%E7%94%A8/</id>
+    <published>2021-07-05T05:50:44.000Z</published>
+    <updated>2021-07-05T06:04:02.190Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Okhttp的使用，封装工具类，调用远程接口。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-OkHttp" scheme="http://www.zllwsy.com/tags/OkHttp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正则表达式</title>
+    <link href="http://www.zllwsy.com/2021/07/05/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>http://www.zllwsy.com/2021/07/05/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</id>
+    <published>2021-07-05T01:58:46.000Z</published>
+    <updated>2021-07-05T02:01:56.829Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;记录一次正则。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-正则 -matches" scheme="http://www.zllwsy.com/tags/%E6%AD%A3%E5%88%99-matches/"/>
+    
+  </entry>
   
   <entry>
     <title>调用阿里云Python SDK</title>
@@ -68,7 +125,7 @@
     <link href="http://www.zllwsy.com/2021/05/07/Hexo%E9%83%A8%E7%BD%B2%E6%8A%A5%E9%94%99Spawn-failed/"/>
     <id>http://www.zllwsy.com/2021/05/07/Hexo%E9%83%A8%E7%BD%B2%E6%8A%A5%E9%94%99Spawn-failed/</id>
     <published>2021-05-07T01:51:58.000Z</published>
-    <updated>2021-05-07T02:12:19.695Z</updated>
+    <updated>2021-06-07T02:41:36.072Z</updated>
     
     
     <summary type="html">&lt;p&gt;使用hexo d命令部署的时候总是出现Spawn failed错误，这里面分两种，一个是连接端口失败，一种是erron 10054。&lt;/p&gt;</summary>
@@ -133,7 +190,7 @@
     <link href="http://www.zllwsy.com/2021/04/25/%E9%82%A3%E4%B8%80%E4%B8%96/"/>
     <id>http://www.zllwsy.com/2021/04/25/%E9%82%A3%E4%B8%80%E4%B8%96/</id>
     <published>2021-04-25T07:52:34.000Z</published>
-    <updated>2021-05-06T11:27:38.474Z</updated>
+    <updated>2021-06-17T03:46:45.935Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;《那一世》&lt;/strong&gt;&lt;/p&gt;
@@ -172,7 +229,7 @@
     <link href="http://www.zllwsy.com/2021/04/16/SpringBoot%E6%89%8B%E5%8A%A8%E4%BB%8EBeanFactory%E4%B8%AD%E8%8E%B7%E5%8F%96Bean/"/>
     <id>http://www.zllwsy.com/2021/04/16/SpringBoot%E6%89%8B%E5%8A%A8%E4%BB%8EBeanFactory%E4%B8%AD%E8%8E%B7%E5%8F%96Bean/</id>
     <published>2021-04-16T02:32:01.000Z</published>
-    <updated>2021-04-16T03:05:59.376Z</updated>
+    <updated>2021-07-05T05:55:54.631Z</updated>
     
     
     <summary type="html">&lt;p&gt;在开发中总是会遇到很多特殊情况，比如MQTT消息走到回调函数messageArrived的时候，想要将消息内容处理后存储到数据库中，但是这个时候业务的Bean还没有被注入，拿到的Bean是为NULL的，又或者解决循环依赖的问题，两个Bean之间的循环依赖可以使用@Lazy注解进行延迟加载，但是多个Bean呢？A依赖B，B依赖C，C依赖D，D又依赖A，我查到两个较好的方法，一是手动获取Bean，二是使用三级缓存，这里记录一下手动获取Bean的方法。&lt;/p&gt;</summary>
@@ -305,7 +362,7 @@
     <link href="http://www.zllwsy.com/2021/03/29/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E8%A1%A8%E8%8E%B7%E5%8F%96%E5%AD%90%E8%A1%A8Json%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%86%85%E5%AE%B9/"/>
     <id>http://www.zllwsy.com/2021/03/29/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E8%A1%A8%E8%8E%B7%E5%8F%96%E5%AD%90%E8%A1%A8Json%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%86%85%E5%AE%B9/</id>
     <published>2021-03-29T06:05:56.000Z</published>
-    <updated>2021-05-06T07:42:53.163Z</updated>
+    <updated>2021-07-05T02:18:31.897Z</updated>
     
     
     <summary type="html">&lt;p&gt;实际开发过程中，总会遇到一些特定的问题，所以也需要一些特殊的解决方法，记录一次最近的SQL例子，A,B表连表查询，关系为一对多，但是查询结果只能为一条，也就是一条A的数据，对应B表很多条数据，但是只取B表最新的一条数据，然后再B表最新的数据中读取一个Json类型字段中的多个值，其中一个值又是一个json类型，还要更深层次获取json中的json中的属性值，再用as建立别名查询出来，你能想到几种方式呢？&lt;/p&gt;</summary>
@@ -324,7 +381,7 @@
     <link href="http://www.zllwsy.com/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
     <id>http://www.zllwsy.com/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/</id>
     <published>2021-01-29T06:58:33.000Z</published>
-    <updated>2021-01-29T07:06:14.704Z</updated>
+    <updated>2021-06-18T03:44:16.281Z</updated>
     
     
     <summary type="html">&lt;ul&gt;
@@ -357,63 +414,6 @@
     
     
     <category term="-oracle -过滤" scheme="http://www.zllwsy.com/tags/oracle-%E8%BF%87%E6%BB%A4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>探索equals必须重写hashCode方法的原理</title>
-    <link href="http://www.zllwsy.com/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/"/>
-    <id>http://www.zllwsy.com/2021/01/29/%E6%8E%A2%E7%B4%A2equals%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99hashCode%E6%96%B9%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86/</id>
-    <published>2021-01-29T06:57:18.000Z</published>
-    <updated>2021-01-29T07:05:14.853Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;hashCode()的作用是获取哈希码，它实际上返回了一个int整数，这个哈希码的作用就是确定该对象在哈希表中的索引位置，并且hashCode()方法被定义在Object.java中，这就意味着java中任何类都包含了hashCode()函数；&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="-@CacheEvict" scheme="http://www.zllwsy.com/tags/CacheEvict/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DockerFile文件开发</title>
-    <link href="http://www.zllwsy.com/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
-    <id>http://www.zllwsy.com/2021/01/29/DockerFile%E6%96%87%E4%BB%B6%E5%BC%80%E5%8F%91/</id>
-    <published>2021-01-29T06:55:45.000Z</published>
-    <updated>2021-01-29T07:22:22.192Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Docker！真香，谁用谁知道，软件安装简单，部署简单，这是一个简单的dockerfile测试。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-Docker" scheme="http://www.zllwsy.com/categories/Docker/"/>
-    
-    
-    <category term="-DockerFile -Linux" scheme="http://www.zllwsy.com/tags/DockerFile-Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringBoot自动装配原理</title>
-    <link href="http://www.zllwsy.com/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/"/>
-    <id>http://www.zllwsy.com/2021/01/29/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/</id>
-    <published>2021-01-29T06:54:53.000Z</published>
-    <updated>2021-05-07T02:04:11.759Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;读了一下源码，找了一下自动装配的原因。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-SpringBoot" scheme="http://www.zllwsy.com/categories/SpringBoot/"/>
-    
-    
-    <category term="-自动装配" scheme="http://www.zllwsy.com/tags/%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"/>
     
   </entry>
   

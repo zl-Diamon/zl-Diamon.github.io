@@ -60,7 +60,7 @@
 <meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113174214845.png">
 <meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113174719189.png">
 <meta property="article:published_time" content="2020-11-21T10:49:56.000Z">
-<meta property="article:modified_time" content="2020-12-02T11:53:08.397Z">
+<meta property="article:modified_time" content="2021-07-05T02:16:40.521Z">
 <meta property="article:author" content="Diamond">
 <meta property="article:tag" content="-Mysql -索引 -索引失效准则 -Explain">
 <meta name="twitter:card" content="summary">
@@ -264,7 +264,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 19:53:08" itemprop="dateModified" datetime="2020-12-02T19:53:08+08:00">2020-12-02</time>
+                <time title="修改时间：2021-07-05 10:16:40" itemprop="dateModified" datetime="2021-07-05T10:16:40+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -337,8 +337,7 @@
 <li>少用or，用它连接时会索引失效</li>
 </ol>
 <blockquote>
-<p>最佳左匹配法则：带头大哥不能死，中间兄弟不能断</p>
-</blockquote>
+<h6 id="最佳左匹配法则：带头大哥不能死，中间兄弟不能断"><a href="#最佳左匹配法则：带头大哥不能死，中间兄弟不能断" class="headerlink" title="最佳左匹配法则：带头大哥不能死，中间兄弟不能断"></a>最佳左匹配法则：带头大哥不能死，中间兄弟不能断</h6></blockquote>
 <p>概念：如果索引了多列，要遵守最左前缀法则，指的是查询从索引的最左前列开始并且<strong>不跳过索引中的列</strong>，</p>
 <p>只有第一个查询条件 name 的时候：</p>
 <ul>
@@ -396,8 +395,7 @@
 <p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113160634862.png" alt="image-20201113160634862"></p>
 <p>这又证明了当中间条件age去掉之后，后面的索引也不再生效了，说明了<strong>带头大哥不能死，中间兄弟也不能断</strong>，</p>
 <blockquote>
-<p>不在索引列上做任何操作(计算、函数、(自动or手动)类型转换)，会导致索引失效而转向全表扫描</p>
-</blockquote>
+<h6 id="不在索引列上做任何操作-计算、函数、-自动or手动-类型转换-，会导致索引失效而转向全表扫描"><a href="#不在索引列上做任何操作-计算、函数、-自动or手动-类型转换-，会导致索引失效而转向全表扫描" class="headerlink" title="不在索引列上做任何操作(计算、函数、(自动or手动)类型转换)，会导致索引失效而转向全表扫描"></a>不在索引列上做任何操作(计算、函数、(自动or手动)类型转换)，会导致索引失效而转向全表扫描</h6></blockquote>
 <p>还是先只设置name一个查询条件：</p>
 <ul>
 <li>type=ref，毫无疑问，索引生效了，</li>
@@ -422,8 +420,7 @@
 <p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113162049543.png" alt="image-20201113162049543"></p>
 <p>毫无疑问，结果是一致的，但是name进行了left截断操作的语句的索引失效了，所以，<strong>不要对索引的字段进行计算，将会导致索引失效</strong>，</p>
 <blockquote>
-<p>存储引擎不能使用索引中范围条件右边的列</p>
-</blockquote>
+<h6 id="存储引擎不能使用索引中范围条件右边的列"><a href="#存储引擎不能使用索引中范围条件右边的列" class="headerlink" title="存储引擎不能使用索引中范围条件右边的列"></a>存储引擎不能使用索引中范围条件右边的列</h6></blockquote>
 <p>先看一下全值匹配，也就是三个查询条件都是=：</p>
 <ul>
 <li>type=ref，进行了优化</li>
@@ -444,8 +441,7 @@
 <p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113163356914.png" alt="image-20201113163356914"></p>
 <p>可以看出来，在范围查询后的索引会失效，所以，<strong>不要使用索引范围右边(也就是后面)的字段(列)，</strong></p>
 <blockquote>
-<p>尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少 select  *</p>
-</blockquote>
+<h6 id="尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少-select"><a href="#尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少-select" class="headerlink" title="尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少 select  *"></a>尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少 select  *</h6></blockquote>
 <p>先使用select * 来查询：</p>
 <ul>
 <li>type = ref，表示范围扫描</li>
@@ -467,8 +463,7 @@
 <p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113164500550.png" alt="image-20201113164500550"></p>
 <p>所以，*<em>最好使用覆盖索引，索引列和查询列保持一致，减少select * 查询*</em>，</p>
 <blockquote>
-<p>mysql在使用不等于（!=或者&lt;&gt;）的时候无法使用索引会导致全表扫描</p>
-</blockquote>
+<h6 id="mysql在使用不等于（-或者-lt-gt-）的时候无法使用索引会导致全表扫描"><a href="#mysql在使用不等于（-或者-lt-gt-）的时候无法使用索引会导致全表扫描" class="headerlink" title="mysql在使用不等于（!=或者&lt;&gt;）的时候无法使用索引会导致全表扫描"></a>mysql在使用不等于（!=或者&lt;&gt;）的时候无法使用索引会导致全表扫描</h6></blockquote>
 <p>在使用 != 会 &lt;&gt; 时会导致索引失效：</p>
 <ul>
 <li>type=ALL，毫无疑问，进行了全表扫描，</li>
@@ -492,8 +487,7 @@
 
 <p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113165712133.png" alt="image-20201113165712133"></p>
 <blockquote>
-<p>like以通配符开头（’%abc…’）mysql索引失效会变成全表扫描操作，所以like % 写在查询条件的最右边</p>
-</blockquote>
+<h6 id="like以通配符开头（’-abc…’）mysql索引失效会变成全表扫描操作，所以like-写在查询条件的最右边"><a href="#like以通配符开头（’-abc…’）mysql索引失效会变成全表扫描操作，所以like-写在查询条件的最右边" class="headerlink" title="like以通配符开头（’%abc…’）mysql索引失效会变成全表扫描操作，所以like % 写在查询条件的最右边"></a>like以通配符开头（’%abc…’）mysql索引失效会变成全表扫描操作，所以like % 写在查询条件的最右边</h6></blockquote>
 <p>使用like，前后都添加通配符：</p>
 <ul>
 <li>type=ALL，毫无疑问，进行了全表扫描，</li>
@@ -583,8 +577,7 @@
 <p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20201113173213108.png" alt="image-20201113173213108"></p>
 <p>从上述的测试可以看出，如果业务中非要用双百分号通配符like，而<strong>要实现索引生效的最好方式，就是使用覆盖索引，也就是查询的字段加入索引，</strong></p>
 <blockquote>
-<p>字符串不加单引号索引失效</p>
-</blockquote>
+<h6 id="字符串不加单引号索引失效"><a href="#字符串不加单引号索引失效" class="headerlink" title="字符串不加单引号索引失效"></a>字符串不加单引号索引失效</h6></blockquote>
 <p>先查看正确的情况，也就是正常使用单引号:</p>
 <ul>
 <li>type = ref，表示范围扫描</li>
@@ -719,6 +712,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%B7%A6%E5%8C%B9%E9%85%8D%E6%B3%95%E5%88%99%EF%BC%9A%E5%B8%A6%E5%A4%B4%E5%A4%A7%E5%93%A5%E4%B8%8D%E8%83%BD%E6%AD%BB%EF%BC%8C%E4%B8%AD%E9%97%B4%E5%85%84%E5%BC%9F%E4%B8%8D%E8%83%BD%E6%96%AD"><span class="nav-number">1.</span> <span class="nav-text">最佳左匹配法则：带头大哥不能死，中间兄弟不能断</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%8D%E5%9C%A8%E7%B4%A2%E5%BC%95%E5%88%97%E4%B8%8A%E5%81%9A%E4%BB%BB%E4%BD%95%E6%93%8D%E4%BD%9C-%E8%AE%A1%E7%AE%97%E3%80%81%E5%87%BD%E6%95%B0%E3%80%81-%E8%87%AA%E5%8A%A8or%E6%89%8B%E5%8A%A8-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-%EF%BC%8C%E4%BC%9A%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E8%80%8C%E8%BD%AC%E5%90%91%E5%85%A8%E8%A1%A8%E6%89%AB%E6%8F%8F"><span class="nav-number">2.</span> <span class="nav-text">不在索引列上做任何操作(计算、函数、(自动or手动)类型转换)，会导致索引失效而转向全表扫描</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E4%B8%AD%E8%8C%83%E5%9B%B4%E6%9D%A1%E4%BB%B6%E5%8F%B3%E8%BE%B9%E7%9A%84%E5%88%97"><span class="nav-number">3.</span> <span class="nav-text">存储引擎不能使用索引中范围条件右边的列</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95%EF%BC%88%E5%8F%AA%E8%AE%BF%E9%97%AE%E7%B4%A2%E5%BC%95%E7%9A%84%E6%9F%A5%E8%AF%A2%EF%BC%88%E7%B4%A2%E5%BC%95%E5%88%97%E5%92%8C%E6%9F%A5%E8%AF%A2%E5%88%97%E4%B8%80%E8%87%B4%EF%BC%89%EF%BC%89%EF%BC%8C%E5%87%8F%E5%B0%91-select"><span class="nav-number">4.</span> <span class="nav-text">尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少 select  *</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#mysql%E5%9C%A8%E4%BD%BF%E7%94%A8%E4%B8%8D%E7%AD%89%E4%BA%8E%EF%BC%88-%E6%88%96%E8%80%85-lt-gt-%EF%BC%89%E7%9A%84%E6%97%B6%E5%80%99%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E4%BC%9A%E5%AF%BC%E8%87%B4%E5%85%A8%E8%A1%A8%E6%89%AB%E6%8F%8F"><span class="nav-number">5.</span> <span class="nav-text">mysql在使用不等于（!&#x3D;或者&lt;&gt;）的时候无法使用索引会导致全表扫描</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#like%E4%BB%A5%E9%80%9A%E9%85%8D%E7%AC%A6%E5%BC%80%E5%A4%B4%EF%BC%88%E2%80%99-abc%E2%80%A6%E2%80%99%EF%BC%89mysql%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E4%BC%9A%E5%8F%98%E6%88%90%E5%85%A8%E8%A1%A8%E6%89%AB%E6%8F%8F%E6%93%8D%E4%BD%9C%EF%BC%8C%E6%89%80%E4%BB%A5like-%E5%86%99%E5%9C%A8%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%9C%80%E5%8F%B3%E8%BE%B9"><span class="nav-number">6.</span> <span class="nav-text">like以通配符开头（’%abc…’）mysql索引失效会变成全表扫描操作，所以like % 写在查询条件的最右边</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8D%E5%8A%A0%E5%8D%95%E5%BC%95%E5%8F%B7%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88"><span class="nav-number">7.</span> <span class="nav-text">字符串不加单引号索引失效</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -734,7 +728,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">96</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -747,7 +741,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-count">86</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -795,13 +789,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">209k</span>
+    <span title="站点总字数">217k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:10</span>
+    <span title="站点阅读时长">3:18</span>
 </div>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
