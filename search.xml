@@ -3941,9 +3941,9 @@
 
 <h5 id="15-访问NameNode界面，ip-50070"><a href="#15-访问NameNode界面，ip-50070" class="headerlink" title="15.访问NameNode界面，ip+50070"></a>15.访问NameNode界面，ip+50070</h5><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719153158623.png" alt="image-20210719153158623" style="zoom: 33%;" />
 
-<h5 id="16-访问管理界面，ip-8087-默认为8088，在yarn-site-xml中设置"><a href="#16-访问管理界面，ip-8087-默认为8088，在yarn-site-xml中设置" class="headerlink" title="16.访问管理界面，ip+8087(默认为8088，在yarn-site.xml中设置)"></a>16.访问管理界面，ip+8087(默认为8088，在yarn-site.xml中设置)</h5><img src="C:\Users\zllwsy\AppData\Roaming\Typora\typora-user-images\image-20210719161357847.png" alt="image-20210719161357847" style="zoom:50%;" />
+<h5 id="16-访问管理界面，ip-8087-默认为8088，在yarn-site-xml中设置"><a href="#16-访问管理界面，ip-8087-默认为8088，在yarn-site-xml中设置" class="headerlink" title="16.访问管理界面，ip+8087(默认为8088，在yarn-site.xml中设置)"></a>16.访问管理界面，ip+8087(默认为8088，在yarn-site.xml中设置)</h5><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719161357847.png" alt="image-20210719161357847" style="zoom:50%;" />
 
-<h5 id="17-管理页面，访问ip-9000"><a href="#17-管理页面，访问ip-9000" class="headerlink" title="17.管理页面，访问ip+9000"></a>17.管理页面，访问ip+9000</h5><img src="C:\Users\zllwsy\AppData\Roaming\Typora\typora-user-images\image-20210719161433215.png" alt="image-20210719161433215" style="zoom:50%;" />
+<h5 id="17-管理页面，访问ip-9000"><a href="#17-管理页面，访问ip-9000" class="headerlink" title="17.管理页面，访问ip+9000"></a>17.管理页面，访问ip+9000</h5><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719161433215.png" alt="image-20210719161433215" style="zoom:50%;" />
 
 <p>经查询，是因为单机模式，需要指定具体的端口。</p>
 <h5 id="18-总结"><a href="#18-总结" class="headerlink" title="18.总结"></a>18.总结</h5><p>中途出现了一些问题，查询了多方资料，注意阿里云服务器，不建议直接关闭防火墙，可以去服务器实例的安全组里面进行配置，开放需要的端口即可。</p>
