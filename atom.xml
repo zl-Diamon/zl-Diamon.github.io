@@ -40,7 +40,7 @@
     <link href="http://www.zllwsy.com/2021/07/28/Springboot%E5%AE%9E%E7%8E%B0aop%E5%88%87%E9%9D%A2%E6%A1%88%E4%BE%8B/"/>
     <id>http://www.zllwsy.com/2021/07/28/Springboot%E5%AE%9E%E7%8E%B0aop%E5%88%87%E9%9D%A2%E6%A1%88%E4%BE%8B/</id>
     <published>2021-07-28T06:24:42.000Z</published>
-    <updated>2021-07-28T06:33:15.883Z</updated>
+    <updated>2021-07-28T08:13:38.297Z</updated>
     
     
     <summary type="html">&lt;p&gt;以前写过很多次Aop切面，基于xml的配置方式，最近要求对每个接口进行权限校验，而不是页面，因为无法避免某个人没有页面权限，但是知道接口的情况，也刚好整理一下。&lt;/p&gt;</summary>
