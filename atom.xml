@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-07-06T03:38:16.686Z</updated>
+  <updated>2021-07-28T07:38:26.736Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -17,11 +17,68 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Linux &amp;&amp; Windows杀死端口</title>
+    <link href="http://www.zllwsy.com/2021/07/28/Linux&amp;&amp;Windows%E6%9D%80%E6%AD%BB%E7%AB%AF%E5%8F%A3/"/>
+    <id>http://www.zllwsy.com/2021/07/28/Linux&amp;&amp;Windows%E6%9D%80%E6%AD%BB%E7%AB%AF%E5%8F%A3/</id>
+    <published>2021-07-28T07:32:21.000Z</published>
+    <updated>2021-07-28T07:38:26.736Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;关闭端口&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="-Port -Linux -Windows" scheme="http://www.zllwsy.com/tags/Port-Linux-Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Springboot实现aop切面案例</title>
+    <link href="http://www.zllwsy.com/2021/07/28/Springboot%E5%AE%9E%E7%8E%B0aop%E5%88%87%E9%9D%A2%E6%A1%88%E4%BE%8B/"/>
+    <id>http://www.zllwsy.com/2021/07/28/Springboot%E5%AE%9E%E7%8E%B0aop%E5%88%87%E9%9D%A2%E6%A1%88%E4%BE%8B/</id>
+    <published>2021-07-28T06:24:42.000Z</published>
+    <updated>2021-07-28T06:33:15.883Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;以前写过很多次Aop切面，基于xml的配置方式，最近要求对每个接口进行权限校验，而不是页面，因为无法避免某个人没有页面权限，但是知道接口的情况，也刚好整理一下。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-Aop" scheme="http://www.zllwsy.com/categories/Aop/"/>
+    
+    
+    <category term="-Aop -Springboot" scheme="http://www.zllwsy.com/tags/Aop-Springboot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop搭建</title>
+    <link href="http://www.zllwsy.com/2021/07/19/Hadoop%E6%90%AD%E5%BB%BA/"/>
+    <id>http://www.zllwsy.com/2021/07/19/Hadoop%E6%90%AD%E5%BB%BA/</id>
+    <published>2021-07-19T06:07:14.000Z</published>
+    <updated>2021-07-19T09:01:35.125Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;因工作需要，和大数据项目组有所交集，搭建部署一下hadoop，接下来会更进一步学习，毕竟大数据和物联网目前是比较热门的板块，有必要去学习，使用的阿里云服务器，先搭个单机版，主要看后面是否能使用docker来搭建集群。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="-Hadoop" scheme="http://www.zllwsy.com/categories/Hadoop/"/>
+    
+    
+    <category term="-Hadoop -Linux" scheme="http://www.zllwsy.com/tags/Hadoop-Linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>从yml配置读取数据工具类</title>
     <link href="http://www.zllwsy.com/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
     <id>http://www.zllwsy.com/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/</id>
     <published>2021-07-06T03:36:27.000Z</published>
-    <updated>2021-07-06T03:38:16.686Z</updated>
+    <updated>2021-07-10T07:30:02.781Z</updated>
     
     
     <summary type="html">&lt;p&gt;不知道为什么，有时候@Value注解读取不到配置文件的数据，所以搞了一个工具类来读取。&lt;/p&gt;</summary>
@@ -354,66 +411,6 @@
     
     
     <category term="-Python -Serial -超声波测距" scheme="http://www.zllwsy.com/tags/Python-Serial-%E8%B6%85%E5%A3%B0%E6%B3%A2%E6%B5%8B%E8%B7%9D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql数据库连表获取子表Json类型字段内容</title>
-    <link href="http://www.zllwsy.com/2021/03/29/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E8%A1%A8%E8%8E%B7%E5%8F%96%E5%AD%90%E8%A1%A8Json%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%86%85%E5%AE%B9/"/>
-    <id>http://www.zllwsy.com/2021/03/29/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E8%A1%A8%E8%8E%B7%E5%8F%96%E5%AD%90%E8%A1%A8Json%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%86%85%E5%AE%B9/</id>
-    <published>2021-03-29T06:05:56.000Z</published>
-    <updated>2021-07-05T02:18:31.897Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;实际开发过程中，总会遇到一些特定的问题，所以也需要一些特殊的解决方法，记录一次最近的SQL例子，A,B表连表查询，关系为一对多，但是查询结果只能为一条，也就是一条A的数据，对应B表很多条数据，但是只取B表最新的一条数据，然后再B表最新的数据中读取一个Json类型字段中的多个值，其中一个值又是一个json类型，还要更深层次获取json中的json中的属性值，再用as建立别名查询出来，你能想到几种方式呢？&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="-Mysql -JSON_EXTRACT -子查询" scheme="http://www.zllwsy.com/tags/Mysql-JSON-EXTRACT-%E5%AD%90%E6%9F%A5%E8%AF%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>FeignClient远程调用</title>
-    <link href="http://www.zllwsy.com/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
-    <id>http://www.zllwsy.com/2021/01/29/FeignClient%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/</id>
-    <published>2021-01-29T06:58:33.000Z</published>
-    <updated>2021-06-18T03:44:16.281Z</updated>
-    
-    
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;引入OpenFeign依赖&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;定义FeignClient接口类（注解&lt;code&gt;@FeignClient&lt;/code&gt;），声明这个接口类是用来远程调用其他服务的&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-随笔" scheme="http://www.zllwsy.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="-OpenFeign" scheme="http://www.zllwsy.com/tags/OpenFeign/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Oracle分组过滤数据总结</title>
-    <link href="http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
-    <id>http://www.zllwsy.com/2021/01/29/Oracle%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/</id>
-    <published>2021-01-29T06:58:08.000Z</published>
-    <updated>2021-05-07T02:01:43.651Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;没怎么用过Oracle，以为差不多，这不就遇到一个坑，因为连表查询，表关系为一对多，要把连查出来的数据过滤为两条，也就是对b表数据进行分组或者说过滤吧，&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-Oracle" scheme="http://www.zllwsy.com/categories/Oracle/"/>
-    
-    
-    <category term="-oracle -过滤" scheme="http://www.zllwsy.com/tags/oracle-%E8%BF%87%E6%BB%A4/"/>
     
   </entry>
   

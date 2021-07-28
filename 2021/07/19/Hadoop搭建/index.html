@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/myCat.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/myCat.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zllwsy.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="因工作需要，和大数据项目组有所交集，搭建部署一下hadoop，接下来会更进一步学习，毕竟大数据和物联网目前是比较热门的板块，有必要去学习，使用的阿里云服务器，先搭个单机版，主要看后面是否能使用docker来搭建集群。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop搭建">
+<meta property="og:url" content="http://www.zllwsy.com/2021/07/19/Hadoop%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Sweet Candy">
+<meta property="og:description" content="因工作需要，和大数据项目组有所交集，搭建部署一下hadoop，接下来会更进一步学习，毕竟大数据和物联网目前是比较热门的板块，有必要去学习，使用的阿里云服务器，先搭个单机版，主要看后面是否能使用docker来搭建集群。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719141401153.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719141738229.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719141946593.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142133641.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719145929248.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142432999.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142606554.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142853417.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142928175.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719143214465.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719153003332.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719153043198.png">
+<meta property="og:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719153158623.png">
+<meta property="og:image" content="c:/Users/zllwsy/AppData/Roaming/Typora/typora-user-images/image-20210719161357847.png">
+<meta property="og:image" content="c:/Users/zllwsy/AppData/Roaming/Typora/typora-user-images/image-20210719161433215.png">
+<meta property="article:published_time" content="2021-07-19T06:07:14.000Z">
+<meta property="article:modified_time" content="2021-07-19T09:01:35.125Z">
+<meta property="article:author" content="Diamond">
+<meta property="article:tag" content="-Hadoop -Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719141401153.png">
+
+<link rel="canonical" href="http://www.zllwsy.com/2021/07/19/Hadoop%E6%90%AD%E5%BB%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hadoop搭建 | Sweet Candy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Sweet Candy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweet Candy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I will in life and deth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/07/19/Hadoop%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hadoop搭建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-19 14:07:14 / 修改时间：17:01:35" itemprop="dateCreated datePublished" datetime="2021-07-19T14:07:14+08:00">2021-07-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">-Hadoop</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/19/Hadoop%E6%90%AD%E5%BB%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/19/Hadoop%E6%90%AD%E5%BB%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>因工作需要，和大数据项目组有所交集，搭建部署一下hadoop，接下来会更进一步学习，毕竟大数据和物联网目前是比较热门的板块，有必要去学习，使用的阿里云服务器，先搭个单机版，主要看后面是否能使用docker来搭建集群。</p>
+<a id="more"></a>
+
+<h5 id="1-下载hadoop"><a href="#1-下载hadoop" class="headerlink" title="1.下载hadoop"></a>1.下载hadoop</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">地址：https:&#x2F;&#x2F;hadoop.apache.org&#x2F;releases.html</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-上传tar包到服务区并解压，路径为-usr-local-hadoop"><a href="#2-上传tar包到服务区并解压，路径为-usr-local-hadoop" class="headerlink" title="2.上传tar包到服务区并解压，路径为 /usr/local/hadoop"></a>2.上传tar包到服务区并解压，路径为 /usr/local/hadoop</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf hadoop-2.7.5.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719141401153.png" alt="image-20210719141401153"></p>
+<h5 id="3-修改服务器hostname"><a href="#3-修改服务器hostname" class="headerlink" title="3.修改服务器hostname"></a>3.修改服务器hostname</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname &lt;新的hostname&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-创建挂载数据的文件夹"><a href="#4-创建挂载数据的文件夹" class="headerlink" title="4.创建挂载数据的文件夹"></a>4.创建挂载数据的文件夹</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir  &#x2F;root&#x2F;hadoop</span><br><span class="line">mkdir  &#x2F;root&#x2F;hadoop&#x2F;tmp</span><br><span class="line">mkdir  &#x2F;root&#x2F;hadoop&#x2F;var</span><br><span class="line">mkdir  &#x2F;root&#x2F;hadoop&#x2F;dfs</span><br><span class="line">mkdir  &#x2F;root&#x2F;hadoop&#x2F;dfs&#x2F;name</span><br><span class="line">mkdir  &#x2F;root&#x2F;hadoop&#x2F;dfs&#x2F;data</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-进入配置文件目录"><a href="#5-进入配置文件目录" class="headerlink" title="5.进入配置文件目录"></a>5.进入配置文件目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;local&#x2F;hadoop&#x2F;hadoop-2.7.5&#x2F;etc&#x2F;hadoop</span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719141738229.png" alt="image-20210719141738229" style="zoom:50%;" />
+
+<h5 id="6-修改core-site-xml"><a href="#6-修改core-site-xml" class="headerlink" title="6.修改core-site.xml"></a>6.修改core-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vi core-site.xml</span><br><span class="line"></span><br><span class="line">#在configuration中添加</span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;&#x2F;root&#x2F;hadoop&#x2F;tmp&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;hdfs:&#x2F;&#x2F;zllwsy:9000&lt;&#x2F;value&gt; #这里为刚刚设置的hostname</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719141946593.png" alt="image-20210719141946593" style="zoom:50%;" />
+
+<h5 id="7-修改hadoop-env-sh"><a href="#7-修改hadoop-env-sh" class="headerlink" title="7.修改hadoop-env.sh"></a>7.修改hadoop-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi hadoop-env.sh</span><br><span class="line"></span><br><span class="line">修改为本地的JDK位置</span><br><span class="line">将export JAVA_HOME&#x3D;$&#123;JAVA_HOME&#125;修改为export JAVA_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;java&#x2F;jdk1.8.0_291</span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142133641.png" alt="image-20210719142133641" style="zoom:50%;" />
+
+<h5 id="8-修改hdfs-site-xml"><a href="#8-修改hdfs-site-xml" class="headerlink" title="8.修改hdfs-site.xml"></a>8.修改hdfs-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">vi hdfs-site.xml</span><br><span class="line"></span><br><span class="line">#在configuration中添加</span><br><span class="line">&lt;property&gt;</span><br><span class="line">   &lt;name&gt;dfs.name.dir&lt;&#x2F;name&gt;</span><br><span class="line">   &lt;value&gt;&#x2F;root&#x2F;hadoop&#x2F;dfs&#x2F;name&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">   &lt;name&gt;dfs.data.dir&lt;&#x2F;name&gt;</span><br><span class="line">   &lt;value&gt;&#x2F;root&#x2F;hadoop&#x2F;dfs&#x2F;data&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">   &lt;name&gt;dfs.replication&lt;&#x2F;name&gt;</span><br><span class="line">   &lt;value&gt;1&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">   &lt;name&gt;dfs.namenode.http.address&lt;&#x2F;name&gt;</span><br><span class="line">   &lt;value&gt;slave1:50070&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719145929248.png" alt="image-20210719145929248" style="zoom:50%;" />
+
+<h5 id="9-修改mapred-site-xml-template"><a href="#9-修改mapred-site-xml-template" class="headerlink" title="9.修改mapred-site.xml.template"></a>9.修改mapred-site.xml.template</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">vi mapred-site.xml.template </span><br><span class="line"></span><br><span class="line">#在configuration中添加</span><br><span class="line">&lt;property&gt;</span><br><span class="line">   &lt;name&gt;mapred.job.tracker&lt;&#x2F;name&gt;</span><br><span class="line">   &lt;value&gt;zllwsy:49001&lt;&#x2F;value&gt; #与hostname一致</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">      &lt;name&gt;mapred.local.dir&lt;&#x2F;name&gt;</span><br><span class="line">       &lt;value&gt;&#x2F;root&#x2F;hadoop&#x2F;var&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">       &lt;name&gt;mapreduce.framework.name&lt;&#x2F;name&gt;</span><br><span class="line">       &lt;value&gt;yarn&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142432999.png" alt="image-20210719142432999" style="zoom:50%;" />
+
+<h5 id="10-修改yarn-site-xml"><a href="#10-修改yarn-site-xml" class="headerlink" title="10.修改yarn-site.xml"></a>10.修改yarn-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">vi yarn-site.xml</span><br><span class="line"></span><br><span class="line">#在configuration中添加</span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.hostname&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;zllwsy&lt;&#x2F;value&gt; #与hostname一致</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.address&lt;&#x2F;name&gt;</span><br><span class="line"></span><br><span class="line">        &lt;value&gt;$&#123;yarn.resourcemanager.hostname&#125;:8032&lt;&#x2F;value&gt;</span><br><span class="line"></span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;$&#123;yarn.resourcemanager.hostname&#125;:8030&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;$&#123;yarn.resourcemanager.hostname&#125;:8087&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.webapp.https.address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;$&#123;yarn.resourcemanager.hostname&#125;:8090&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;$&#123;yarn.resourcemanager.hostname&#125;:8031&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.admin.address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;$&#123;yarn.resourcemanager.hostname&#125;:8033&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.aux-services&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;mapreduce_shuffle&lt;&#x2F;value&gt;</span><br><span class="line"></span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.scheduler.maximum-allocation-mb&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;2048&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.vmem-pmem-ratio&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;2.1&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.resource.memory-mb&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;2048&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;false&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142606554.png" alt="image-20210719142606554" style="zoom:50%;" />
+
+<h5 id="11-格式化一个新的分布式文件系统："><a href="#11-格式化一个新的分布式文件系统：" class="headerlink" title="11.格式化一个新的分布式文件系统："></a>11.格式化一个新的分布式文件系统：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#在路径&#x2F;usr&#x2F;local&#x2F;hadoop&#x2F;hadoop-2.7.5&#x2F;bin下执行</span><br><span class="line"></span><br><span class="line">.&#x2F;hadoop  namenode  -format</span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142853417.png" alt="image-20210719142853417" style="zoom:50%;" />
+
+<h5 id="12-启动hadoop"><a href="#12-启动hadoop" class="headerlink" title="12.启动hadoop"></a>12.启动hadoop</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#启动命令都在&#x2F;usr&#x2F;local&#x2F;hadoop&#x2F;hadoop-2.7.5&#x2F;sbin下</span><br><span class="line">#直接启动所有</span><br><span class="line"></span><br><span class="line">sh start-all.sh </span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719142928175.png" alt="image-20210719142928175" style="zoom:50%;" />
+
+<p>输入yes即可，然后输入密码：</p>
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719143214465.png" alt="image-20210719143214465" style="zoom:50%;" />
+
+<h5 id="13-查看启动是否成功，使用jps命令"><a href="#13-查看启动是否成功，使用jps命令" class="headerlink" title="13.查看启动是否成功，使用jps命令"></a>13.查看启动是否成功，使用jps命令</h5><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719153003332.png" alt="image-20210719153003332" style="zoom:50%;" />
+
+<h5 id="14-阿里云服务器问题"><a href="#14-阿里云服务器问题" class="headerlink" title="14.阿里云服务器问题"></a>14.阿里云服务器问题</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;hosts # 阿里云服务器这里必须设置为内网ip</span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719153043198.png" alt="image-20210719153043198" style="zoom:50%;" />
+
+<h5 id="15-访问NameNode界面，ip-50070"><a href="#15-访问NameNode界面，ip-50070" class="headerlink" title="15.访问NameNode界面，ip+50070"></a>15.访问NameNode界面，ip+50070</h5><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20210719153158623.png" alt="image-20210719153158623" style="zoom: 33%;" />
+
+<h5 id="16-访问管理界面，ip-8087-默认为8088，在yarn-site-xml中设置"><a href="#16-访问管理界面，ip-8087-默认为8088，在yarn-site-xml中设置" class="headerlink" title="16.访问管理界面，ip+8087(默认为8088，在yarn-site.xml中设置)"></a>16.访问管理界面，ip+8087(默认为8088，在yarn-site.xml中设置)</h5><img src="C:\Users\zllwsy\AppData\Roaming\Typora\typora-user-images\image-20210719161357847.png" alt="image-20210719161357847" style="zoom:50%;" />
+
+<h5 id="17-管理页面，访问ip-9000"><a href="#17-管理页面，访问ip-9000" class="headerlink" title="17.管理页面，访问ip+9000"></a>17.管理页面，访问ip+9000</h5><img src="C:\Users\zllwsy\AppData\Roaming\Typora\typora-user-images\image-20210719161433215.png" alt="image-20210719161433215" style="zoom:50%;" />
+
+<p>经查询，是因为单机模式，需要指定具体的端口。</p>
+<h5 id="18-总结"><a href="#18-总结" class="headerlink" title="18.总结"></a>18.总结</h5><p>中途出现了一些问题，查询了多方资料，注意阿里云服务器，不建议直接关闭防火墙，可以去服务器实例的安全组里面进行配置，开放需要的端口即可。</p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+		<div>
+     
+	        <div style="text-align:center;color: #ccc;font-size:14px">----------本文结束<i class="fa fa-paw"></i>感谢您的阅读----------</div>
+	 
+</div>
+		
+	</div>
+
+	<div>
+    
+        
+    
+    </div>
+	
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hadoop-Linux/" rel="tag"># -Hadoop -Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/" rel="prev" title="从yml配置读取数据工具类">
+      <i class="fa fa-chevron-left"></i> 从yml配置读取数据工具类
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/28/Springboot%E5%AE%9E%E7%8E%B0aop%E5%88%87%E9%9D%A2%E6%A1%88%E4%BE%8B/" rel="next" title="Springboot实现aop切面案例">
+      Springboot实现aop切面案例 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%B8%8B%E8%BD%BDhadoop"><span class="nav-number">1.</span> <span class="nav-text">1.下载hadoop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%B8%8A%E4%BC%A0tar%E5%8C%85%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%8C%BA%E5%B9%B6%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%B7%AF%E5%BE%84%E4%B8%BA-usr-local-hadoop"><span class="nav-number">2.</span> <span class="nav-text">2.上传tar包到服务区并解压，路径为 &#x2F;usr&#x2F;local&#x2F;hadoop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8hostname"><span class="nav-number">3.</span> <span class="nav-text">3.修改服务器hostname</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E5%88%9B%E5%BB%BA%E6%8C%82%E8%BD%BD%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">4.</span> <span class="nav-text">4.创建挂载数据的文件夹</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E8%BF%9B%E5%85%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">5.进入配置文件目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E4%BF%AE%E6%94%B9core-site-xml"><span class="nav-number">6.</span> <span class="nav-text">6.修改core-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-%E4%BF%AE%E6%94%B9hadoop-env-sh"><span class="nav-number">7.</span> <span class="nav-text">7.修改hadoop-env.sh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-%E4%BF%AE%E6%94%B9hdfs-site-xml"><span class="nav-number">8.</span> <span class="nav-text">8.修改hdfs-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-%E4%BF%AE%E6%94%B9mapred-site-xml-template"><span class="nav-number">9.</span> <span class="nav-text">9.修改mapred-site.xml.template</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-%E4%BF%AE%E6%94%B9yarn-site-xml"><span class="nav-number">10.</span> <span class="nav-text">10.修改yarn-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%9A"><span class="nav-number">11.</span> <span class="nav-text">11.格式化一个新的分布式文件系统：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12-%E5%90%AF%E5%8A%A8hadoop"><span class="nav-number">12.</span> <span class="nav-text">12.启动hadoop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13-%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F%EF%BC%8C%E4%BD%BF%E7%94%A8jps%E5%91%BD%E4%BB%A4"><span class="nav-number">13.</span> <span class="nav-text">13.查看启动是否成功，使用jps命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text">14.阿里云服务器问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#15-%E8%AE%BF%E9%97%AENameNode%E7%95%8C%E9%9D%A2%EF%BC%8Cip-50070"><span class="nav-number">15.</span> <span class="nav-text">15.访问NameNode界面，ip+50070</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16-%E8%AE%BF%E9%97%AE%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2%EF%BC%8Cip-8087-%E9%BB%98%E8%AE%A4%E4%B8%BA8088%EF%BC%8C%E5%9C%A8yarn-site-xml%E4%B8%AD%E8%AE%BE%E7%BD%AE"><span class="nav-number">16.</span> <span class="nav-text">16.访问管理界面，ip+8087(默认为8088，在yarn-site.xml中设置)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17-%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2%EF%BC%8C%E8%AE%BF%E9%97%AEip-9000"><span class="nav-number">17.</span> <span class="nav-text">17.管理页面，访问ip+9000</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#18-%E6%80%BB%E7%BB%93"><span class="nav-number">18.</span> <span class="nav-text">18.总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Diamond"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">Diamond</p>
+  <div class="site-description" itemprop="description">黑色的眼睛，注定寻找光明</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zl-Diamon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zl-Diamon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/zllwsy" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;zllwsy" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/DDDDD" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;DDDDD" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  
+  <span class="author" itemprop="copyrightHolder">Diamond</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">226k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:26</span>
+</div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+</div>
+
+
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nLtYdYhOieJn53fMGYIiyU5f-gzGzoHsz',
+      appKey     : '43kflehvxloXN1wOm9R90dRh',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+  
+  <script type="text/javascript"
+  color="0,0,255" opacity='0.7' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+ 
+ <!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+  </body>
+</html>
