@@ -6,7 +6,7 @@
   <link href="http://www.zllwsy.com/atom.xml" rel="self"/>
   
   <link href="http://www.zllwsy.com/"/>
-  <updated>2021-07-28T07:38:26.736Z</updated>
+  <updated>2023-02-19T13:08:39.082Z</updated>
   <id>http://www.zllwsy.com/</id>
   
   <author>
@@ -15,6 +15,94 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux搭建es集群(三)</title>
+    <link href="http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%89/"/>
+    <id>http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%89/</id>
+    <published>2023-02-19T13:04:56.000Z</published>
+    <updated>2023-02-19T13:08:39.082Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;前言：已经完成了es单节点搭建和kibana的搭建，还不知道的可以点击跳转&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="-大数据" scheme="http://www.zllwsy.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+    <category term="-JDK -Linux -ElasticSearch -集群 -kibana" scheme="http://www.zllwsy.com/tags/JDK-Linux-ElasticSearch-%E9%9B%86%E7%BE%A4-kibana/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux搭建es集群(二)</title>
+    <link href="http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%BA%8C/"/>
+    <id>http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%BA%8C/</id>
+    <published>2023-02-19T13:04:52.000Z</published>
+    <updated>2023-02-19T13:08:53.131Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;前言：在上一章节已经完成了单机版本的es搭建，还不知道的可以点击跳转&lt;a href=&quot;&quot;&gt;Linux搭建es集群(一)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;1、先搭一个kibana面板方便查看es，下载一个&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="-大数据" scheme="http://www.zllwsy.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+    <category term="-JDK -ElasticSearch -集群 -kibana" scheme="http://www.zllwsy.com/tags/JDK-ElasticSearch-%E9%9B%86%E7%BE%A4-kibana/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux搭建es集群(一)</title>
+    <link href="http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%80/"/>
+    <id>http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%80/</id>
+    <published>2023-02-19T13:04:30.000Z</published>
+    <updated>2023-02-19T13:08:48.745Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;前言：搭建es集群，&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;IP&lt;/th&gt;
+&lt;th&gt;服务&lt;/th&gt;
+&lt;th&gt;位置&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;192.168.152.135&lt;/td&gt;
+&lt;td&gt;elasticse</summary>
+        
+      
+    
+    
+    
+    <category term="-大数据" scheme="http://www.zllwsy.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+    <category term="-JDK -Linux -ElasticSearch -集群 -kibana" scheme="http://www.zllwsy.com/tags/JDK-Linux-ElasticSearch-%E9%9B%86%E7%BE%A4-kibana/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux &amp;&amp; Windows杀死端口</title>
@@ -354,63 +442,6 @@
     
     
     <category term="-SimpleDateFormat" scheme="http://www.zllwsy.com/tags/SimpleDateFormat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>忙碌中别忘记了生活的样子</title>
-    <link href="http://www.zllwsy.com/2021/04/01/%E5%BF%99%E7%A2%8C%E4%B8%AD%E5%88%AB%E5%BF%98%E8%AE%B0%E4%BA%86%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/"/>
-    <id>http://www.zllwsy.com/2021/04/01/%E5%BF%99%E7%A2%8C%E4%B8%AD%E5%88%AB%E5%BF%98%E8%AE%B0%E4%BA%86%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/</id>
-    <published>2021-04-01T07:30:15.000Z</published>
-    <updated>2021-05-06T06:54:45.775Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;每天往返于公司和家之间，不知道是否真的把自己都全部扔进了工作里，好像每天都在匆忙中度过，似乎显得充实而满足，但内心的压力和彷徨却无处可去，有时候可能真的是矫情，又或者是当物质生活得到满足后的空虚，人似乎真的也需要一点精神上的慰藉，曾在美篇写过一篇&lt;a href=&quot;https://www.meipian.cn/editor?mask_id=on0tcca&amp;getArticleListsParams=%7B%22page%22%3A%201,%20%22hasSureKeyword%22%3A%20%22%22,%20%22curListType%22%3A%20%22list%22%7D&quot; target=&quot;_blank&quot;&gt;&amp;lt;&amp;lt;唯美家庭所蕴含的真谛&amp;gt;&amp;gt;&lt;/a&gt;，可能是内心的索求，又或许是梦中的幻想。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-生活的样子" scheme="http://www.zllwsy.com/categories/%E7%94%9F%E6%B4%BB%E7%9A%84%E6%A0%B7%E5%AD%90/"/>
-    
-    
-    <category term="-单车 -微风 -湖面" scheme="http://www.zllwsy.com/tags/%E5%8D%95%E8%BD%A6-%E5%BE%AE%E9%A3%8E-%E6%B9%96%E9%9D%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>支付接口之支付宝支付</title>
-    <link href="http://www.zllwsy.com/2021/03/30/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3%E4%B9%8B%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98/"/>
-    <id>http://www.zllwsy.com/2021/03/30/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3%E4%B9%8B%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98/</id>
-    <published>2021-03-30T06:26:29.000Z</published>
-    <updated>2021-03-30T07:12:37.376Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;无论做多少项目，除了一些系统管理类的项目，大部分小程序、公众号、App或者网站都是需要支付接口的，而目前最常用的支付方法肯定就是微信和支付宝，今天来探讨一下支付宝支付功能。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-支付接口" scheme="http://www.zllwsy.com/categories/%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3/"/>
-    
-    
-    <category term="-支付宝 -Alipay" scheme="http://www.zllwsy.com/tags/%E6%94%AF%E4%BB%98%E5%AE%9D-Alipay/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python之Serial连接硬件串口</title>
-    <link href="http://www.zllwsy.com/2021/03/29/Python%E4%B9%8BSerial%E8%BF%9E%E6%8E%A5%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3/"/>
-    <id>http://www.zllwsy.com/2021/03/29/Python%E4%B9%8BSerial%E8%BF%9E%E6%8E%A5%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3/</id>
-    <published>2021-03-29T07:13:54.000Z</published>
-    <updated>2021-03-30T07:30:45.779Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;万万没想到，我有一天会搞一搞Python，唯一对Python的印象就是爬虫，爬取数据，但是以前我写过的爬数据也是用的Webmagic，真是第一次接触Python语言，老大要求，那搞就完事了，一起看看吧。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="-Python" scheme="http://www.zllwsy.com/categories/Python/"/>
-    
-    
-    <category term="-Python -Serial -超声波测距" scheme="http://www.zllwsy.com/tags/Python-Serial-%E8%B6%85%E5%A3%B0%E6%B3%A2%E6%B5%8B%E8%B7%9D/"/>
     
   </entry>
   

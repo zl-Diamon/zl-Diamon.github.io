@@ -197,6 +197,455 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%89/" class="post-title-link" itemprop="url">Linux搭建es集群(三)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-02-19 21:04:56 / 修改时间：21:08:39" itemprop="dateCreated datePublished" datetime="2023-02-19T21:04:56+08:00">2023-02-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">-大数据</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前言：已经完成了es单节点搭建和kibana的搭建，还不知道的可以点击跳转</p>
+<p><a href="../Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%80/index.html">Linux搭建es集群(一)</a></p>
+<p><a href="../Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%BA%8C/index.html">Linux搭建es集群(二)</a></p>
+<p>1、先将elastic拷贝到另外准备好的两台服务器中，同时在两个服务器新增es用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r root@192.168.152.135:&#x2F;opt&#x2F;elasticsearch&#x2F; &#x2F;opt&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219160251283.png" alt="image-20230219160251283"></p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219155913193.png" alt="image-20230219155913193"></p>
+<p>2、修改192.168.152.135服务器的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># 集群名称，保证唯一</span><br><span class="line">cluster.name: es</span><br><span class="line"># 节点名称，必须不一样</span><br><span class="line">node.name: node1</span><br><span class="line">#是不是有资格成为主节点</span><br><span class="line">#ip地址.</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">#端口</span><br><span class="line">http.port: 9200</span><br><span class="line">#内部节点之间沟通端口</span><br><span class="line">transport.tcp.port: 9300</span><br><span class="line">#是否符合成为主节点的条件</span><br><span class="line">node.master: true</span><br><span class="line">#是否存储数据</span><br><span class="line">node.data: true</span><br><span class="line">#数据存储路径，记得赋权给es用户</span><br><span class="line">path.data: &#x2F;data01&#x2F;es</span><br><span class="line">#日志存储路径</span><br><span class="line">path.logs: &#x2F;data01&#x2F;logs</span><br><span class="line">#内存锁定，是否禁用交换</span><br><span class="line">bootstrap.memory_lock: false</span><br><span class="line">#系统调用过滤器</span><br><span class="line">bootstrap.system_call_filter: false</span><br><span class="line">#最大集群节点数</span><br><span class="line">#node.max_local_storage_nodes: 3</span><br><span class="line">#节点发现</span><br><span class="line">discovery.zen.ping_timeout: 120s</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;192.168.152.135&quot;,&quot;192.168.152.135&quot;,&quot;192.168.152.135&quot;]</span><br><span class="line">#是否允许跨源Rest请求</span><br><span class="line">#client.cors.enabled: true</span><br><span class="line">#允许的源地址</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: es</span><br><span class="line">node.name: node2</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9200</span><br><span class="line">node.master: true</span><br><span class="line">node.data: true</span><br><span class="line">path.data: &#x2F;data01&#x2F;es</span><br><span class="line">path.logs: &#x2F;data01&#x2F;logs</span><br><span class="line">#node.max_local_storage_nodes: 3</span><br><span class="line">transport.tcp.port: 9300</span><br><span class="line">discovery.zen.ping_timeout: 120s</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;192.168.152.135&quot;,&quot;192.168.152.135&quot;,&quot;192.168.152.135&quot;]</span><br><span class="line">discovery.zen.fd.ping_retries: 10</span><br><span class="line">client.transport.ping_timeout: 60s</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: es</span><br><span class="line">node.name: node3</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9200</span><br><span class="line">node.master: true</span><br><span class="line">node.data: true</span><br><span class="line">path.data: &#x2F;data01&#x2F;es</span><br><span class="line">path.logs: &#x2F;data01&#x2F;logs</span><br><span class="line">node.max_local_storage_nodes: 3</span><br><span class="line">transport.tcp.port: 9300</span><br><span class="line">discovery.zen.ping_timeout: 10s</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;192.168.152.135&quot;,&quot;192.168.152.135&quot;,&quot;192.168.152.135&quot;]</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure>
+
+<p>3、分别启动三个服务器的es，然后随便使用一个服务器访问，可以看到三个节点已经启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET http:&#x2F;&#x2F;192.168.152.135:9200&#x2F;_cat&#x2F;nodes</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219191138457.png" alt="image-20230219191138457"></p>
+<p>4、修改kibana配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server.port: 5601</span><br><span class="line">server.host: &quot;0.0.0.0&quot;</span><br><span class="line">elasticsearch.hosts: [&quot;http:&#x2F;&#x2F;192.168.152.135:9200&quot;,&quot;http:&#x2F;&#x2F;192.168.152.137:9200&quot;,&quot;http:&#x2F;&#x2F;192.168.152.139:9200&quot;]</span><br><span class="line">kibana.index: &quot;.kibana&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219200151850.png" alt="image-20230219200151850"></p>
+<p>5、启动kibana又报错了，版本一致！版本一致！版本一致！再来一个kibana，步骤省略</p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219165540044.png" alt="image-20230219165540044"></p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219165719252.png" alt="image-20230219165719252"></p>
+<p>6、查看页面，顺便搞个索引试试，</p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219200334763.png" alt="image-20230219200334763"></p>
+<p>7、基本集群已经可用了，还有一个遗漏的就是集群的安全认证，首先生成证书，一路回车先不设置密码账户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;bin&#x2F;elasticsearch-certutil ca</span><br><span class="line">.&#x2F;bin&#x2F;elasticsearch-certutil cert --ca elastic-stack-ca.p12</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219204607526.png" alt="image-20230219204607526"></p>
+<p>8、将生成的证书同步到其他节点</p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219202149551.png" alt="image-20230219202149551"></p>
+<p>9、修改每一个节点的elasticsearch.yml配置文件，添加证书配置，重启所有节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xpack.security.enabled: true</span><br><span class="line">xpack.security.transport.ssl.enabled: true</span><br><span class="line">xpack.security.transport.ssl.verification_mode: certificate</span><br><span class="line">xpack.security.transport.ssl.keystore.path: elastic-certificates.p12</span><br><span class="line">xpack.security.transport.ssl.truststore.path: elastic-certificates.p12</span><br></pre></td></tr></table></figure>
+
+<p>10、设置密码，在一个节点设置即可，会自动同步到其他节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;bin&#x2F;elasticsearch-setup-passwords interactive</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219204802461.png" alt="image-20230219204802461"></p>
+<p>7、修改kibana配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">elasticsearch.username: &quot;elastic&quot;</span><br><span class="line">elasticsearch.password: &quot;Aa123456&quot;</span><br></pre></td></tr></table></figure>
+
+<p>8、页面查看，可以看到已经能正常访问</p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219205443455.png" alt="image-20230219205443455"></p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219205503883.png" alt="image-20230219205503883"></p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219205526577.png" alt="image-20230219205526577"></p>
+<p>总结：完结撒花，其实并不是很复杂，但是需要细心，很多错误其实可以避免</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%BA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%BA%8C/" class="post-title-link" itemprop="url">Linux搭建es集群(二)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-02-19 21:04:52 / 修改时间：21:08:53" itemprop="dateCreated datePublished" datetime="2023-02-19T21:04:52+08:00">2023-02-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">-大数据</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%BA%8C/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%BA%8C/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>449</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前言：在上一章节已经完成了单机版本的es搭建，还不知道的可以点击跳转<a href="">Linux搭建es集群(一)</a></p>
+<p>1、先搭一个kibana面板方便查看es，下载一个<a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/kibana">kibana</a>,注意下载对应版本，我开始下载的5.6.3版本就是教训，导入到服务器中</p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219154406440.png" alt="image-20230219154406440"></p>
+<p>2、修改配置文件kibana.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server.host: &quot;0.0.0.0&quot;</span><br><span class="line">#一定要加http，不然会报错无法解析</span><br><span class="line">elasticsearch.hosts: [&quot;http:&#x2F;&#x2F;192.168.152.135:9200&quot;]  </span><br><span class="line">i18n.locale: &quot;zh-CN&quot;</span><br><span class="line">elasticsearch.username: &quot;elastic&quot;</span><br><span class="line">elasticsearch.password: &quot;Aa123456&quot;</span><br></pre></td></tr></table></figure>
+
+<p>3、启动然后查看页面，kibana搭建完成(kibana登录密码就是开始搭建es时候设置的密码)；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su es .&#x2F;bin&#x2F;kibana</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219155100683.png" alt="image-20230219155100683"></p>
+
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="Diamond">
+      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweet Candy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%80/" class="post-title-link" itemprop="url">Linux搭建es集群(一)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-02-19 21:04:30 / 修改时间：21:08:48" itemprop="dateCreated datePublished" datetime="2023-02-19T21:04:30+08:00">2023-02-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">-大数据</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%80/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/19/Linux%E6%90%AD%E5%BB%BAes%E9%9B%86%E7%BE%A4-%E4%B8%80/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前言：搭建es集群，</p>
+<table>
+<thead>
+<tr>
+<th>IP</th>
+<th>服务</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192.168.152.135</td>
+<td>elasticsearch、kibana</td>
+<td>/opt/elasticsearch；/opt/kibana-6.8.4</td>
+</tr>
+<tr>
+<td>192.168.152.137</td>
+<td>elasticsearch</td>
+<td>/opt/elasticsearch</td>
+</tr>
+<tr>
+<td>192.168.152.139</td>
+<td>elasticsearch</td>
+<td>/opt/elasticsearch</td>
+</tr>
+</tbody></table>
+<p>先在152.135服务器搭建一个es单节点，</p>
+<p>1、下载es的安装包，<a target="_blank" rel="noopener" href="https://elasticsearch.cn/download/">点击下载</a></p>
+<p>2、导入服务器，再解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf elasticsearch-6.8.0.tar.gz -C &#x2F;opt&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>3、es不允许使用root账户启动，所以需要添加一个新的用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd es #用户名</span><br><span class="line">passwd es #设置用户的密码</span><br><span class="line">chown -R es:es elasticsearch  #设置权限</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219134844394.png" alt="image-20230219134844394"></p>
+<p>4、修改es的配置文件elastisearch.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: es    #elasticsearch的集群名称</span><br><span class="line">node.name: node1    #节点名称</span><br><span class="line">network.host: 0.0.0.0    #设置0.0.0.0代表允许外网访问</span><br><span class="line">http.port: 9200    #http访问端口</span><br><span class="line">cluster.initial_master_nodes: [&quot;node1&quot;]    #初始化新集群时需要通过该配置来选举master，如果报错就先将该配置注释掉</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219134232803.png" alt="image-20230219134232803"></p>
+<p>5、关闭防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#查看防火墙状态</span><br><span class="line">systemctl status firewalld</span><br><span class="line">#关闭防火墙</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">#永久关闭</span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219135743578.png" alt="image-20230219135743578"></p>
+<p>6、启动elasticsearch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#后台启动</span><br><span class="line">&#x2F;opt&#x2F;elasticsearch&#x2F;bin&#x2F;elasticsearch -d</span><br></pre></td></tr></table></figure>
+
+<p>7、遇到一个问题，同样记录，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219140355501.png" alt="image-20230219140355501"></p>
+<p>初步是es的一个配置权限，还有一个logs目录权限，进入对应目录查看状况:</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219140502576.png" alt="image-20230219140502576"></p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219140853416.png" alt="image-20230219140853416"></p>
+<p>果不其然，找个keystore文件的权限是root，知道问题了，修改也很简单，修改文件的权限即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#修改配置文件权限</span><br><span class="line">chown -R es:es elasticsearch.keystore</span><br><span class="line">#修改日志文件权限</span><br><span class="line">chown -R es:es ..&#x2F;logs&#x2F;*</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219140639342.png" alt="image-20230219140639342"></p>
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219140948237.png" alt="image-20230219140948237"></p>
+<p>8、再次启动，再次出现问题</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219144016665.png" alt="image-20230219144016665"></p>
+<p>9、修改配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#1.最大可创建文件数太小</span><br><span class="line">vim &#x2F;etc&#x2F;security&#x2F;limits.conf</span><br><span class="line">#在文件末尾中增加下面内容</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">* soft nproc 2048</span><br><span class="line">* hard nproc 4096</span><br><span class="line">vim &#x2F;etc&#x2F;security&#x2F;limits.d&#x2F;90-nproc.conf </span><br><span class="line">#在文件末尾中增加下面内容,*代表Linux所有用户名称</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">*  hard    nproc     65536</span><br><span class="line"></span><br><span class="line">#2.最大虚拟内存太小</span><br><span class="line">vim &#x2F;etc&#x2F;sysctl.conf</span><br><span class="line">#在文件中增加下面内容</span><br><span class="line">vm.max_map_count&#x3D;655360</span><br><span class="line">#重新加载，输入下面命令:</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\Learn\assets\image-20230219135342384.png" alt="image-20230219135342384"></p>
+<p>10、再再次启动，页面查看，启动成功</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219144404141.png" alt="image-20230219144404141"></p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219144347639.png" alt="image-20230219144347639"></p>
+<p>11、单机版本到此就搭建完毕…等等，好像不对，还木有配置用户名密码登录，直接修改配置文件elasticsearch.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#配置X-Pack</span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br><span class="line">http.cors.allow-headers: Authorization</span><br><span class="line">xpack.security.enabled: true</span><br><span class="line">xpack.license.self_generated.type: basic</span><br><span class="line">xpack.security.transport.ssl.enabled: true</span><br></pre></td></tr></table></figure>
+
+<p>12、重启es，尴尬的是es本身木有重启命令，所以回归原始</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -ef|grep elasticsearch #查找</span><br><span class="line">kill -9 1429 #杀死端口</span><br><span class="line">su es elasticsearch&#x2F;bin&#x2F;elasticsearch -d #启动</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219152146449.png" alt="image-20230219152146449"></p>
+<p>13、设置用户名和密码，包含elastic、apm_system、kibana、logstash_system、beats_system、remote_monitoring_user五个系统的密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;bin&#x2F;elasticsearch-setup-passwords interactive</span><br></pre></td></tr></table></figure>
+
+<p><img src="E:\HexoBlog\source_posts\assets\image-20230219152612647.png" alt="image-20230219152612647"></p>
+<p>14、over，登录页面查看，完事，</p>
+<p><img src="https://gitee.com/zllwsy/PicGo/raw/master/img/image-20230219152801168.png" alt="image-20230219152801168"></p>
+<p>15、一步一步完成了单机版的es搭建，下一步就开始集群的搭建，一起学习一起进步</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+	    
+	</div>
+
+	<div>
+    
+    </div>
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/07/28/Linux&&Windows%E6%9D%80%E6%AD%BB%E7%AB%AF%E5%8F%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -535,348 +984,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/" class="post-title-link" itemprop="url">从yml配置读取数据工具类</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-06 11:36:27" itemprop="dateCreated datePublished" datetime="2021-07-06T11:36:27+08:00">2021-07-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-10 15:30:02" itemprop="dateModified" datetime="2021-07-10T15:30:02+08:00">2021-07-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">-随笔</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>不知道为什么，有时候@Value注解读取不到配置文件的数据，所以搞了一个工具类来读取。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/06/%E4%BB%8Eyml%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%B7%A5%E5%85%B7%E7%B1%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/07/05/OkHttp%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/05/OkHttp%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">OkHttp使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-07-05 13:50:44 / 修改时间：14:04:02" itemprop="dateCreated datePublished" datetime="2021-07-05T13:50:44+08:00">2021-07-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">-随笔</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/07/05/OkHttp%E4%BD%BF%E7%94%A8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/05/OkHttp%E4%BD%BF%E7%94%A8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Okhttp的使用，封装工具类，调用远程接口。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/05/OkHttp%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.zllwsy.com/2021/07/05/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="Diamond">
-      <meta itemprop="description" content="黑色的眼睛，注定寻找光明">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweet Candy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/05/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">正则表达式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-07-05 09:58:46 / 修改时间：10:01:56" itemprop="dateCreated datePublished" datetime="2021-07-05T09:58:46+08:00">2021-07-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">-随笔</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/07/05/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/05/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>130</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记录一次正则。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/05/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	<div>
-	    
-	</div>
-
-	<div>
-    
-    </div>
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -948,20 +1055,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">102</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">91</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -998,7 +1105,7 @@
 <div class="copyright">
   
   &copy; 2020 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1009,13 +1116,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">226k</span>
+    <span title="站点总字数">232k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:26</span>
+    <span title="站点阅读时长">3:31</span>
 </div>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
